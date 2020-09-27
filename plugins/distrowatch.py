@@ -10,5 +10,5 @@ def init(update, context):
     distro_long_name = parsed_html.title.string[17:].lower()
     distro_name = distro_long_name.split()[0]
     distro_url = f'https://distrowatch.com/table.php?distribution={distro_name}'
-    distro_message = "You found the following Linux distribution: {}".format(distro_url)
+    distro_message = "Here is a random linux distribution: {}".format(distro_url)
     message(update,context,distro_message)

@@ -1,3 +1,3 @@
-__all__ = ["ban"]
+__all__ = ["ban","info_group"]
 
 from core.commands.admin import *

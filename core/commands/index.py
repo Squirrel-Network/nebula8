@@ -14,6 +14,7 @@ def user_command(dsp):
 def admin_command(dsp):
     function = dsp.add_handler
     function(CMH('ban', admin.ban.init))
+    function(CMH('status', admin.info_group.init))
 
 def owner_command(dsp):
     function = dsp.add_handler

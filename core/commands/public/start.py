@@ -1,6 +1,9 @@
 from languages.getLang import languages
+from core.utilities.message import message
+from core import decorators
 
+@decorators.private.init
+@decorators.delete.init
 def init(update, context):
-    bot = context.bot
     languages(update,context)
-    bot.send_message(update.effective_chat.id, languages.helps)
+    message(update,context,languages.start)
