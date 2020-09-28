@@ -8,8 +8,6 @@ from telegram.ext import (
 def user_command(dsp):
     function = dsp.add_handler
     function(CMH('start', public.start.init))
-    #function(CQH(public.start.welcome_button, pattern='welcome_button'))
-    #function(CQH(public.start.back_button, pattern='back_button'))
 
 def admin_command(dsp):
     function = dsp.add_handler

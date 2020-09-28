@@ -11,6 +11,7 @@ from telegram.ext import (Updater,Filters)
 from core.commands import index
 from plugins import plugin_index
 from core import handlers
+from core.handlers import handlers_index
 
 # if version < 3.6, stop bot.
 LOGGER = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ def main():
     index.user_command(dsp)
     index.admin_command(dsp)
     index.owner_command(dsp)
+    handlers_index.core_handlers(dsp)
 
     #Plugins Section
     if Config.ENABLE_PLUGINS == True:
@@ -40,7 +42,7 @@ def main():
         plugin_index.function_plugins(dsp)
     else:
         print("PLUGINS STATUS: Disable")
-    
+
     dsp.add_error_handler(handlers.errors.error)
 
     # Start the Bot

@@ -1,3 +1,3 @@
-__all__ = ["errors"]
+__all__ = ["handlers_index","errors","welcome"]
 
 from core.handlers import *

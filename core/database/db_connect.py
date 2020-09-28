@@ -12,14 +12,14 @@ class Connection:
             cursorclass=pymysql.cursors.DictCursor
             )
         self.cur = self.con.cursor()
-    
+
     def _select(self,sql,args=None):
         self.cur.execute(sql,args)
         self.sel = self.cur.fetchone()
         self.cur.close()
         self.con.close()
         return self.sel
-    
+
     def _selectAll(self,sql,args=None):
         self.cur.execute(sql,args)
         self.sel = self.cur.fetchall()
