@@ -5,6 +5,8 @@
 
 import logging
 import sys
+from rich.logging import RichHandler
+from rich.console import Console
 from datetime import datetime
 from config import Config
 from telegram.ext import (Updater,Filters)
@@ -13,6 +15,7 @@ from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
 
+console = Console()
 # if version < 3.6, stop bot.
 LOGGER = logging.getLogger(__name__)
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
@@ -21,10 +24,12 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 
 # Print start with datetime
 timestamp = datetime.strftime(datetime.today(), '%H:%M at %Y/%m/%d')
-print("[[[Welcome to Nebula Bot]]]\nBot started on {}".format(timestamp))
+console.print("[bold blue][[[Welcome to Nebula Bot]]][/bold blue]\n [yellow]Bot started on {}[/yellow]".format(timestamp))
 
 # Enable logging (set debug == logging.DEBUG ; set info == logging.INFO)
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt="[%X]", handlers=[RichHandler()]
+)
 logger = logging.getLogger(__name__)
 
 def main():
@@ -38,10 +43,10 @@ def main():
 
     #Plugins Section
     if Config.ENABLE_PLUGINS == True:
-        print("PLUGINS STATUS: Enable")
+        console.print("[b]PLUGINS STATUS:[/b] [green]Enable[/green]")
         plugin_index.function_plugins(dsp)
     else:
-        print("PLUGINS STATUS: Disable")
+        console.print("[b]PLUGINS STATUS:[/b] [bold red]Disable[/bold red]")
 
     dsp.add_error_handler(handlers.errors.error)
 
