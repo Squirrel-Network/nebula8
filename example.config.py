@@ -4,8 +4,8 @@ class Config(object):
      ##########################
      HOST = 'localhost'
      PORT = 3306
-     USER = 'user'
-     PASSWORD = 'password'
+     USER = 'usr'
+     PASSWORD = 'pws'
      DBNAME = 'dbname'
      ###########################
      ##   TELEGRAM SETTINGS  ##
@@ -18,4 +18,5 @@ class Config(object):
      ##   PROJECT SETTINGS   ##
      ##########################
      ENABLE_PLUGINS = True
+     DEFAULT_LANGUAGE = "EN"
      VERSION = '8.0.0'
