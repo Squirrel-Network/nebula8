@@ -7,12 +7,12 @@ def get(update, context):
     row = GroupLanguageRepository().getById([chat])
     if row is None:
         return None
-    else: 
+    else:
         return row['languages']
 
 def languages(update,context):
     LANGUAGE = get(update,context)
-    
+
     if LANGUAGE == "" or LANGUAGE is None:
         LANGUAGE = Config.DEFAULT_LANGUAGE
 
