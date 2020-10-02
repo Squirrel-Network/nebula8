@@ -2,3 +2,18 @@
 
 
 # NEBULA 8
+
+## HOW TO START
+
+### - Clone this repository
+```git clone https://github.com/Squirrel-Network/nebula8.git```
+
+### - Creating Virtual Environments
+```python3 -m venv env1```
+<br>
+```source env1/bin/activate```
+
+### - Install requirements
+```pip install -r requirements.txt```
+
+### Enjoy!
