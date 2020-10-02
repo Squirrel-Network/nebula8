@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-
 import logging
 import sys
 from rich.logging import RichHandler
 from rich.console import Console
+from rich.table import Table
 from datetime import datetime
 from config import Config
 from telegram.ext import (Updater,Filters)
@@ -16,6 +16,8 @@ from core import handlers
 from core.handlers import handlers_index
 
 console = Console()
+table = Table(show_header=True, header_style="bold blue")
+
 # if version < 3.6, stop bot.
 LOGGER = logging.getLogger(__name__)
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
@@ -24,7 +26,9 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 
 # Print start with datetime
 timestamp = datetime.strftime(datetime.today(), '%H:%M at %Y/%m/%d')
-console.print("[bold blue][[[Welcome to Nebula Bot]]][/bold blue]\n [yellow]Bot started on {}[/yellow]".format(timestamp))
+console.print("[bold blue][[[Welcome to Nebula Bot]]][/bold blue]")
+table.add_column("[b]Date[/b]", style="dim", width=12)
+table.add_column("[b]Plugins Status[/b]")
 
 # Enable logging (set debug == logging.DEBUG ; set info == logging.INFO)
 logging.basicConfig(
@@ -43,10 +47,18 @@ def main():
 
     #Plugins Section
     if Config.ENABLE_PLUGINS == True:
-        console.print("[b]PLUGINS STATUS:[/b] [green]Enable[/green]")
+        table.add_row(
+            "[yellow]{}[/yellow]".format(timestamp),
+            "[green]Enable[/green]",
+            )
+        console.print(table)
         plugin_index.function_plugins(dsp)
     else:
-        console.print("[b]PLUGINS STATUS:[/b] [bold red]Disable[/bold red]")
+        table.add_row(
+            "[yellow]{}[/yellow]".format(timestamp),
+            "[bold red]Disable[/bold red]",
+            )
+        console.print(table)
 
     dsp.add_error_handler(handlers.errors.error)
 
