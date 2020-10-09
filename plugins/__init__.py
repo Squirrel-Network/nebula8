@@ -1,3 +1,3 @@
-__all__ = ["plugin_index","distrowatch"]
+__all__ = ["plugin_index","distrowatch","google"]
 
 from plugins import *

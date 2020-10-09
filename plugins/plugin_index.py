@@ -8,3 +8,4 @@ from telegram.ext import (
 def function_plugins(dsp):
     function = dsp.add_handler
     function(CMH('distro',plugins.distrowatch.init))
+    function(CMH('google',plugins.google.init))
