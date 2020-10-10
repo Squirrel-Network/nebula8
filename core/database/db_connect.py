@@ -5,11 +5,12 @@ class Connection:
     def __init__(self):
         self.con = pymysql.connect(
             host = Config.HOST,
+            port = Config.PORT,
             user = Config.USER,
             password = Config.PASSWORD,
             db = Config.DBNAME,
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor
+            charset = 'utf8mb4',
+            cursorclass = pymysql.cursors.DictCursor
             )
         self.cur = self.con.cursor()
 
