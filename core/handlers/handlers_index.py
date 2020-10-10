@@ -9,3 +9,4 @@ from telegram.ext import (
 def core_handlers(dsp):
     function = dsp.add_handler
     function(MH(Filters.status_update.new_chat_members, handlers.welcome.init))
+    function(MH(Filters.group, handlers.superban.init))

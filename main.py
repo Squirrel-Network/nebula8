@@ -43,22 +43,22 @@ def main():
     index.user_command(dsp)
     index.admin_command(dsp)
     index.owner_command(dsp)
-    handlers_index.core_handlers(dsp)
-
     #Plugins Section
     if Config.ENABLE_PLUGINS == True:
+        plugin_index.function_plugins(dsp)
         table.add_row(
             "[yellow]{}[/yellow]".format(timestamp),
             "[green]Enable[/green]",
             )
         console.print(table)
-        plugin_index.function_plugins(dsp)
     else:
         table.add_row(
             "[yellow]{}[/yellow]".format(timestamp),
             "[bold red]Disable[/bold red]",
             )
         console.print(table)
+
+    handlers_index.core_handlers(dsp)
 
     dsp.add_error_handler(handlers.errors.error)
 
