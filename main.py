@@ -32,7 +32,7 @@ table.add_column("[b]Plugins Status[/b]")
 
 # Enable logging (set debug == logging.DEBUG ; set info == logging.INFO)
 logging.basicConfig(
-    level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt="[%X]", handlers=[RichHandler()]
+    level=(logging.INFO, logging.DEBUG)[Config.DEBUG], format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt="[%X]", handlers=[RichHandler()]
 )
 logger = logging.getLogger(__name__)
 

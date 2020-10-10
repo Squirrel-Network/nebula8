@@ -20,3 +20,4 @@ class Config(object):
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
      VERSION = '8.0.0'
+     DEBUG = True
