@@ -1,7 +1,7 @@
-from core.database.repository.get_superban import SuperbanRepository
+from core.database.repository.superban import SuperbanRepository
 from languages.getLang import languages
 from core.utilities.message import message
-from core.utilities.functions import kick_user
+from core.utilities.functions import ban_user
 from core.utilities.functions import delete_message
 from telegram.ext.dispatcher import run_async
 
@@ -13,4 +13,4 @@ def init(update, context):
         msg = "text"
         message(update,context,msg)
         delete_message(update,context)
-        kick_user(update,context)
+        ban_user(update,context)

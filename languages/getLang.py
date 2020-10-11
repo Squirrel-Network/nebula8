@@ -1,5 +1,5 @@
 from config import Config
-from core.database.repository.get_group_language import GroupLanguageRepository
+from core.database.repository.group_language import GroupLanguageRepository
 from languages import (EN,IT)
 
 def get(update, context):

@@ -1,4 +1,4 @@
-from core.database.repository.get_group_language import GroupLanguageRepository
+from core.database.repository.group_language import GroupLanguageRepository
 from core import decorators
 
 @decorators.owner.init
