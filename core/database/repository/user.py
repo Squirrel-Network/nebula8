@@ -1,9 +1,13 @@
 from core.database.db_connect import Connection
+from core.database.QB import QB
+
 
 class UserRepository(Connection):
     def getById(self, args=None):
-        sql = "SELECT * FROM users WHERE user_id = %s"
-        return self._selectAll(sql, args)
+        query = QB("users").select().columns(["*"])
+        query = query.where("user_id", "=", "%s").buildQuery()
+
+        return self._selectAll(query, args)
 
     def add(self, args=None):
         # TODO: write add function
