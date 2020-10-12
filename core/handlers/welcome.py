@@ -16,25 +16,23 @@ def has_arabic_character(string):
 
 def save_user(user):
     # Salva l'utente nel database e controlla che esiste se esiste e ha cambiato nickname sovrascrivi
-    user = UserRepository.getById([user.id])
+    user = UserRepository().getById(user.id)
     if user:
-        print("UPDATE THE USER")
-        #UserRepository.update(username = user.username)
+        print('update')
+        # UserRepository().update(username = user.username)
     else:
-        print("SAVE USER")
-        #UserRepository.add(user)
+        print('add')
+        # UserRepository().add(user)
 
 def is_in_blacklist(uid):
-    return not not SuperbanRepository.getById([uid])
+    return not not SuperbanRepository().getByIdFetchOne(uid)
 
 def welcome_user(update, context, member):
     # Controlla che il welcome esista sul database se non esiste Default Welcome
     chat = update.effective_message.chat_id
 
-    groups = GroupRepository().getById([chat])
-    if groups is not None:
-        group = groups[0]
-
+    group = GroupRepository().getById(chat)
+    if group is not None:
         parsed_message = group['welcome_text'].replace(
             '{first_name}',
             update.message.from_user.first_name).replace('{chat_name}',
@@ -43,9 +41,9 @@ def welcome_user(update, context, member):
         )
         format_message = "{}".format(parsed_message)
         # welcome = update.message.reply_text(format_message,parse_mode='HTML')
-        reply_message(update,context,format_message)
+        reply_message(update, context, format_message)
     else:
-        reply_message(update,context,'default welcome')
+        reply_message(update, context, 'default welcome')
 
 
 def welcome_bot(update, context):
@@ -55,25 +53,19 @@ def welcome_bot(update, context):
 @run_async
 def init(update, context):
     for member in update.message.new_chat_members:
-        print('***Welcome*** ' + str(member))
 
         if member.is_bot:
-            print('***Welcome*** ' + 'is_bot')
             welcome_bot(update, context)
 
         else:
-            print('***Welcome*** ' + 'is_user')
-            # save_user(member)
+            save_user(member)
 
             if member.username is None:
-                print('***Welcome*** ' + 'no username')
                 kick_user(update, context)
 
             # TODO: add flag blacklist active
             elif is_in_blacklist(member.id) or has_arabic_character(member):
-                print('***Welcome*** ' + 'blacklist or arabic')
                 ban_user(update, context)
 
             else:
-                print('***Welcome*** ' + 'welcome')
                 welcome_user(update, context, member)
