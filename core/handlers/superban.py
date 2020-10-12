@@ -7,8 +7,8 @@ from telegram.ext.dispatcher import run_async
 
 @run_async
 def init(update, context):
-    ban_user = str(update.effective_user.id)
-    rows = SuperbanRepository().getById([ban_user])
+    user = str(update.effective_user.id)
+    rows = SuperbanRepository().getById([user])
     if rows:
         msg = "text"
         message(update,context,msg)
