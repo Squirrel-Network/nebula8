@@ -8,3 +8,9 @@ class GroupRepository(Connection):
         query = query.where("id_group", "=", "%s").buildQuery()
 
         return self._select(query, args)
+
+    def getAll(self,args=None):
+        query = QB("groups").select().columns(["*"])
+        query = query.where("id_group", "=", "%s").buildQuery()
+
+        return self._selectAll(query, args)

@@ -24,4 +24,5 @@ def languages(update,context):
     languages.start = setLang["START_COMMAND"]
     languages.helps = setLang["HELP_COMMAND"]
     languages.group_info = setLang["GROUP_INFO"]
+    languages.bot_welcome = setLang["BOT_WELCOME"]
     return LANGUAGE
