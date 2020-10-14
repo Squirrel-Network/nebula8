@@ -14,3 +14,8 @@ class GroupRepository(Connection):
         query = query.where("id_group", "=", "%s").buildQuery()
 
         return self._selectAll(query, args)
+
+    def insert(self,args=None):
+        query = QB("groups").insert().values("%s")
+
+        return self._insert(query,args)
