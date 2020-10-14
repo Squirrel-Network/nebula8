@@ -25,7 +25,7 @@ def save_user(user):
         # UserRepository().add(user)
 
 def is_in_blacklist(uid):
-    return not not SuperbanRepository().getByIdFetchOne(uid)
+    return not not SuperbanRepository().getById(uid)
 
 def welcome_user(update, context, member):
     # Controlla che il welcome esista sul database se non esiste Default Welcome
@@ -47,8 +47,9 @@ def welcome_user(update, context, member):
 
 
 def welcome_bot(update, context):
+    languages(update,context)
     # TODO: handler che salva il gruppo suò database e controlla che esiste. se esiste e ha cambiato id lo cambia
-    reply_message(update, context, "Grazie per avermi aggiunta al gruppo :D")
+    reply_message(update, context,languages.bot_welcome)
 
 @run_async
 def init(update, context):

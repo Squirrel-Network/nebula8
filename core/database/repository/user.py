@@ -7,6 +7,12 @@ class UserRepository(Connection):
         query = QB("users").select().columns(["*"])
         query = query.where("user_id", "=", "%s").buildQuery()
 
+        return self._select(query, args)
+
+    def getAll(self, args=None):
+        query = QB("users").select().columns(["*"])
+        query = query.where("user_id", "=", "%s").buildQuery()
+
         return self._selectAll(query, args)
 
     def add(self, args=None):
