@@ -3,13 +3,13 @@
 1. select a table
 
 ```python
-QB("tabella")
+QB("table")
 ```
 
 2. perform an operation
 
 ```python
-QB("tabella").select()
+QB("table").select()
              .insert()
              .delete()
              .update()
@@ -18,17 +18,17 @@ QB("tabella").select()
 3. in case of selecting or inserting select the columns (to select them all use ["*"])
 
 ```python
-QB("tabella").select().columns(["a", "b"])
+QB("table").select().columns(["a", "b"])
 ```
 
 4. in case of update select columns and values immediately
 
 ```python
-QB("tabella").update().params({"a": 3, "b": "ciao"})
+QB("table").update().params({"a": 3, "b": "ciao"})
 ```
 
 5. add any where
 
 ```python
-QB("tabella").delete().where("x", "=", 2)
+QB("table").delete().where("x", "=", 2)
 ```
