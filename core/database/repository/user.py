@@ -1,17 +1,17 @@
 from core.database.db_connect import Connection
-from core.database.QB import QB
+from pypika import Query, Table, Field
 
 
 class UserRepository(Connection):
     def getById(self, args=None):
-        query = QB("users").select().columns(["*"])
-        query = query.where("user_id", "=", "%s").buildQuery()
+        users = Table("users")
+        query = Query.from_(users).select("*").where(users.user_id == "%s").get_sql()
 
         return self._select(query, args)
 
     def getAll(self, args=None):
-        query = QB("users").select().columns(["*"])
-        query = query.where("user_id", "=", "%s").buildQuery()
+        users = Table("users")
+        query = Query.from_(users).select("*").where(users.user_id == "%s").get_sql()
 
         return self._selectAll(query, args)
 
