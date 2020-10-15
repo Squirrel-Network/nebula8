@@ -17,8 +17,3 @@
 ```pip install -r requirements.txt```
 
 ### Enjoy!
-
-
-## HOW TO USE QB(Query Builder)
-
-==> Go to https://github.com/Squirrel-Network/nebula8/blob/master/core/database/QB-README.md
