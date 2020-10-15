@@ -1,12 +1,12 @@
-# Come usare QB
+# How to use QB (Query Builder)
 
-1. selezionare una tabella
+1. select a table
 
 ```python
 QB("tabella")
 ```
 
-2. eseguire un operazione
+2. perform an operation
 
 ```python
 QB("tabella").select()
@@ -15,19 +15,19 @@ QB("tabella").select()
              .update()
 ```
 
-3. in caso di select o insert selezionare le colonne (per selezionarle tutte usare ["*"])
+3. in case of selecting or inserting select the columns (to select them all use ["*"])
 
 ```python
 QB("tabella").select().columns(["a", "b"])
 ```
 
-4. in caso di update selezionare colonne e valori subito
+4. in case of update select columns and values immediately
 
 ```python
 QB("tabella").update().params({"a": 3, "b": "ciao"})
 ```
 
-5. aggiungere una eventuale where
+5. add any where
 
 ```python
 QB("tabella").delete().where("x", "=", 2)
