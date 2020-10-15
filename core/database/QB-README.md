@@ -24,7 +24,7 @@ QB("table").select().columns(["a", "b"])
 4. in case of update select columns and values immediately
 
 ```python
-QB("table").update().params({"a": 3, "b": "ciao"})
+QB("table").update().params({"a": 3, "b": "hello"})
 ```
 
 5. add any where
