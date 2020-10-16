@@ -19,3 +19,4 @@ telegram==0.0.1
 tornado==6.0.4
 typing-extensions==3.7.4.3
 urllib3==1.25.10
+PyPika==0.42.1
