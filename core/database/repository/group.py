@@ -16,8 +16,9 @@ class GroupRepository(Connection):
 
         return self._selectAll(q, args)
 
-    def insert(self, args=None):
-        query = Query.from_(groups).insert("%s")
-        q = query.get_sql(quote_char=None)
-
+    def insertDate(self, args=None):
+        #query = Query.from_(groups).insert("%s")
+        #q = query.get_sql(quote_char=None)
+        q = "INSERT INTO groups VALUES = %s"
+        print(q)
         return self._insert(q, args)

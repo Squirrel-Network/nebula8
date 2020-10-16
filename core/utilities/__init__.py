@@ -1,3 +1,3 @@
-__all__ = ["menu","message","functions"]
+__all__ = ["menu","message","functions","regex"]
 
 from core.utilities import *

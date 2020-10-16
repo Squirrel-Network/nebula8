@@ -7,11 +7,18 @@ from core.database.repository.superban import SuperbanRepository
 from core.utilities.message import message, reply_message
 from core.utilities import functions
 from core.utilities.functions import delete_message
+from core.utilities.regex import Regex
 from telegram.ext.dispatcher import run_async
 from core.utilities.functions import kick_user, ban_user
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+LANGUAGE_KEYBOARD = [[
+    InlineKeyboardButton("EN", callback_data='select_language_en'),
+    InlineKeyboardButton("IT", callback_data='select_language_it')
+    ]]
 
 def has_arabic_character(string):
-    arabic = re.search("[\u0600-\u06ff]|[\u0750-\u077f]|[\ufb50-\ufbc1]|[\ufbd3-\ufd3f]|[\ufd50-\ufd8f]|[\ufd92-\ufdc7]|[\ufe70-\ufefc]|[\uFDF0-\uFDFD]+", string.first_name)
+    arabic = re.search(Regex.HAS_ARABIC, string.first_name)
     return not not arabic
 
 def save_user(user):
@@ -40,16 +47,30 @@ def welcome_user(update, context, member):
             "@"+member.username
         )
         format_message = "{}".format(parsed_message)
-        # welcome = update.message.reply_text(format_message,parse_mode='HTML')
         reply_message(update, context, format_message)
     else:
         reply_message(update, context, 'default welcome')
 
 
 def welcome_bot(update, context):
-    languages(update,context)
+    reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
+    msg = "Please select your preferred language\nPerfavore seleziona la tua lingua di preferenza"
+    #GroupRepository().insertDate([123456789,"ciao","ciao",1,"EN"])
     # TODO: handler che salva il gruppo suò database e controlla che esiste. se esiste e ha cambiato id lo cambia
-    reply_message(update, context,languages.bot_welcome)
+    update.message.reply_text(msg,reply_markup=reply_markup)
+
+def select_language_en(update, context):
+    msg = "English Languages"
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(msg,parse_mode='HTML')
+
+
+def select_language_it(update, context):
+    msg = "Italian Languages"
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(msg,parse_mode='HTML')
 
 @run_async
 def init(update, context):

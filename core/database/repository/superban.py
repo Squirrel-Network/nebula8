@@ -7,11 +7,13 @@ class SuperbanRepository(Connection):
     def getById(self, args=None):
         query = Query.from_(superban).select("*").where(superban.user_id == "%s")
         q = query.get_sql(quote_char=None)
+        print(q)
 
         return self._select(q, args)
 
     def getAll(self, args=None):
         query = Query.from_(superban).select("user_id").where(superban.user_id == "%s")
         q = query.get_sql(quote_char=None)
+        print(q)
 
         return self._selectAll(q, args)
