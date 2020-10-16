@@ -11,6 +11,7 @@ class GroupRepository(Connection):
 
     def getAll(self, args=None):
         query = Query.from_("groups").select("*")
+        print(query)
 
         return self._selectAll(query, args)
 

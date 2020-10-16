@@ -5,7 +5,7 @@ from core import decorators
 
 @decorators.admin.user_admin
 @decorators.public.init
-@decorators.delete.init
+#@decorators.delete.init
 def init(update, context):
     languages(update,context)
     chat = update.effective_message.chat_id
