@@ -1,15 +1,19 @@
 from core.database.db_connect import Connection
 from pypika import Query, Table, Field
 
+superban = Table("superban_table")
+
 class SuperbanRepository(Connection):
     def getById(self, args=None):
-        superban_table = Table("superban_table")
-        query = Query.from_(superban_table).select("*").where(superban_table.user_id == "%s").get_sql()
+        query = Query.from_(superban).select("*").where(superban.user_id == "%s")
+        q = query.get_sql(quote_char=None)
+        print(q)
 
-        return self._select(query, args)
+        return self._select(q, args)
 
     def getAll(self, args=None):
-        superban_table = Table("superban_table")
-        query = Query.from_(superban_table).select("user_id").where(superban_table.user_id == "%s").get_sql()
+        query = Query.from_(superban).select("user_id").where(superban.user_id == "%s")
+        q = query.get_sql(quote_char=None)
+        print(q)
 
-        return self._selectAll(query, args)
+        return self._selectAll(q, args)
