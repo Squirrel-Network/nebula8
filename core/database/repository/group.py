@@ -7,14 +7,12 @@ class GroupRepository(Connection):
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == "%s")
         q = query.get_sql(quote_char=None)
-        print(q)
 
         return self._select(q, args)
 
     def getAll(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == "%s")
         q = query.get_sql(quote_char=None)
-        print(q)
 
         return self._selectAll(q, args)
 
