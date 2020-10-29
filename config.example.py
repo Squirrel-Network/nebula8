@@ -11,8 +11,14 @@ class Config(object):
      ##   TELEGRAM SETTINGS  ##
      ##########################
      BOT_TOKEN = 'INSERT TOKEN HERE'
-     OWNER = ['123456789']
-     SUPERADMIN = ['123456789']
+     SUPERADMIN = {
+          'foo': 123456789,
+          'bar': 123456789
+     }
+     OWNER = {
+          'foo': 123456789,
+          'bar': 123456789
+     }
      DEFAULT_LOG_CHANNEL = -123456789
      ###########################
      ##   PROJECT SETTINGS   ##

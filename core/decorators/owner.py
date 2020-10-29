@@ -1,7 +1,7 @@
 from functools import wraps
 from config import Config
 
-OWNER_LIST= Config.OWNER
+OWNER_LIST = list(Config.OWNER.values())
 
 def init(func):
     @wraps(func)
