@@ -29,9 +29,9 @@ class Connection:
         self.con.close()
         return self.sel
 
-    def _insert(self,sql,args=None):
-        self.cur.execute(sql,args)
-        self.ins = self.cur.commit()
-        self.cur.close()
-        self.con.close()
+    #@todo Not Working
+    def _insert(self,sql,args):
+        print(sql)
+        print(args)
+        self.ins = self.cur.execute(sql,[args])
         return self.ins

@@ -1,10 +1,16 @@
-from core.database.repository.group_language import GroupLanguageRepository
+from core.database.repository.group import GroupRepository
+from core.database.db_connect import Connection
 from core import decorators
+
+def insert_query(query,args):
+    connector = Connection()
+    sql = connector.cur.execute(query,[args])
+    return sql
 
 @decorators.owner.init
 def init(update, context):
-    chat = update.effective_message.chat_id
-    row = GroupLanguageRepository().getById([chat])
-    print(row['languages'])
-    message = "{}".format(row['languages'])
-    context.bot.send_message(chat,message)
+    chat = str(update.message.chat_id)
+    #connector = Connection()
+    query = "INSERT INTO prova (testo) VALUES (%s)"
+    insert_query(query,chat)
+    #connector.cur.execute(query,[chat])

@@ -7,7 +7,7 @@ from telegram.ext.dispatcher import run_async
 
 @run_async
 def init(update, context):
-    user = str(update.effective_user.id)
+    user = update.effective_user.id
     rows = SuperbanRepository().getById([user])
     if rows:
         msg = "text"
