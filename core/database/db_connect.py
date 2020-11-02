@@ -30,8 +30,8 @@ class Connection:
         return self.sel
 
     #@todo Not Working
-    def _insert(self,sql,args):
+    def insert(self,sql,args=None):
         print(sql)
         print(args)
-        self.ins = self.cur.execute(sql,[args])
+        self.ins = self.cur.executemany(sql,args)
         return self.ins
