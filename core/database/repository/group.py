@@ -16,11 +16,10 @@ class GroupRepository(Connection):
 
         return self._selectAll(q, args)
 
-    def insertDate(self, args="123"):
+    def insertDate(self, args=None):
         #query = Query.from_(groups).insert("%s")
         #q = query.get_sql(quote_char=None)
-        #q = "INSERT INTO groups VALUES = %s"
-        q = "INSERT INTO groups (id_group) VALUES (%s)"
-        #print(q)
+        q = "INSERT INTO groups (id_group, welcome_text, rules_text, community, languages) VALUES (%s,%s,%s,%s,%s)"
+        print(q)
         print(args)
         return self._insert(q, args)

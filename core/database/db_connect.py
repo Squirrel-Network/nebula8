@@ -29,9 +29,6 @@ class Connection:
         self.con.close()
         return self.sel
 
-    #@todo Not Working
-    def insert(self,sql,args=None):
-        print(sql)
-        print(args)
+    def _insert(self,sql,args=None):
         self.ins = self.cur.executemany(sql,args)
         return self.ins
