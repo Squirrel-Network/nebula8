@@ -1,4 +1,5 @@
 import re
+from config import Config
 from core import decorators
 from languages.getLang import languages
 from core.database.repository.group import GroupRepository
@@ -31,6 +32,16 @@ def save_user(user):
         print('add')
         # UserRepository().add(user)
 
+def save_group(update):
+    chat = update.effective_message.chat_id
+    group = GroupRepository().getById(chat)
+    if group:
+        print("update")
+    else:
+        default_lang = Config.DEFAULT_LANGUAGE
+        data = [(chat,"","",1,default_lang)]
+        GroupRepository().insertDate(data)
+
 def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)
 
@@ -49,14 +60,16 @@ def welcome_user(update, context, member):
         format_message = "{}".format(parsed_message)
         reply_message(update, context, format_message)
     else:
-        reply_message(update, context, 'default welcome')
+        chat_title = update.effective_chat.title
+        default_welcome = Config.DEFAULT_WELCOME.format("@"+member.username,chat_title)
+        reply_message(update, context,default_welcome)
 
 
 def welcome_bot(update, context):
     reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
-    msg = "Please select your preferred language\nPerfavore seleziona la tua lingua di preferenza"
-    #GroupRepository().insertDate([123456789,"ciao","ciao",1,"EN"])
-    # TODO: handler che salva il gruppo suò database e controlla che esiste. se esiste e ha cambiato id lo cambia
+    msg = "Please select your preferred language\n\nPerfavore seleziona la tua lingua di preferenza"
+    # TODO: handler che salva il gruppo sul database e controlla che esiste. se esiste e ha cambiato id lo cambia
+    save_group(update)
     update.message.reply_text(msg,reply_markup=reply_markup)
 
 def select_language_en(update, context):
