@@ -22,20 +22,16 @@ def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string.first_name)
     return not not arabic
 
-def save_user(user):
-    print(user.id)
+def save_user(update,member):
     # Salva l'utente nel database e controlla che esiste se esiste e ha cambiato nickname sovrascrivi
-    user = UserRepository().getById(user.id)
+    user = UserRepository().getById(member.id)
     if user:
         print('update')
         # UserRepository().update(username = user.username)
     else:
-        print(user.id)
-        print('add')
-        #print(user_id)
-        #print(user.username)
-        #data = [(user.id,username)]
-        #UserRepository().add(data)
+        username = "@"+member.username
+        data = [(member.id,username)]
+        UserRepository().add(data)
 
 def save_group(update):
     chat = update.effective_message.chat_id
@@ -98,7 +94,7 @@ def init(update, context):
             welcome_bot(update, context)
 
         else:
-            save_user(member)
+            save_user(update,member)
 
             if member.username is None:
                 kick_user(update, context)
