@@ -19,6 +19,7 @@ class Config(object):
           'foo': 123456789,
           'bar': 123456789
      }
+     DEFAULT_WELCOME = "Welcome {} to the {} group"
      DEFAULT_LOG_CHANNEL = -123456789
      ###########################
      ##   PROJECT SETTINGS   ##
