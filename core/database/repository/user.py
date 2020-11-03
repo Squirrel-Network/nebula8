@@ -18,8 +18,6 @@ class UserRepository(Connection):
         return self._selectAll(q, args)
 
     def add(self, args=None):
-        # TODO: write add function
-        print(args)
         q = "INSERT INTO users (tg_id, tg_username) VALUES (%s,%s)"
         return self._insert(q, args)
 

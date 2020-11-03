@@ -22,7 +22,7 @@ def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string.first_name)
     return not not arabic
 
-def save_user(update,member):
+def save_user(member):
     # Salva l'utente nel database e controlla che esiste se esiste e ha cambiato nickname sovrascrivi
     user = UserRepository().getById(member.id)
     if user:
@@ -94,7 +94,7 @@ def init(update, context):
             welcome_bot(update, context)
 
         else:
-            save_user(update,member)
+            save_user(member)
 
             if member.username is None:
                 kick_user(update, context)
