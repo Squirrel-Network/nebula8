@@ -23,14 +23,19 @@ def has_arabic_character(string):
     return not not arabic
 
 def save_user(user):
+    print(user.id)
     # Salva l'utente nel database e controlla che esiste se esiste e ha cambiato nickname sovrascrivi
     user = UserRepository().getById(user.id)
     if user:
         print('update')
         # UserRepository().update(username = user.username)
     else:
+        print(user.id)
         print('add')
-        # UserRepository().add(user)
+        #print(user_id)
+        #print(user.username)
+        #data = [(user.id,username)]
+        #UserRepository().add(data)
 
 def save_group(update):
     chat = update.effective_message.chat_id
@@ -40,7 +45,7 @@ def save_group(update):
     else:
         default_lang = Config.DEFAULT_LANGUAGE
         data = [(chat,"","",1,default_lang)]
-        GroupRepository().insertDate(data)
+        GroupRepository().add(data)
 
 def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)

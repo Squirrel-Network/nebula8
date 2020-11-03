@@ -10,4 +10,4 @@ def init(update, context):
     community = 1
     lang = "EN"
     data = [(chat,welcome,rules,community,lang)]
-    GroupRepository().insertDate(data)
+    GroupRepository().add(data)
