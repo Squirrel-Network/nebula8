@@ -21,6 +21,6 @@ class UserRepository(Connection):
         q = "INSERT INTO users (tg_id, tg_username) VALUES (%s,%s)"
         return self._insert(q, args)
 
-    def update(self, username):
-        # TODO: write update function
-        return ''
+    def update(self, args=None):
+        q = "UPDATE users SET tg_username = %s WHERE tg_id = %s"
+        return self._update(q,args)

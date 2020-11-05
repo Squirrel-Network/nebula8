@@ -32,3 +32,7 @@ class Connection:
     def _insert(self,sql,args=None):
         self.ins = self.cur.executemany(sql,args)
         return self.ins
+
+    def _update(self,sql, args=None):
+        self.upd = self.cur.executemany(sql,args)
+        return self.upd

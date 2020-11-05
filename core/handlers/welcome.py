@@ -23,11 +23,12 @@ def has_arabic_character(string):
     return not not arabic
 
 def save_user(member):
-    # Salva l'utente nel database e controlla che esiste se esiste e ha cambiato nickname sovrascrivi
+    # Save the user in the database and check that it exists if it exists and has changed nickname overwrite
     user = UserRepository().getById(member.id)
     if user:
-        print('update')
-        # UserRepository().update(username = user.username)
+        username = "@"+member.username
+        data = [(username,member.id)]
+        UserRepository().update(data)
     else:
         username = "@"+member.username
         data = [(member.id,username)]
@@ -37,7 +38,9 @@ def save_group(update):
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
     if group:
-        print("update")
+        print('update')
+        #data = [(chat,chat)]
+        #GroupRepository().update(data)
     else:
         default_lang = Config.DEFAULT_LANGUAGE
         data = [(chat,"","",1,default_lang)]
@@ -47,7 +50,7 @@ def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)
 
 def welcome_user(update, context, member):
-    # Controlla che il welcome esista sul database se non esiste Default Welcome
+    # Check that the welcome exists on the database if there is no Default Welcome
     chat = update.effective_message.chat_id
 
     group = GroupRepository().getById(chat)
@@ -69,7 +72,6 @@ def welcome_user(update, context, member):
 def welcome_bot(update, context):
     reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
     msg = "Please select your preferred language\n\nPerfavore seleziona la tua lingua di preferenza"
-    # TODO: handler che salva il gruppo sul database e controlla che esiste. se esiste e ha cambiato id lo cambia
     save_group(update)
     update.message.reply_text(msg,reply_markup=reply_markup)
 

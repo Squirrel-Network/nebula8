@@ -21,3 +21,8 @@ class GroupRepository(Connection):
         #q = query.get_sql(quote_char=None)
         q = "INSERT INTO groups (id_group, welcome_text, rules_text, community, languages) VALUES (%s,%s,%s,%s,%s)"
         return self._insert(q, args)
+
+    def update(self, args=None):
+        print(args)
+        q = "UPDATE groups SET id_group = %s WHERE id_group = %s"
+        return self._update(q, args)
