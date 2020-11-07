@@ -22,7 +22,12 @@ class GroupRepository(Connection):
         q = "INSERT INTO groups (id_group, welcome_text, rules_text, community, languages) VALUES (%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
+    #TODO logic error
     def update(self, args=None):
         print(args)
         q = "UPDATE groups SET id_group = %s WHERE id_group = %s"
+        return self._update(q, args)
+
+    def update_language(self, args=None):
+        q = "UPDATE groups SET languages = %s WHERE id_group = %s"
         return self._update(q, args)

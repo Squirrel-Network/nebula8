@@ -75,17 +75,26 @@ def welcome_bot(update, context):
     save_group(update)
     update.message.reply_text(msg,reply_markup=reply_markup)
 
+@decorators.admin.user_admin
 def select_language_en(update, context):
-    msg = "English Languages"
+    chat = update.effective_message.chat_id
+    msg = "You have selected the Italian language for your group"
     query = update.callback_query
     query.answer()
+    lang = "EN"
+    data = [(lang,chat)]
+    GroupRepository().update_language(data)
     query.edit_message_text(msg,parse_mode='HTML')
 
-
+@decorators.admin.user_admin
 def select_language_it(update, context):
-    msg = "Italian Languages"
+    chat = update.effective_message.chat_id
+    msg = "Hai selezionato la lingua italiana per il tuo gruppo"
     query = update.callback_query
     query.answer()
+    lang = "IT"
+    data = [(lang,chat)]
+    GroupRepository().update_language(data)
     query.edit_message_text(msg,parse_mode='HTML')
 
 @run_async
