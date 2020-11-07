@@ -1,3 +1,3 @@
-__all__ = ["exit","test"]
+__all__ = ["exit","broadcast","test"]
 
 from core.commands.owner import *
