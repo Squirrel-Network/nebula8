@@ -78,7 +78,7 @@ def welcome_bot(update, context):
 @decorators.admin.user_admin
 def select_language_en(update, context):
     chat = update.effective_message.chat_id
-    msg = "You have selected the Italian language for your group"
+    msg = "You have selected the English language for your group"
     query = update.callback_query
     query.answer()
     lang = "EN"
