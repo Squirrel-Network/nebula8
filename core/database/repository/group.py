@@ -10,11 +10,18 @@ class GroupRepository(Connection):
 
         return self._select(q, args)
 
-    def getAll(self, args=None):
+    def getAllById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')
         q = query.get_sql(quote_char=None)
 
         return self._selectAll(q, args)
+
+    def getAll(self):
+        query = Query.from_(groups).select("*")
+        q = query.get_sql(quote_char=None)
+        print(q)
+
+        return self._selectAll(q)
 
     def add(self, args=None):
         #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')

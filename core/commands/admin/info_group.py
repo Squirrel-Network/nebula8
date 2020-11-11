@@ -9,7 +9,7 @@ from core import decorators
 def init(update, context):
     languages(update,context)
     chat = update.effective_message.chat_id
-    rows = GroupRepository().getAll([chat])
+    rows = GroupRepository().getAllById([chat])
     for row in rows:
         message(update,context,languages.group_info.format(
             row['id_group'],
