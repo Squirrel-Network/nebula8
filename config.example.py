@@ -20,6 +20,7 @@ class Config(object):
           'bar': 123456789
      }
      DEFAULT_WELCOME = "Welcome {} to the {} group"
+     DEFAULT_RULES = "https://github.com/Squirrel-Network/GroupRules"
      DEFAULT_LOG_CHANNEL = -123456789
      ###########################
      ##   PROJECT SETTINGS   ##

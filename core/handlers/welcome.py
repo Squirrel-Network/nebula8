@@ -9,7 +9,6 @@ from core.utilities.message import message, reply_message
 from core.utilities import functions
 from core.utilities.functions import delete_message
 from core.utilities.regex import Regex
-from telegram.ext.dispatcher import run_async
 from core.utilities.functions import kick_user, ban_user
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -38,12 +37,14 @@ def save_group(update):
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
     if group:
-        print('update')
+        print('update group')
         #data = [(chat,chat)]
         #GroupRepository().update(data)
     else:
+        default_welcome = Config.DEFAULT_WELCOME.format("{username}","{chat}")
+        default_rules = Config.DEFAULT_RULES
         default_lang = Config.DEFAULT_LANGUAGE
-        data = [(chat,"","",1,default_lang)]
+        data = [(chat,default_welcome,default_rules,1,default_lang)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -57,7 +58,7 @@ def welcome_user(update, context, member):
     if group is not None:
         parsed_message = group['welcome_text'].replace(
             '{first_name}',
-            update.message.from_user.first_name).replace('{chat_name}',
+            update.message.from_user.first_name).replace('{chat}',
             update.message.chat.title).replace('{username}',
             "@"+member.username
         )
@@ -97,7 +98,6 @@ def select_language_it(update, context):
     GroupRepository().update_language(data)
     query.edit_message_text(msg,parse_mode='HTML')
 
-@run_async
 def init(update, context):
     for member in update.message.new_chat_members:
 

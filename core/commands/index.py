@@ -16,6 +16,6 @@ def admin_command(dsp):
 
 def owner_command(dsp):
     function = dsp.add_handler
-    function(CMH('b', owner.broadcast.init))
+    function(CMH('b', owner.broadcast.init, run_async=True))
     function(CMH('test', owner.test.init))
     function(CMH('exit', owner.exit.init))
