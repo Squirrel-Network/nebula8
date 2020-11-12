@@ -1,7 +1,6 @@
 from core import handlers
 from telegram.ext import MessageFilter
 from telegram.ext import (
-    CommandHandler as CMH,
     MessageHandler as MH,
     CallbackQueryHandler as CQH,
     ConversationHandler as CH,

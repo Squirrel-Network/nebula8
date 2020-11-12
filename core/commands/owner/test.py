@@ -1,5 +1,4 @@
 from core.database.repository.group import GroupRepository
-from core.database.db_connect import Connection
 from core import decorators
 
 @decorators.owner.init
