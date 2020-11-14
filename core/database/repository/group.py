@@ -19,7 +19,6 @@ class GroupRepository(Connection):
     def getAll(self):
         query = Query.from_(groups).select("*")
         q = query.get_sql(quote_char=None)
-        print(q)
 
         return self._selectAll(q)
 
@@ -31,7 +30,6 @@ class GroupRepository(Connection):
 
     #TODO logic error
     def update(self, args=None):
-        print(args)
         q = "UPDATE groups SET id_group = %s WHERE id_group = %s"
         return self._update(q, args)
 
