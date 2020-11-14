@@ -25,6 +25,9 @@ class Config(object):
      ###########################
      ##   PROJECT SETTINGS   ##
      ##########################
+     DEVS = {
+          'blulupo': 1065189838
+     }
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
      VERSION = '8.0.0'

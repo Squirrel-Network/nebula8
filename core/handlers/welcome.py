@@ -100,6 +100,7 @@ def select_language_it(update, context):
 
 def init(update, context):
     for member in update.message.new_chat_members:
+        print(member.username)
 
         if member.is_bot:
             welcome_bot(update, context)
@@ -108,7 +109,6 @@ def init(update, context):
             save_user(member)
 
             if member.username is None:
-                message(update,context,"{} set a username!You were kicked for safety!".format(member.id))
                 kick_user(update, context)
 
             # TODO: add flag blacklist active
