@@ -5,4 +5,4 @@ class Strings(object):
               'Username: <a href="tg://user?id={id}">{username}</a>\n'\
               "Group: {chat}\n"\
               "Motivation: {motivation}"
-    SUPERBAN_LOG = "<b>#Log User Superbanned!</b>\nUser_Id: {}\nMotivation: {}\nDatetime: {}\nOperator_id: {}"
+    SUPERBAN_LOG = "<b>#Log User Superbanned!</b>\nUser_Id: {}\nMotivation: {}\nDatetime: <code>{}</code>\nOperator_id: {}"
