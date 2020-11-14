@@ -34,11 +34,10 @@ def init(update, context):
             ban_user_reply(update,context)
             message(update,context,ban_text)
             telegram_loggers(update,context,logs_text)
+            formatter = "Ban eseguito da: {} nella chat {}".format(
+                update.message.from_user.id,
+                chat.title)
+            sys_loggers("[BAN_LOGS]",formatter,False,True)
     elif reply is None:
         banana = "You must use this command in response to a user!"
         message(update,context,banana)
-    ########## Logs ##########
-    formatter = "Ban eseguito da: {} nella chat {}".format(
-        update.message.from_user.id,
-        chat.title)
-    sys_loggers("[BAN_LOGS]",formatter,False,True)

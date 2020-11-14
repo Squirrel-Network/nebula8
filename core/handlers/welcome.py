@@ -108,6 +108,7 @@ def init(update, context):
             save_user(member)
 
             if member.username is None:
+                message(update,context,"{} set a username!You were kicked for safety!".format(member.id))
                 kick_user(update, context)
 
             # TODO: add flag blacklist active

@@ -26,4 +26,5 @@ def languages(update,context):
     languages.group_info = setLang["GROUP_INFO"]
     languages.bot_welcome = setLang["BOT_WELCOME"]
     languages.ban_message = setLang["BAN_MESSAGE"]
+    languages.rules = setLang["RULES"]
     return LANGUAGE

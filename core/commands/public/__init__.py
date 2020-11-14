@@ -1,3 +1,3 @@
-__all__ = ["start"]
+__all__ = ["start","rules"]
 
 from core.commands.public import *

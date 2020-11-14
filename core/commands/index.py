@@ -4,6 +4,7 @@ from telegram.ext import (CommandHandler as CMH)
 def user_command(dsp):
     function = dsp.add_handler
     function(CMH('start', public.start.init))
+    function(CMH('rules', public.rules.init))
 
 def admin_command(dsp):
     function = dsp.add_handler
