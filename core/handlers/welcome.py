@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 import re
 from config import Config
 from core import decorators
@@ -11,6 +16,7 @@ from core.utilities.functions import delete_message
 from core.utilities.regex import Regex
 from core.utilities.functions import kick_user, ban_user
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from core.utilities.functions import bot_object,user_object,chat_object,new_user_object
 
 LANGUAGE_KEYBOARD = [[
     InlineKeyboardButton("EN", callback_data='select_language_en'),
@@ -18,7 +24,7 @@ LANGUAGE_KEYBOARD = [[
     ]]
 
 def has_arabic_character(string):
-    arabic = re.search(Regex.HAS_ARABIC, string.first_name)
+    arabic = re.search(Regex.HAS_ARABIC, string)
     return not not arabic
 
 def save_user(member):
@@ -100,20 +106,22 @@ def select_language_it(update, context):
 
 def init(update, context):
     for member in update.message.new_chat_members:
-        print(member.username)
+        user = member.username
+        user_first = member.first_name
+        user_id = member.id
+        bot = bot_object(update,context)
 
-        if member.is_bot:
-            welcome_bot(update, context)
-
+        if bot.id == user_id:
+            welcome_bot(update,context)
+        elif user is None:
+            kick_user(update, context)
+            message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
+        elif is_in_blacklist(user_id):
+            ban_user(update, context)
+            message(update,context,"I got super banned <code>{}</code>".format(user_id))
+        elif has_arabic_character(user_first):
+            ban_user(update, context)
+            message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
         else:
             save_user(member)
-
-            if member.username is None:
-                kick_user(update, context)
-
-            # TODO: add flag blacklist active
-            elif is_in_blacklist(member.id) or has_arabic_character(member):
-                ban_user(update, context)
-
-            else:
-                welcome_user(update, context, member)
+            welcome_user(update,context,member)
