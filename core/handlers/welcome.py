@@ -116,7 +116,7 @@ def init(update, context):
 
         if bot.id == user_id:
             welcome_bot(update,context)
-            l_txt = "#Log <b>Bot added to group</b> {}\nId: {}".format(chat_title,chat_id)
+            l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
             telegram_loggers(update,context,l_txt)
         elif user is None:
             kick_user(update, context)
