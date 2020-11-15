@@ -17,6 +17,7 @@ from core.utilities.regex import Regex
 from core.utilities.functions import kick_user, ban_user
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.functions import bot_object
+from core.handlers.logs import telegram_loggers
 
 LANGUAGE_KEYBOARD = [[
     InlineKeyboardButton("EN", callback_data='select_language_en'),
@@ -109,10 +110,14 @@ def init(update, context):
         user = member.username
         user_first = member.first_name
         user_id = member.id
+        chat_title = update.effective_chat.title
+        chat_id = update.effective_chat.id
         bot = bot_object(update,context)
 
         if bot.id == user_id:
             welcome_bot(update,context)
+            l_txt = "#Log <b>Bot added to group</b> {}\nId: {}".format(chat_title,chat_id)
+            telegram_loggers(update,context,l_txt)
         elif user is None:
             kick_user(update, context)
             message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
