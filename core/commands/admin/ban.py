@@ -21,14 +21,12 @@ def init(update, context):
             ban_text = languages.ban_message.format(
             user=reply.from_user.username or reply.from_user.first_name,
             userid=reply.from_user.id,
-            chat=chat.title,
-            motivation= "TEST NEBULA 8.0.0"
+            chat=chat.title
             )
             logs_text = Strings.BAN_LOG.format(
                 username=reply.from_user.username or reply.from_user.first_name,
                 id=reply.from_user.id,
-                chat=chat.title,
-                 motivation="TEST NEBULA 8.0.0"
+                chat=chat.title
             )
             delete_message_reply(update,context)
             ban_user_reply(update,context)

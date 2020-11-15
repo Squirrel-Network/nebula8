@@ -26,7 +26,7 @@ class Config(object):
      ##   PROJECT SETTINGS   ##
      ##########################
      DEVS = {
-          'blulupo': 1065189838
+          'foo': 123456789
      }
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"

@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 import sys
 import traceback
 from config import Config

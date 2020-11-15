@@ -16,7 +16,7 @@ from core.utilities.functions import delete_message
 from core.utilities.regex import Regex
 from core.utilities.functions import kick_user, ban_user
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from core.utilities.functions import bot_object,user_object,chat_object,new_user_object
+from core.utilities.functions import bot_object
 
 LANGUAGE_KEYBOARD = [[
     InlineKeyboardButton("EN", callback_data='select_language_en'),
