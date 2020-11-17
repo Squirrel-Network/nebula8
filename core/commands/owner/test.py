@@ -1,12 +1,8 @@
 from core.database.repository.group import GroupRepository
 from core import decorators
+from telegram import Update, ParseMode
+from telegram.ext import CallbackContext
 
 @decorators.owner.init
-def init(update, context):
-    chat = str(update.effective_chat.id)
-    welcome = "Lorem Ipsum Dolor"
-    rules = "Example Rules"
-    community = 1
-    lang = "EN"
-    data = [(chat,welcome,rules,community,lang)]
-    GroupRepository().add(data)
+def init(update: Update, context: CallbackContext) -> None:
+    context.bot.wrong_method_name()
