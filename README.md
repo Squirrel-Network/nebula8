@@ -6,3 +6,4 @@
 ## Getting started
 
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/How-To-start">How to Start</a>
+- <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
