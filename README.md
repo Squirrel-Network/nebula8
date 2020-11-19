@@ -7,3 +7,83 @@
 
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/How-To-start">How to Start</a>
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
+
+## Project Structure
+
+```markdown
+│   config.py
+│   main.py
+│   requirements.txt
+├───core
+│   │   __init__.py
+│   │
+│   ├───commands
+│   │   │   index.py
+│   │   │   __init__.py
+│   │   │
+│   │   ├───admin
+│   │   │       ban.py
+│   │   │       info_group.py
+│   │   │       set_lang.py
+│   │   │       __init__.py
+│   │   │
+│   │   ├───owner
+│   │   │       broadcast.py
+│   │   │       exit.py
+│   │   │       server_info.py
+│   │   │       superban.py
+│   │   │       test.py
+│   │   │       __init__.py
+│   │   │
+│   │   └───public
+│   │           rules.py
+│   │           start.py
+│   │           __init__.py
+│   │
+│   ├───database
+│   │   │   db_connect.py
+│   │   │   __init__.py
+│   │   │
+│   │   └───repository
+│   │           group.py
+│   │           group_language.py
+│   │           superban.py
+│   │           user.py
+│   │           __init__.py
+│   │
+│   ├───decorators
+│   │       admin.py
+│   │       delete.py
+│   │       owner.py
+│   │       private.py
+│   │       public.py
+│   │       __init__.py
+│   │
+│   ├───handlers
+│   │       errors.py
+│   │       handlers_index.py
+│   │       logs.py
+│   │       superban.py
+│   │       welcome.py
+│   │       __init__.py
+│   │
+│   └───utilities
+│           functions.py
+│           menu.py
+│           message.py
+│           regex.py
+│           strings.py
+│           __init__.py
+│
+├───languages
+│       EN.py
+│       getLang.py
+│       IT.py
+│       __init__.py
+│
+└───plugins
+        distrowatch.py
+        google.py
+        plugin_index.py
+        __init__.py
+```
