@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 
 import re
+import json
 from config import Config
 from core import decorators
 from languages.getLang import languages
@@ -11,13 +12,11 @@ from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
 from core.database.repository.superban import SuperbanRepository
 from core.utilities.message import message, reply_message
-from core.utilities import functions
-from core.utilities.functions import delete_message
 from core.utilities.regex import Regex
-from core.utilities.functions import kick_user, ban_user
+from core.utilities.functions import kick_user, ban_user, bot_object
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from core.utilities.functions import bot_object
 from core.handlers.logs import telegram_loggers
+from core.utilities.menu import build_menu
 
 LANGUAGE_KEYBOARD = [[
     InlineKeyboardButton("EN", callback_data='select_language_en'),
@@ -70,7 +69,17 @@ def welcome_user(update, context, member):
             "@"+member.username
         )
         format_message = "{}".format(parsed_message)
-        reply_message(update, context, format_message)
+        buttons = GroupRepository().getById(chat)
+        try:
+            welcome_buttons = buttons['welcome_buttons']
+            format_json = json.loads(welcome_buttons)
+            arr_buttons = []
+            for key, value in format_json.items():
+                arr_buttons.append(InlineKeyboardButton(text=key, url=value))
+            menu = build_menu(arr_buttons, 2)
+            update.message.reply_text(format_message,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+        except ValueError:
+            reply_message(update,context,format_message)
     else:
         chat_title = update.effective_chat.title
         default_welcome = Config.DEFAULT_WELCOME.format("@"+member.username,chat_title)

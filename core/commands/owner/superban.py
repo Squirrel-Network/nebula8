@@ -4,7 +4,7 @@ from core.utilities.message import message
 from core.database.repository.superban import SuperbanRepository
 from core.handlers.logs import sys_loggers,telegram_loggers
 from core.utilities.strings import Strings
-from core.utilities.functions import ban_user_reply
+from core.utilities.functions import ban_user_reply,delete_message_reply
 
 @decorators.owner.init
 def init(update,context):
@@ -18,6 +18,7 @@ def init(update,context):
             data = [(user_id,motivation,save_date,operator_id)]
             SuperbanRepository().add(data)
             ban_user_reply(update,context)
+            delete_message_reply(update,context)
             logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
             message(update,context,"You got super banned <code>{}</code>".format(user_id))
             telegram_loggers(update,context,logs_text)
