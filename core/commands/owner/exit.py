@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import decorators
 from core.handlers.logs import sys_loggers,telegram_loggers
 from core.utilities.functions import chat_object

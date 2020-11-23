@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 def message(update,context,text = ""):
     bot = context.bot
     chat = update.effective_chat.id

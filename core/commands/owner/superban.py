@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 import datetime
 from core import decorators
 from core.utilities.message import message
@@ -7,6 +11,7 @@ from core.utilities.strings import Strings
 from core.utilities.functions import ban_user_reply,delete_message_reply
 
 @decorators.owner.init
+@decorators.delete.init
 def init(update,context):
     motivation = update.message.text[2:].strip()
     reply = update.message.reply_to_message

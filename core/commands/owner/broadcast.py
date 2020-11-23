@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import decorators
 from core.utilities.message import message,messageWithId
 from core.utilities.strings import Strings
@@ -6,7 +10,7 @@ from telegram.error import BadRequest
 
 @decorators.owner.init
 def init(update, context):
-    msg = update.message.text[2:]
+    msg = update.message.text[2:].strip()
     rows = GroupRepository().getAll()
     for a in rows:
         id_groups = a['id_group']

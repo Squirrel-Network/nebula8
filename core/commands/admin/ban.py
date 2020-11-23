@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import decorators
 from core.handlers.logs import sys_loggers,telegram_loggers
 from core.utilities.message import message
@@ -8,6 +12,7 @@ from core.utilities.functions import ban_user_reply,delete_message_reply
 
 #TODO Da completare o rivedere
 @decorators.admin.user_admin
+@decorators.delete.init
 def init(update, context):
     languages(update,context)
     bot = bot_object(update,context)

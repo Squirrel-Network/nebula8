@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
 from core.utilities.message import message

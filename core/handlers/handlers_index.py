@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import handlers
-from telegram.ext import MessageFilter
 from telegram.ext import (
     MessageHandler as MH,
     CallbackQueryHandler as CQH,
