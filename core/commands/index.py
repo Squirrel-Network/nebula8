@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 from core.commands import public ,admin, owner
 from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 

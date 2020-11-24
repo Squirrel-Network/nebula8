@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 from config import Config
 from core.database.repository.group_language import GroupLanguageRepository
 from languages import (EN,IT)

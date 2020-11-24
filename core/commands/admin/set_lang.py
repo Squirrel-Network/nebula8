@@ -8,7 +8,6 @@ LANGUAGE_KEYBOARD = [[
     ]]
 
 @decorators.admin.user_admin
-@decorators.delete.init
 def init(update,context):
     reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
     msg = "Please select your preferred language\n\nPerfavore seleziona la tua lingua di preferenza"
