@@ -9,7 +9,7 @@ from rich.console import Console
 from rich.table import Table
 from datetime import datetime
 from config import Config
-from telegram.ext import (Updater,Filters)
+from telegram.ext import Updater
 from core.commands import index
 from plugins import plugin_index
 from core import handlers
