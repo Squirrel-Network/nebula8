@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 import psutil, datetime
-import platform
 from core import decorators
 from core.utilities.message import message
 from core.handlers.logs import sys_loggers

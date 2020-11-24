@@ -8,8 +8,7 @@ import json
 import logging
 import traceback
 from telegram import Update, ParseMode
-from telegram.ext import Updater, CallbackContext, CommandHandler
-from config import Config
+from telegram.ext import CallbackContext
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -17,7 +16,6 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-#LIST_DEVS = list(Config.DEVS.values())
 DEVELOPER_CHAT_ID = 1065189838
 
 #ERROR HANDLER 3.0
