@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["ban","info_group","set_lang","mute","warn"]
+__all__ = ["ban","info_group","mute","set_lang","warn"]
 
 from core.commands.admin import *

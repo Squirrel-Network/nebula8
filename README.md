@@ -8,6 +8,9 @@
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/How-To-start">How to Start</a>
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
 
+# Official API
+- <a href="https://github.com/Squirrel-Network/api_nebula">Go Here</a>
+
 ## Project Structure
 
 ```markdown
@@ -24,7 +27,9 @@
 │   │   ├───admin
 │   │   │       ban.py
 │   │   │       info_group.py
+|   |   |       mute.py
 │   │   │       set_lang.py
+|   |   |       warn.py
 │   │   │       __init__.py
 │   │   │
 │   │   ├───owner
