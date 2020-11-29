@@ -48,9 +48,11 @@ def save_group(update):
         #GroupRepository().update(data)
     else:
         default_welcome = Config.DEFAULT_WELCOME.format("{username}","{chat}")
+        default_buttons = ""
         default_rules = Config.DEFAULT_RULES
         default_lang = Config.DEFAULT_LANGUAGE
-        data = [(chat,default_welcome,default_rules,1,default_lang)]
+        default_community = 1
+        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
