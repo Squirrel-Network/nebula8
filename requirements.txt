@@ -13,7 +13,7 @@ pycparser==2.20
 Pygments==2.7.1
 PyMySQL==0.10.1
 PyPika==0.42.1
-python-telegram-bot==13.0
+python-telegram-bot==13.1
 pytz==2020.4
 requests==2.24.0
 rich==7.1.0
