@@ -5,6 +5,8 @@
 
 import time
 
+from core.database.repository.user import UserRepository
+
 #Ban a user
 def ban_user(update,context):
     bot = context.bot
@@ -19,6 +21,19 @@ def ban_user_reply(update,context):
     chat = update.effective_chat.id
     user = update.message.reply_to_message.from_user
     ban = bot.kick_chat_member(chat,user.id)
+    return ban
+
+def ban_user_by_username(update, context, username):
+    bot = context.bot
+    chat = update.effective_chat.id
+    user = UserRepository().getByUsername(username)
+    ban = bot.kick_chat_member(chat, user['tg_id'])
+    return ban
+
+def ban_user_by_id(update, context, id):
+    bot = context.bot
+    chat = update.effective_chat.id
+    ban = bot.kick_chat_member(chat, id)
     return ban
 
 #Kicks a user, not a ban

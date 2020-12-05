@@ -1,6 +1,8 @@
 from core.database.db_connect import Connection
 from pypika import Query, Table
 
+from pprint import pprint
+
 users = Table("users")
 
 
@@ -8,6 +10,11 @@ class UserRepository(Connection):
     def getById(self, args=None):
         query = Query.from_(users).select("*").where(users.tg_id == "%s")
         q = query.get_sql(quote_char=None)
+
+        return self._select(q, args)
+
+    def getByUsername(self, args=None):
+        q = "SELECT * FROM users WHERE tg_username = %s"
 
         return self._select(q, args)
 
