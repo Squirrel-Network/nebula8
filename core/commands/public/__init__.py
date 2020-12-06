@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["rules","start"]
+__all__ = ["report","rules","start"]
 
 from core.commands.public import *

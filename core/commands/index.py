@@ -4,12 +4,13 @@
 # Copyright SquirrelNetwork
 
 from core.commands import public ,admin, owner
-from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
+from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH,MessageHandler as MH,Filters)
 
 def user_command(dsp):
     function = dsp.add_handler
     function(CMH('start', public.start.init))
     function(CMH('rules', public.rules.init))
+    function(MH(Filters.text("@admin"), public.report.init))
 
 def admin_command(dsp):
     function = dsp.add_handler

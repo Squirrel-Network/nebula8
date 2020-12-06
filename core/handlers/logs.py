@@ -26,3 +26,8 @@ def telegram_loggers(update,context,msg = ""):
     id_channel = Config.DEFAULT_LOG_CHANNEL
     send = messageWithId(update,context,id_channel,msg)
     return send
+
+def staff_loggers(update,context,msg = ""):
+    id_staff_group = Config.DEFAULT_STAFF_GROUP
+    send = messageWithId(update,context,id_staff_group,msg)
+    return send
