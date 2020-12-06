@@ -4,7 +4,7 @@ from core.utilities.message import messageWithId
 
 def sys_loggers(name="",message="",debugs = False,info = False,warning = False,errors = False, critical = False):
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel((logging.INFO, logging.DEBUG)[Config.DEBUG])
     fh = logging.FileHandler('debug.log')
     fh.setLevel(logging.INFO)
     logger.addHandler(fh)
