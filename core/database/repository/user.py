@@ -25,7 +25,7 @@ class UserRepository(Connection):
         return self._selectAll(q, args)
 
     def add(self, args=None):
-        q = "INSERT INTO users (tg_id, tg_username) VALUES (%s,%s)"
+        q = "INSERT INTO users (tg_id, tg_username, warn_count) VALUES (%s,%s,%s)"
         return self._insert(q, args)
 
     def update(self, args=None):

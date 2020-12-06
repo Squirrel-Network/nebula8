@@ -36,7 +36,8 @@ def save_user(member):
         UserRepository().update(data)
     else:
         username = "@"+member.username
-        data = [(member.id,username)]
+        default_warn = 0
+        data = [(member.id,username,default_warn)]
         UserRepository().add(data)
 
 def save_group(update):
