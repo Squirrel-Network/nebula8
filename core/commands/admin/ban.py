@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from pprint import pprint
-
 from core import decorators
 from core.handlers.logs import sys_loggers, telegram_loggers
 from core.utilities.functions import (
@@ -14,22 +12,16 @@ from core.utilities.functions import (
 	delete_message_reply)
 from core.utilities.message import message
 from core.utilities.strings import Strings
-from core.utilities.monads import (
-	Given,
-	Try)
+from core.utilities.monads import (Given,Try)
 from languages.getLang import languages
 
 def ban_error(update, context, username = None, id = None):
-	message(
-		update,
-		context,
-		"Si è verificato un problema per il ban dell'utente %s" % (username if username is not None else id))
+	languages(update,context)
+	message(update,context,languages.ban_user_error % (username if username is not None else id))
 
 def ban_success(update, context, username = None, id = None):
-	message(
-		update,
-		context,
-		"Ho bannato %s" % (username if username is not None else id))
+	languages(update,context)
+	message(update,context,languages.user_ban % (username if username is not None else id))
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -42,9 +34,7 @@ def init(update, context):
 
 	if reply is not None:
 		if reply.from_user.id == bot.id:
-			text = "Non posso bannarmi da sola!"
-
-			message(update,context,text)
+			message(update,context,languages.bot_ban)
 		else:
 			ban_text = languages.ban_message.format(
 				user = reply.from_user.username or reply.from_user.first_name,
@@ -86,10 +76,5 @@ def init(update, context):
 				.catch(lambda err: ban_error(update, context, id = userid)) \
 				.map(lambda x : ban_success(update, context, id = userid))
 		else:
-			message(
-				update,
-				context,
-				"Sintassi del comando errata o utente non riconosciuto: {}"
-					.format(ban_argument)
-			)
+			message(update,context,languages.ban_error.format(ban_argument))
 			return

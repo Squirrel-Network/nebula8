@@ -32,4 +32,8 @@ def languages(update,context):
     languages.bot_welcome = setLang["BOT_WELCOME"]
     languages.ban_message = setLang["BAN_MESSAGE"]
     languages.rules = setLang["RULES"]
+    languages.user_ban = setLang["BAN_USER"]
+    languages.bot_ban = setLang["BAN_BOT"]
+    languages.ban_error = setLang["BAN_ERROR"]
+    languages.ban_user_error = setLang["BAN_USER_ERROR"]
     return LANGUAGE
