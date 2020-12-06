@@ -19,9 +19,11 @@ def ban_error(update, context, username = None, id = None):
 	languages(update,context)
 	message(update,context,languages.ban_user_error % (username if username is not None else id))
 
-def ban_success(update, context, username = None, id = None):
+def ban_success(update, context, chat, username = None, id = None):
 	languages(update,context)
 	message(update,context,languages.user_ban % (username if username is not None else id))
+	logs_text = "<b>#Log User Banned!</b>\nGroup: {}\nUser: {}".format(chat.id,username or id)
+	telegram_loggers(update,context,logs_text)
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -68,13 +70,13 @@ def init(update, context):
 
 			Try.of(lambda: ban_user_by_username(update, context, username)) \
 				.catch(lambda err: ban_error(update, context, username = username)) \
-				.map(lambda x : ban_success(update, context, username = username))
+				.map(lambda x : ban_success(update, context, chat, username = username))
 		elif is_user_id:
 			userid = ban_argument
 
 			Try.of(lambda: ban_user_by_id(update, context, userid)) \
 				.catch(lambda err: ban_error(update, context, id = userid)) \
-				.map(lambda x : ban_success(update, context, id = userid))
+				.map(lambda x : ban_success(update, context, chat, id = userid))
 		else:
 			message(update,context,languages.ban_error.format(ban_argument))
 			return
