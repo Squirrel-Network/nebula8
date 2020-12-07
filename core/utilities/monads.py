@@ -1,4 +1,7 @@
-from pprint import pprint
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 
 class Optional:
 	@staticmethod
