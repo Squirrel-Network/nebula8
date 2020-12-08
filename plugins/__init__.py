@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["plugin_index","distrowatch","google"]
+__all__ = ["distrowatch","google","mdn_search","plugin_index"]
 
 from plugins import *
