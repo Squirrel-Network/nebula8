@@ -10,6 +10,7 @@ def user_command(dsp):
     function = dsp.add_handler
     function(CMH('start', public.start.init))
     function(CMH('rules', public.rules.init))
+    function(CMH('source', public.source.init))
     function(MH(Filters.text("@admin"), public.report.init))
 
 def admin_command(dsp):

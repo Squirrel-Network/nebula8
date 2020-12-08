@@ -9,3 +9,4 @@ class Strings(object):
               "Group: {chat}\n"
     SUPERBAN_LOG = "<b>#Log User Superbanned!</b>\nUser_Id: {}\nMotivation: {}\nDatetime: <code>{}</code>\nOperator_id: {}"
     REPORT_MSG = "#Report\nGroup Id: <code>{}</code>\nGroup Title: {}\nMessage: <i>{}</i>\nLink: {}"
+    SOURCE = "<b>Hi! my name is: {}\nMy Version is: <code>{} {}</code>\nMy repository is: {}</b>"

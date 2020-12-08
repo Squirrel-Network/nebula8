@@ -1,10 +1,7 @@
 from core.database.db_connect import Connection
 from pypika import Query, Table
 
-from pprint import pprint
-
 users = Table("users")
-
 
 class UserRepository(Connection):
     def getById(self, args=None):
