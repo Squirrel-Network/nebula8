@@ -14,9 +14,10 @@
 ## Project Structure
 
 ```markdown
-│   config.py
+
+│   config.example.py
 │   main.py
-│   requirements.txt
+│
 ├───core
 │   │   __init__.py
 │   │
@@ -27,9 +28,9 @@
 │   │   ├───admin
 │   │   │       ban.py
 │   │   │       info_group.py
-|   |   |       mute.py
+│   │   │       mute.py
 │   │   │       set_lang.py
-|   |   |       warn.py
+│   │   │       warn.py
 │   │   │       __init__.py
 │   │   │
 │   │   ├───owner
@@ -41,7 +42,9 @@
 │   │   │       __init__.py
 │   │   │
 │   │   └───public
+│   │           report.py
 │   │           rules.py
+│   │           source.py
 │   │           start.py
 │   │           __init__.py
 │   │
@@ -76,6 +79,7 @@
 │           functions.py
 │           menu.py
 │           message.py
+│           monads.py
 │           regex.py
 │           strings.py
 │           __init__.py
@@ -89,6 +93,7 @@
 └───plugins
         distrowatch.py
         google.py
+        mdn_search.py
         plugin_index.py
         __init__.py
 ```
