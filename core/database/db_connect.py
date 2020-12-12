@@ -36,3 +36,7 @@ class Connection:
     def _update(self,sql, args=None):
         self.upd = self.cur.executemany(sql,args)
         return self.upd
+
+    def _delete(self, sql, args=None):
+        self.delete = self.cur.executemany(sql,args)
+        return self.delete
