@@ -20,6 +20,7 @@ def admin_command(dsp):
     function(CMH('lang', admin.set_lang.init))
     function(CMH('mute', admin.mute.init))
     function(CMH('warn', admin.warn.init))
+    function(CMH('info', admin.user_info.init))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
 

@@ -73,6 +73,10 @@ def user_object(update):
     user = update.message.from_user
     return user
 
+def user_reply_object(update):
+    user = update.message.reply_to_message.from_user
+    return user
+
 def new_user_object(update):
     for member in update.message.new_chat_members:
         new_user = member

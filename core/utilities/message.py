@@ -16,3 +16,8 @@ def messageWithId(update,context,chat,text = ""):
 def reply_message(update,context,text = ""):
     msg = update.message.reply_text(text,parse_mode='HTML')
     return msg
+
+def PrivateMessage(update,context, text = ""):
+    bot = context.bot
+    msg = bot.send_message(update.message.from_user.id,text,parse_mode='HTML')
+    return msg
