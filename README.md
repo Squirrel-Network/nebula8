@@ -11,6 +11,9 @@
 # Official API
 - <a href="https://github.com/Squirrel-Network/api_nebula">Go Here</a>
 
+# Official Resources
+- <a href="https://squirrel-network.online/knowhere/">Knowhere (Blacklist Search)</a>
+
 ## Project Structure
 
 ```markdown
