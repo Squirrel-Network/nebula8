@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 class Config(object):
      ###########################
      ##   DATABASE SETTINGS  ##
@@ -19,11 +24,19 @@ class Config(object):
           'foo': 123456789,
           'bar': 123456789
      }
+     DEFAULT_WELCOME = "Welcome {} to the {} group"
+     DEFAULT_RULES = "https://github.com/Squirrel-Network/GroupRules"
      DEFAULT_LOG_CHANNEL = -123456789
+     DEFAULT_STAFF_GROUP = -123456789
      ###########################
      ##   PROJECT SETTINGS   ##
      ##########################
+     DEVS = {
+          'foo': 123456789
+     }
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
      VERSION = '8.0.0'
+     VERSION_NAME = 'Hatterene'
+     REPO = 'https://github.com/Squirrel-Network/nebula8'
      DEBUG = True

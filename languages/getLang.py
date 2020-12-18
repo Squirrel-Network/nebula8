@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 from config import Config
 from core.database.repository.group_language import GroupLanguageRepository
 from languages import (EN,IT)
@@ -25,4 +30,10 @@ def languages(update,context):
     languages.helps = setLang["HELP_COMMAND"]
     languages.group_info = setLang["GROUP_INFO"]
     languages.bot_welcome = setLang["BOT_WELCOME"]
+    languages.ban_message = setLang["BAN_MESSAGE"]
+    languages.rules = setLang["RULES"]
+    languages.user_ban = setLang["BAN_USER"]
+    languages.bot_ban = setLang["BAN_BOT"]
+    languages.ban_error = setLang["BAN_ERROR"]
+    languages.ban_user_error = setLang["BAN_USER_ERROR"]
     return LANGUAGE

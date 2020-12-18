@@ -1,16 +1,10 @@
-from core.database.repository.group import GroupRepository
-from core.database.db_connect import Connection
+from core.utilities.message import message
 from core import decorators
-
-def insert_query(query,args):
-    connector = Connection()
-    sql = connector.cur.execute(query,[args])
-    return sql
+from core.utilities.functions import chat_object
 
 @decorators.owner.init
-def init(update, context):
-    chat = str(update.message.chat_id)
-    #connector = Connection()
-    query = "INSERT INTO prova (testo) VALUES (%s)"
-    insert_query(query,chat)
-    #connector.cur.execute(query,[chat])
+def init(update,context):
+    var = chat_object(update)
+    print(var)
+    print(update.message.migrate_to_chat_id)
+    #message(update,context,var)

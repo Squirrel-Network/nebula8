@@ -7,16 +7,10 @@ from languages.getLang import languages
 from core.utilities.message import message
 from core import decorators
 
-@decorators.admin.user_admin
 @decorators.public.init
 @decorators.delete.init
 def init(update, context):
     languages(update,context)
     chat = update.effective_message.chat_id
-    rows = GroupRepository().getAllById([chat])
-    for row in rows:
-        message(update,context,languages.group_info.format(
-            row['id_group'],
-            row['welcome_text'],
-            row['rules_text'],
-            row['languages']))
+    row = GroupRepository().getById([chat])
+    message(update,context,languages.rules.format(row['rules_text']))
