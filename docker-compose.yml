@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+    bot:
+        image: squirrelnet/nebula8
+        build:
+            context: docker/bot/
+        volumes:
+            - bot_service:/opt/service
+            - bot_requirements:/root
+        environment:
+            REPO: $REPO
+            
+            HOST: $HOST
+            PORT: $PORT
+            USER: $USER
+            PASSWORD: $PASSWORD
+
+            BOT_TOKEN: $BOT_TOKEN
+            SUPERADMIN: $SUPERADMIN
+            OWNER: $OWNER
+            DEFAULT_LOG_CHANNEL: $DEFAULT_LOG_CHANNEL
+
+            ENABLE_PLUGINS: $ENABLE_PLUGINS
+            DEFAULT_LANGUAGE: $DEFAULT_LANGUAGE
+            VERSION: $VERSION
+            
+            DEBUG: $DEBUG
+
+volumes:
+    bot_service:
+    bot_requirements:
