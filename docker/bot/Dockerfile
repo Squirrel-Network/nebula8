@@ -19,5 +19,4 @@ COPY    scripts         ./scripts
 ENV     SERVICE_HOME    /opt/service/data
 ENV     NEBULA_HOME     ${SERVICE_HOME}/nebula
 
-ENTRYPOINT [ "bash", "scripts/entrypoint.sh" ]
-CMD [ "python3", "data/main.py" ]
+ENTRYPOINT [ "bash", "/opt/service/scripts/entrypoint.sh" ]

@@ -17,17 +17,19 @@ then
         then
             if [[ ! -d $NEBULA_HOME ]]
             then
-                git clone $REPO $NEBULA_HOME | tee $INIT_FILE
+                git clone -b ${BRANCH:=master} $REPO $NEBULA_HOME | tee $INIT_FILE
                 cd $NEBULA_HOME
+                {
+                    echo "Creating Virtual Environment" | tee $INIT_FILE
+                    python3 -m venv env | tee $INIT_FILE
 
-                echo "Creating Virtual Environment" | tee $INIT_FILE
-                python3 -m venv env | tee $INIT_FILE
+                    echo "Activate Virtual Environments" | tee $INIT_FILE
+                    source env/bin/activate | tee $INIT_FILE
 
-                echo "Activate Virtual Environments" | tee $INIT_FILE
-                source env/bin/activate | tee $INIT_FILE
-
-                echo "Install requirementes" | tee $INIT_FILE
-                pip3 install -r "requirements.txt" | tee $INIT_FILE
+                    echo "Install requirementes" | tee $INIT_FILE
+                    pip3 install -r "requirements.txt" | tee $INIT_FILE
+                }
+                cd /opt/service
             fi
         else
             echo "Can not initialize an empty container wihtout a source code. Please, set \$GIT_REPOSITORY for clone the code to execute."
@@ -39,7 +41,7 @@ then
     }
 fi
 
-cat "scripts/templates/config.tmp.py" \
+cat "/opt/service/scripts/templates/config.tmp.py" \
     | sed "s;%HOST%;$HOST;g" \
     | sed "s;%PORT%;$PORT;g" \
     | sed "s;%USER%;$USER;g" \
@@ -56,8 +58,9 @@ cat "scripts/templates/config.tmp.py" \
     | sed "s;%VERSION%;$VERSION;g" \
     | sed "s;%DEBUG%;$DEBUG;g" \
     \
-    > "data/config.py"
+    > "$NEBULA_HOME/config.py"
 
-cat "data/config.py"
+cat "$NEBULA_HOME/config.py"
 
-exec "$@"
+cd $NEBULA_HOME
+python3 main.py
