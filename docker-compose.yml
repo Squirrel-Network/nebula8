@@ -5,9 +5,9 @@ services:
         image: squirrelnet/nebula8
         build:
             context: docker/bot/
-        volumes:
-            - bot_service:/opt/service
-            - bot_requirements:/root
+        # volumes:
+        #     - bot_data:/opt/service/data
+        #     - bot_requirements:/root
         environment:
             REPO: $REPO
             
@@ -28,5 +28,5 @@ services:
             DEBUG: $DEBUG
 
 volumes:
-    bot_service:
+    bot_data:
     bot_requirements:

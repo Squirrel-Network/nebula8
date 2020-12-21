@@ -13,10 +13,11 @@ RUN apk add --no-cache \
 RUN apk add --no-cache \
             git
 
-# RUN     mkdir       ./data -p
-COPY    scripts     ./scripts
+RUN     mkdir           ./data
+COPY    scripts         ./scripts
 
-ENV     NEBULA_HOME /opt/service/data
+ENV     SERVICE_HOME    /opt/service/data
+ENV     NEBULA_HOME     ${SERVICE_HOME}/nebula
 
 ENTRYPOINT [ "bash", "scripts/entrypoint.sh" ]
 CMD [ "python3", "data/main.py" ]

@@ -8,19 +8,26 @@ fi
 # source scripts/environment.sh
 # source scripts/functions.sh
 
-if [[ ! $(find $NEBULA_HOME -name ".init-*") ]]
+if [[ ! $(find $SERVICE_HOME -name ".init-*") ]]
 then
-    INIT_FILE="$NEBULA_HOME/.init-$(date "+%d%m%y%S%M%H")"
+    INIT_FILE="$SERVICE_HOME/.init-$(date "+%d%m%y%S%M%H")"
     touch $INIT_FILE
     {
         if [[ "$REPO" ]]
         then
-            if [[ ! -d ./data ]]
+            if [[ ! -d $NEBULA_HOME ]]
             then
-                git clone $REPO ./data
+                git clone $REPO $NEBULA_HOME | tee $INIT_FILE
+                cd $NEBULA_HOME
 
-                echo "Install requirementes"
-                pip3 install -r "data/requirements.txt"
+                echo "Creating Virtual Environment" | tee $INIT_FILE
+                python3 -m venv env | tee $INIT_FILE
+
+                echo "Activate Virtual Environments" | tee $INIT_FILE
+                source env/bin/activate | tee $INIT_FILE
+
+                echo "Install requirementes" | tee $INIT_FILE
+                pip3 install -r "requirements.txt" | tee $INIT_FILE
             fi
         else
             echo "Can not initialize an empty container wihtout a source code. Please, set \$GIT_REPOSITORY for clone the code to execute."
