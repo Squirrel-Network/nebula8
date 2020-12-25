@@ -8,5 +8,6 @@ English =	{
   "BAN_USER": "I got banned %s",
   "BAN_BOT": "I can't ban myself!",
   "BAN_ERROR": "Incorrect command syntax or unrecognized user: {}",
-  "BAN_USER_ERROR": "There was a problem with the user ban %s"
+  "BAN_USER_ERROR": "There was a problem with the user ban %s",
+  "SAY_MESSAGE": "Error the message cannot be empty!"
 }

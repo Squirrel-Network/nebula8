@@ -4,7 +4,6 @@ from core.utilities.functions import chat_object
 
 @decorators.owner.init
 def init(update,context):
-    var = chat_object(update)
-    print(var)
-    print(update.message.migrate_to_chat_id)
-    #message(update,context,var)
+    msg = update.message.text
+    x = msg.count(msg)
+    print(x)
