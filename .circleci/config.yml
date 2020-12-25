@@ -1,30 +1,21 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@1.0.1
-
-workflows:
-  commit:
-    jobs:
-      - docker:
-          context: docker-credentials
+  python: circleci/python@0.2.1
 
 jobs:
-  docker:
-    executor: docker/docker
+  build-and-test:
+    executor: python/default
     steps:
-      - docker/install-docker-tools
-      - setup_remote_docker
       - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
       - run:
-          name: Build Docker Images
-          command: |
-            docker-compose build
-      - run:
-          name: Login on Docker Hub
-          command: echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
-      - run:
-          name: Publish Docker Images
-          command: |
-            docker images
-            docker-compose push
+          command: ./manage.py test
+          name: Test
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
