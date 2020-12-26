@@ -25,12 +25,19 @@ class GroupRepository(Connection):
     def add(self, args=None):
         #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')
         #q = query.get_sql(quote_char=None)
-        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages) VALUES (%s,%s,%s,%s,%s,%s)"
+        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
     #TODO logic error
     def update(self, args=None):
         q = "UPDATE groups SET id_group = %s WHERE id_group = %s"
+        return self._update(q, args)
+
+    ##########################
+    ##### GROUP SETTINGS #####
+    ##########################
+    def SetWelcome(self, args=None):
+        q = "UPDATE groups SET set_welcome = %s WHERE id_group = %s"
         return self._update(q, args)
 
     def update_language(self, args=None):

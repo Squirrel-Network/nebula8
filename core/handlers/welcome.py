@@ -52,8 +52,9 @@ def save_group(update):
         default_buttons = ""
         default_rules = Config.DEFAULT_RULES
         default_lang = Config.DEFAULT_LANGUAGE
-        default_community = 1
-        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang)]
+        default_community = 0
+        default_set_welcome = 1
+        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -118,13 +119,18 @@ def select_language_it(update, context):
     query.edit_message_text(msg,parse_mode='HTML')
 
 def init(update, context):
-    for member in update.message.new_chat_members:
-        user = member.username
-        user_first = member.first_name
-        user_id = member.id
-        chat_title = update.effective_chat.title
-        chat_id = update.effective_chat.id
-        bot = bot_object(update,context)
+    # Get settings
+    chat = update.effective_message.chat_id
+    group = GroupRepository().getById(chat)
+    row = group['set_welcome']
+    if row == 1:
+        for member in update.message.new_chat_members:
+            user = member.username
+            user_first = member.first_name
+            user_id = member.id
+            chat_title = update.effective_chat.title
+            chat_id = update.effective_chat.id
+            bot = bot_object(update,context)
 
         if bot.id == user_id:
             welcome_bot(update,context)

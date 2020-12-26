@@ -22,8 +22,10 @@ def admin_command(dsp):
     function(CMH('warn', admin.warn.init))
     function(CMH('info', admin.user_info.init))
     function(CMH('say', admin.say.init))
+    function(CMH('settings', admin.settings.init))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
+    function(CQH(admin.settings.update_settings))
 
 def owner_command(dsp):
     function = dsp.add_handler
