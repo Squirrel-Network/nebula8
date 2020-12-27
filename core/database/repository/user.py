@@ -27,4 +27,8 @@ class UserRepository(Connection):
 
     def update(self, args=None):
         q = "UPDATE users SET tg_username = %s WHERE tg_id = %s"
-        return self._update(q,args)
+        return self._update(q, args)
+
+    def updateWarn(self, args=None):
+        q = "UPDATE users SET warn_count = warn_count + 1 WHERE tg_id = %s"
+        return self._update(q, args)

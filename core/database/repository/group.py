@@ -26,7 +26,7 @@ class GroupRepository(Connection):
     def add(self, args=None):
         #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')
         #q = query.get_sql(quote_char=None)
-        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
     #TODO logic error
