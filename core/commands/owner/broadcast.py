@@ -14,10 +14,11 @@ def init(update, context):
     rows = GroupRepository().getAll()
     for a in rows:
         id_groups = a['id_group']
+        community = a['community']
         try:
-            if msg == "":
-                message(update,context,"You cannot send an empty message!")
-            else:
+            if msg != "" and community == 1:
                 messageWithId(update,context,id_groups,msg)
+            else:
+                message(update,context,"You cannot send an empty message!")
         except BadRequest:
             message(update,context,Strings.ERROR_HANDLING)

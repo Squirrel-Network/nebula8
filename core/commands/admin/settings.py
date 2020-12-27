@@ -4,6 +4,7 @@ from languages.getLang import languages
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
 
+#TODO Devo poter tornare la funzione keyboard_settings al posto di query.edit... per un menu dinamico in tempo reale.
 def keyboard_settings(update,context):
     bot = context.bot
     chat = update.effective_message.chat_id
@@ -20,6 +21,7 @@ def keyboard_settings(update,context):
 def init(update,context):
     keyboard_settings(update,context)
 
+@decorators.admin.user_admin
 def update_settings(update,context):
     query = update.callback_query
     chat = update.effective_message.chat_id

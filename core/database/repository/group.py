@@ -22,6 +22,7 @@ class GroupRepository(Connection):
 
         return self._selectAll(q)
 
+    # Save group by Welcome
     def add(self, args=None):
         #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')
         #q = query.get_sql(quote_char=None)
