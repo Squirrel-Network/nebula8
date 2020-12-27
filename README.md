@@ -8,8 +8,8 @@
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/How-To-start">How to Start</a>
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
 
-# Official API
+## Official API
 - <a href="https://github.com/Squirrel-Network/api_nebula">Go Here</a>
 
-# Official Resources
+## Official Resources
 - <a href="https://squirrel-network.online/knowhere/">Knowhere (Blacklist Search)</a>
