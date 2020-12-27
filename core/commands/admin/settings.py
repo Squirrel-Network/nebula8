@@ -20,6 +20,7 @@ def keyboard_settings(update,context,editkeyboard = False):
     return keyboard_menu
 
 @decorators.admin.user_admin
+@decorators.delete.init
 def init(update,context):
     keyboard_settings(update,context)
 
