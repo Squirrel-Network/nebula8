@@ -55,7 +55,8 @@ def save_group(update):
         default_community = 0
         default_set_welcome = 1
         default_max_warn = 3
-        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn)]
+        default_global_silence = 0
+        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
