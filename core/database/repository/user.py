@@ -1,18 +1,34 @@
 from core.database.db_connect import Connection
-from core.database.QB import QB
+from pypika import Query, Table
 
+users = Table("users")
 
 class UserRepository(Connection):
     def getById(self, args=None):
-        query = QB("users").select().columns(["*"])
-        query = query.where("user_id", "=", "%s").buildQuery()
+        query = Query.from_(users).select("*").where(users.tg_id == "%s")
+        q = query.get_sql(quote_char=None)
 
-        return self._selectAll(query, args)
+        return self._select(q, args)
+
+    def getByUsername(self, args=None):
+        q = "SELECT * FROM users WHERE tg_username = %s"
+
+        return self._select(q, args)
+
+    def getAll(self, args=None):
+        query = Query.from_(users).select("*").where(users.tg_id == "%s")
+        q = query.get_sql(quote_char=None)
+
+        return self._selectAll(q, args)
 
     def add(self, args=None):
-        # TODO: write add function
-        return ''
+        q = "INSERT INTO users (tg_id, tg_username, warn_count) VALUES (%s,%s,%s)"
+        return self._insert(q, args)
 
-    def update(self, username):
-        # TODO: write update function
-        return ''
+    def update(self, args=None):
+        q = "UPDATE users SET tg_username = %s WHERE tg_id = %s"
+        return self._update(q, args)
+
+    def updateWarn(self, args=None):
+        q = "UPDATE users SET warn_count = warn_count + 1 WHERE tg_id = %s"
+        return self._update(q, args)

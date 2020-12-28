@@ -9,7 +9,7 @@ from rich.console import Console
 from rich.table import Table
 from datetime import datetime
 from config import Config
-from telegram.ext import (Updater,Filters)
+from telegram.ext import Updater
 from core.commands import index
 from plugins import plugin_index
 from core import handlers
@@ -58,9 +58,10 @@ def main():
             )
         console.print(table)
 
+    handlers.logs.sys_loggers()
     handlers_index.core_handlers(dsp)
 
-    dsp.add_error_handler(handlers.errors.error)
+    dsp.add_error_handler(handlers.errors.error_handler)
 
     # Start the Bot
     updater.start_polling()

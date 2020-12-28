@@ -9,6 +9,7 @@ class Connection:
             user = Config.USER,
             password = Config.PASSWORD,
             db = Config.DBNAME,
+            autocommit=True,
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor
             )
@@ -27,3 +28,15 @@ class Connection:
         self.cur.close()
         self.con.close()
         return self.sel
+
+    def _insert(self,sql,args=None):
+        self.ins = self.cur.executemany(sql,args)
+        return self.ins
+
+    def _update(self,sql, args=None):
+        self.upd = self.cur.executemany(sql,args)
+        return self.upd
+
+    def _delete(self, sql, args=None):
+        self.delete = self.cur.executemany(sql,args)
+        return self.delete

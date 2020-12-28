@@ -1,14 +1,15 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d29dde165294d3283f92ec8f8638369)](https://www.codacy.com/gh/Squirrel-Network/nebula8/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Squirrel-Network/nebula8&amp;utm_campaign=Badge_Grade) <img src="https://img.shields.io/badge/made%20with-python-blue.svg?style=flat-square" alt="made with python">
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://www.python.org/) [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://en.wikipedia.org/wiki/Open_source)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d29dde165294d3283f92ec8f8638369)](https://www.codacy.com/gh/Squirrel-Network/nebula8/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Squirrel-Network/nebula8&amp;utm_campaign=Badge_Grade) [![Squirrel-Network](https://circleci.com/gh/Squirrel-Network/nebula.svg?style=shield)](https://app.circleci.com/pipelines/github/Squirrel-Network/nebula8) [![Group](https://img.shields.io/badge/Group-SquirrelNetwork-blue)](https://t.me/squirrelnetwork)
+# NEBULA BOT
 
-# NEBULA 8
+## Getting started
 
-### 1) Install
+- <a href="https://github.com/Squirrel-Network/nebula8/wiki/How-To-start">How to Start</a>
+- <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
 
-To try the bot:
-- clone the repository `git clone https://github.com/Squirrel-Network/nebula8.git`
-- create a virtual environment `python3 -m venv env1`
-- activate the venv `source env1/bin/activate`
-- install requirements `pip install -r requirements.txt`
+## Official API
+- <a href="https://github.com/Squirrel-Network/api_nebula">Go Here</a>
 
-### Enjoy!
+## Official Resources
+- <a href="https://squirrel-network.online/knowhere/">Knowhere (Blacklist Search)</a>

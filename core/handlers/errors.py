@@ -1,31 +1,48 @@
-import sys
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
+import html
+import json
+import logging
 import traceback
-from config import Config
-from telegram.utils.helpers import mention_html
+from telegram import Update, ParseMode
+from telegram.ext import CallbackContext
 
-#ERROR HANDLER 2.0
-def error(update, context):
-    # add all the dev user_ids in this list. You can also add ids of channels or groups.
-    devs = Config.OWNER
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
 
-    trace = "".join(traceback.format_tb(sys.exc_info()[2]))
-    # lets try to get as much information from the telegram update as possible
-    payload = ""
-    # normally, we always have an user. If not, its either a channel or a poll update.
-    if update.effective_user:
-        payload += f' with the user {mention_html(update.effective_user.id, update.effective_user.first_name)}'
-    # there are more situations when you don't get a chat
-    if update.effective_chat:
-        payload += f' within the chat <i>{update.effective_chat.title}</i>'
-        if update.effective_chat.username:
-            payload += f' (@{update.effective_chat.username})'
-    # but only one where you have an empty payload by now: A poll (buuuh)
-    if update.poll:
-        payload += f' with the poll id {update.poll.id}.'
-    # lets put this in a "well" formatted text
-    text = f"Hey.\n The error <code>{context.error}</code> happened{payload}. The full traceback:\n\n<code>{trace}" \
-           f"</code>"
-    # and send it to the dev(s)
-    for dev_id in devs:
-        context.bot.send_message(dev_id, text, parse_mode='HTML')
-#END ERROR HANDLER
+logger = logging.getLogger(__name__)
+
+DEVELOPER_CHAT_ID = 1065189838
+
+#ERROR HANDLER 3.0
+def error_handler(update: Update, context: CallbackContext) -> None:
+    """Log the error and send a telegram message to notify the developer."""
+    # Log the error before we do anything else, so we can see it even if something breaks.
+    logger.error(msg="Exception while handling an update:", exc_info=context.error)
+
+    # traceback.format_exception returns the usual python message about an exception, but as a
+    # list of strings rather than a single string, so we have to join them together.
+    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
+    tb_string = ''.join(tb_list)
+
+    # Build the message with some markup and additional information about what happened.
+    # You might need to add some logic to deal with messages longer than the 4096 character limit.
+    message = (
+        'An exception was raised while handling an update\n'
+        '<pre>update = {}</pre>\n\n'
+        '<pre>context.chat_data = {}</pre>\n\n'
+        '<pre>context.user_data = {}</pre>\n\n'
+        '<pre>{}</pre>'
+    ).format(
+        html.escape(json.dumps(update.to_dict(), indent=2, ensure_ascii=False)),
+        html.escape(str(context.chat_data)),
+        html.escape(str(context.user_data)),
+        html.escape(tb_string),
+    )
+
+    # Finally, send the message
+    context.bot.send_message(chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML)

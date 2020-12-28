@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 import requests
 from core import decorators
 from bs4 import BeautifulSoup

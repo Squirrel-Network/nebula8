@@ -1,11 +1,9 @@
-from core.database.repository.group_language import GroupLanguageRepository
+from core.utilities.message import message
 from core import decorators
+from core.utilities.functions import chat_object
 
 @decorators.owner.init
-def init(update, context):
-    chat = update.effective_message.chat_id
-    #rows = GroupRepository().getById([chat])
-    row = GroupLanguageRepository().getById([chat])
-    print(row['languages'])
-    message = "{}".format(row['languages'])
-    context.bot.send_message(chat,message)
+def init(update,context):
+    msg = update.message.text
+    x = msg.count(msg)
+    print(x)

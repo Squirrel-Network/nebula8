@@ -1,16 +1,21 @@
 from core.database.db_connect import Connection
-from core.database.QB import QB
+from pypika import Query, Table
 
+superban = Table("superban_table")
 
 class SuperbanRepository(Connection):
     def getById(self, args=None):
-        query = QB("superban_table").select().columns(["*"])
-        query = query.where("user_id", "=", "%s").buildQuery()
+        query = Query.from_(superban).select("*").where(superban.user_id == '%s')
+        q = query.get_sql(quote_char=None)
 
-        return self._selectAll(query, args)
+        return self._select(q, args)
 
-    def getByIdFetchOne(self, args=None):
-        query = QB("superban_table").select().columns(["user_id"])
-        query = query.where("user_id", "=", "%s").buildQuery()
+    def getAll(self, args=None):
+        query = Query.from_(superban).select("user_id").where(superban.user_id == '%s')
+        q = query.get_sql(quote_char=None)
 
-        return self._select(query, args)
+        return self._selectAll(q, args)
+
+    def add(self, args=None):
+        q = "INSERT IGNORE INTO superban_table(user_id, motivation_text, user_date, id_operator) VALUES (%s,%s,%s,%s)"
+        return self._insert(q, args)

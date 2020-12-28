@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
 from core.utilities.message import message
@@ -9,7 +13,7 @@ from core import decorators
 def init(update, context):
     languages(update,context)
     chat = update.effective_message.chat_id
-    rows = GroupRepository().getById([chat])
+    rows = GroupRepository().getAllById([chat])
     for row in rows:
         message(update,context,languages.group_info.format(
             row['id_group'],

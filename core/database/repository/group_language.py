@@ -1,10 +1,11 @@
 from core.database.db_connect import Connection
-from core.database.QB import QB
+from pypika import Query, Table
 
 
 class GroupLanguageRepository(Connection):
     def getById(self, args=None):
-        query = QB("groups").select().columns(["languages"])
-        query = query.where("id_group", "=", "%s").buildQuery()
+        groups = Table("groups")
+        query = Query.from_(groups).select(groups.languages).where(groups.id_group == '%s')
+        q = query.get_sql(quote_char=None)
 
-        return self._select(query, args)
+        return self._select(q, args)
