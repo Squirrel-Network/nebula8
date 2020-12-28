@@ -18,11 +18,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 
-LANGUAGE_KEYBOARD = [[
-    InlineKeyboardButton("EN", callback_data='select_language_en'),
-    InlineKeyboardButton("IT", callback_data='select_language_it')
-    ]]
-
 def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
     return not not arabic
@@ -57,6 +52,7 @@ def save_group(update):
         default_max_warn = 3
         default_global_silence = 0
         data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence)]
+        print(data)
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -93,39 +89,21 @@ def welcome_user(update, context, member):
 
 
 def welcome_bot(update, context):
-    reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
-    msg = "Please select your preferred language\n\nPerfavore seleziona la tua lingua di preferenza"
+    msg = "Please select your language => /lang \n\nRemember to make me administrator to work properly"
     save_group(update)
-    update.message.reply_text(msg,reply_markup=reply_markup)
-
-@decorators.admin.user_admin
-def select_language_en(update, context):
-    chat = update.effective_message.chat_id
-    msg = "You have selected the English language for your group\nRemember to make me admin in order to function properly!"
-    query = update.callback_query
-    query.answer()
-    lang = "EN"
-    data = [(lang,chat)]
-    GroupRepository().update_language(data)
-    query.edit_message_text(msg,parse_mode='HTML')
-
-@decorators.admin.user_admin
-def select_language_it(update, context):
-    chat = update.effective_message.chat_id
-    msg = "Hai selezionato la lingua italiana per il tuo gruppo\nRicordati di farmi admin per poter funzionare correttamente!"
-    query = update.callback_query
-    query.answer()
-    lang = "IT"
-    data = [(lang,chat)]
-    GroupRepository().update_language(data)
-    query.edit_message_text(msg,parse_mode='HTML')
+    update.message.reply_text(msg)
 
 def init(update, context):
     # Get settings
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
-    row = group['set_welcome']
-    if row == 1:
+
+    if group:
+        row = group['set_welcome']
+    else:
+        row = 1
+
+    if row == 1 and row is not None:
         for member in update.message.new_chat_members:
             user = member.username
             user_first = member.first_name

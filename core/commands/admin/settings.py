@@ -41,6 +41,7 @@ def keyboard_settings(update,context,editkeyboard = False):
         keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
     return keyboard_menu
 
+@decorators.public.init
 @decorators.admin.user_admin
 @decorators.delete.init
 def init(update,context):
