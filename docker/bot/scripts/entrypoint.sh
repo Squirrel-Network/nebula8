@@ -51,16 +51,20 @@ cat "/opt/service/scripts/templates/config.tmp.py" \
     | sed "s;%BOT_TOKEN%;$BOT_TOKEN;g" \
     | sed "s;%SUPERADMIN%;$SUPERADMIN;g" \
     | sed "s;%OWNER%;$OWNER;g" \
+    | sed "s;%DEFAULT_WELCOME%;$DEFAULT_WELCOME;g" \
+    | sed "s;%DEFAULT_RULES%;$DEFAULT_RULES;g" \
     | sed "s;%DEFAULT_LOG_CHANNEL%;$DEFAULT_LOG_CHANNEL;g" \
+    | sed "s;%DEFAULT_STAFF_GROUP%;$DEFAULT_STAFF_GROUP;g" \
     \
     | sed "s;%ENABLE_PLUGINS%;$ENABLE_PLUGINS;g" \
     | sed "s;%DEFAULT_LANGUAGE%;$DEFAULT_LANGUAGE;g" \
     | sed "s;%VERSION%;$VERSION;g" \
+    | sed "s;%VERSION_NAME%;$VERSION_NAME;g" \
+    | sed "s;%REPO%;$REPO;g" \
     | sed "s;%DEBUG%;$DEBUG;g" \
     \
     > "$NEBULA_HOME/config.py"
 
-cat "$NEBULA_HOME/config.py"
 
 cd $NEBULA_HOME
 python3 main.py
