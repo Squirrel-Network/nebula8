@@ -4,8 +4,8 @@ class Config(object):
      ##########################
      HOST = '%HOST%'
      PORT = %PORT%
-     USER = '%USER'
-     PASSWORD = '%PASSWORD'
+     USER = '%USER%'
+     PASSWORD = '%PASSWORD%'
      DBNAME = '%DBNAME%'
      ###########################
      ##   TELEGRAM SETTINGS  ##
