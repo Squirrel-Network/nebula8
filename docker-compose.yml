@@ -16,6 +16,7 @@ services:
             PORT: $PORT
             USER: $USER
             PASSWORD: $PASSWORD
+            DBNAME: $DBNAME
 
             BOT_TOKEN: $BOT_TOKEN
             SUPERADMIN: $SUPERADMIN
