@@ -11,5 +11,6 @@ from telegram.ext import (
 
 def core_handlers(dsp):
     function = dsp.add_handler
+    function(MH(Filters.chat_type.groups, handlers.check_status_user.check_status))
     function(MH(Filters.status_update.new_chat_members, handlers.welcome.init, run_async=True))
     function(MH(Filters.chat_type.groups, handlers.superban.init, run_async=True))
