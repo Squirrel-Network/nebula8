@@ -12,6 +12,7 @@ def ban_user(update,context):
     bot = context.bot
     chat = update.effective_chat.id
     user = update.message.from_user.id
+    print(user)
     kick = bot.kick_chat_member(chat,user)
     return kick
 

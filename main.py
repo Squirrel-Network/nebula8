@@ -58,8 +58,8 @@ def main():
             )
         console.print(table)
 
-    handlers.logs.sys_loggers()
     handlers_index.core_handlers(dsp)
+    handlers.logs.sys_loggers()
 
     dsp.add_error_handler(handlers.errors.error_handler)
 
