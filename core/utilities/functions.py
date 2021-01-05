@@ -12,7 +12,6 @@ def ban_user(update,context):
     bot = context.bot
     chat = update.effective_chat.id
     user = update.message.from_user.id
-    print(user)
     kick = bot.kick_chat_member(chat,user)
     return kick
 
@@ -71,7 +70,7 @@ def chat_object(update):
     return chat
 
 def user_object(update):
-    user = update.message.from_user
+    user = update.effective_message.from_user
     return user
 
 def user_reply_object(update):
