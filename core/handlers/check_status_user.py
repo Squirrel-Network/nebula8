@@ -5,7 +5,7 @@ from core.database.repository.superban import SuperbanRepository
 from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message
 from core.utilities.message import message
 
-#@decorators.public.init
+@decorators.public.init
 def check_status(update,context):
     chat = chat_object(update)
     user = user_object(update)

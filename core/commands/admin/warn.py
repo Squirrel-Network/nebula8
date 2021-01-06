@@ -9,7 +9,9 @@ from core.database.repository.group import GroupRepository
 from core.utilities.functions import user_reply_object, chat_object
 from core.utilities.functions import ban_user_reply
 from core.utilities.message import message
+from core.handlers.logs import telegram_loggers
 
+#TODO LOGIC ERROR IN WARN , NEED NEW DATABASE TABLE FOR JOIN
 @decorators.admin.user_admin
 @decorators.delete.init
 def init(update,context):
@@ -27,13 +29,17 @@ def init(update,context):
             data = [(username,user.id)]
             UserRepository().update(data)
             UserRepository().updateWarn([user.id])
-            message(update,context,"{} was warned by the group {}".format(user.username,chat.title))
+            message(update,context,"{} was warned by the group {}".format(username,chat.title))
+            log_txt = "#Log {} was warned by the group {}".format(username,chat.title)
+            telegram_loggers(update,context,log_txt)
         else:
             username = "@"+user.username
             default_warn = 1
             data = [(user.id,username,default_warn)]
             UserRepository().add(data)
-            message(update,context,"{} was warned by the group {}".format(user.username,chat.title))
+            message(update,context,"{} was warned by the group {}".format(username,chat.title))
+            log_txt = "#Log {} was warned by the group {}".format(username,chat.title)
+            telegram_loggers(update,context,log_txt)
     else:
         ban_user_reply(update,context)
         message(update,context,"User @{} has reached the maximum number\n of warns in the {} group and has been banned".format(user.username,chat.title))
