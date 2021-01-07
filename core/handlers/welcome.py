@@ -22,18 +22,22 @@ def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
     return not not arabic
 
-def save_user(member):
+def save_user(member, chat):
     # Save the user in the database and check that it exists if it exists and has changed nickname overwrite
     user = UserRepository().getById(member.id)
     if user:
         username = "@"+member.username
         data = [(username,member.id)]
         UserRepository().update(data)
+        data_mtm = [(member.id, chat)]
+        UserRepository().add_into_mtm(data_mtm)
     else:
         username = "@"+member.username
         default_warn = 0
         data = [(member.id,username,default_warn)]
         UserRepository().add(data)
+        data_mtm = [(member.id, chat)]
+        UserRepository().add_into_mtm(data_mtm)
 
 def save_group(update):
     chat = update.effective_message.chat_id
@@ -52,7 +56,6 @@ def save_group(update):
         default_max_warn = 3
         default_global_silence = 0
         data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence)]
-        print(data)
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -113,7 +116,7 @@ def init(update, context):
             bot = bot_object(update,context)
 
         if bot.id == user_id:
-            welcome_bot(update,context)
+            welcome_bot(update, context)
             l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
             telegram_loggers(update,context,l_txt)
         elif user is None:
@@ -126,5 +129,5 @@ def init(update, context):
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
         else:
-            save_user(member)
+            save_user(member, chat_id)
             welcome_user(update,context,member)

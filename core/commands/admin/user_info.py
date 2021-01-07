@@ -27,5 +27,7 @@ def init(update, context):
         default_warn = 0
         data = [(user.id,username,default_warn)]
         UserRepository().add(data)
+        data_mtm = [(user.id, chat.id)]
+        UserRepository().add_into_mtm(data_mtm)
         msg = Strings.USER_INFO.format(id=user.id,username=user.username,chat=chat.title,warn=default_warn)
         PrivateMessage(update,context,msg)

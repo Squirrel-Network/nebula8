@@ -1,8 +1,8 @@
 def init(fn):
-  def wrapper(*args,**kwargs):
-    message = args[0].message
-    if message.chat.type == 'supergroup' or message.chat.type == 'group':
-      return fn(*args,**kwargs)
+  def wrapper(update,context):
+    chat = update.effective_chat
+    if chat.type == 'supergroup' or chat.type == 'group':
+      return fn(update,context)
     else:
       return False
   return wrapper

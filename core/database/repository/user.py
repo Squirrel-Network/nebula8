@@ -15,6 +15,10 @@ class UserRepository(Connection):
 
         return self._select(q, args)
 
+    def getUserByGroup(self, args=None):
+        q = "SELECT * FROM users u INNER JOIN group_users gu ON gu.tg_id = u.tg_id INNER JOIN groups gr ON gu.tg_group_id = gr.id_group WHERE u.tg_id = %s AND gr.id_group = %s"
+        return self._select(q, args)
+
     def getAll(self, args=None):
         query = Query.from_(users).select("*").where(users.tg_id == "%s")
         q = query.get_sql(quote_char=None)
@@ -23,6 +27,10 @@ class UserRepository(Connection):
 
     def add(self, args=None):
         q = "INSERT INTO users (tg_id, tg_username, warn_count) VALUES (%s,%s,%s)"
+        return self._insert(q, args)
+
+    def add_into_mtm(self, args=None):
+        q = "INSERT IGNORE INTO group_users (tg_id, tg_group_id) VALUES (%s,%s)"
         return self._insert(q, args)
 
     def update(self, args=None):

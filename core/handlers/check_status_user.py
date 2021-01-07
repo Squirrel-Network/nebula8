@@ -11,10 +11,14 @@ def check_status(update,context):
     user = user_object(update)
     get_superban_user_id = update.effective_user.id
     user_db = UserRepository().getById(user.id)
-    get_group = GroupRepository().getById(chat.id)
     get_superban = SuperbanRepository().getById(get_superban_user_id)
-    warn_count = user_db['warn_count'] if user_db is not None else 0
-    max_warn = get_group['max_warn']
+    #get_group = GroupRepository().getById(chat.id)
+    #warn_count = user_db['warn_count'] if user_db is not None else 0
+    #max_warn = get_group['max_warn']
+    #if warn_count == max_warn:
+        #ban_user(update,context)
+        #msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
+        #message(update,context,msg.format(user.id))
 
     if user.username is None or "":
         kick_user(update, context)
@@ -24,15 +28,15 @@ def check_status(update,context):
         username = "@"+user.username
         data = [(username,user.id)]
         UserRepository().update(data)
+        data_mtm = [(user.id, chat.id)]
+        UserRepository().add_into_mtm(data_mtm)
     if user_db is None or "":
         username = "@"+user.username
         default_warn = 0
         data = [(user.id,username,default_warn)]
         UserRepository().add(data)
-    if warn_count == max_warn:
-        ban_user(update,context)
-        msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
-        message(update,context,msg.format(user.id))
+        data_mtm = [(user.id, chat.id)]
+        UserRepository().add_into_mtm(data_mtm)
     if get_superban:
         msg = "I got super banned <code>{}</code>".format(user.id)
         message(update,context,msg)
