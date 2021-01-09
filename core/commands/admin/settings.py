@@ -33,10 +33,24 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Welcome %s' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
     list_buttons.append(InlineKeyboardButton('Silence %s' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
+    list_buttons.append(InlineKeyboardButton('Filters', callback_data='Filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
         keyboard_menu = bot.send_message(chat,"Group Settings",reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+    if editkeyboard == True:
+        keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
+    return keyboard_menu
+
+def keyboard_filters(update,context,editkeyboard = False):
+    bot = context.bot
+    chat = update.message.chat_id
+    list_buttons = []
+    list_buttons.append(InlineKeyboardButton('Exe Filters', callback_data='exe_filters'))
+    list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
+    menu = build_menu(list_buttons,2)
+    if editkeyboard == False:
+        keyboard_menu = bot.send_message(chat,"Filters Settings",reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     if editkeyboard == True:
         keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
     return keyboard_menu
@@ -77,6 +91,9 @@ def update_settings(update,context):
             GroupRepository().setSilence(data)
             bot.set_chat_permissions(update.effective_chat.id, permission_true)
             return keyboard_settings(query,context,True)
+    if query.data == 'Filters':
+        return keyboard_filters(query, context, True)
+        #query.edit_message_text("#FEATURE FUNCTION",parse_mode='HTML')
     # Close Menu
     if query.data == 'close':
         query.edit_message_text("You have closed the settings menu",parse_mode='HTML')
