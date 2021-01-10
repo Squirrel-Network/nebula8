@@ -44,5 +44,6 @@ def owner_command(dsp):
     function(CMH('b', owner.broadcast.init, run_async=True))
     function(CMH('s', owner.superban.init, run_async=True))
     function(CMH('server', owner.server_info.init))
+    function(CMH('community', owner.add_community.init))
     function(CMH('test', owner.test.init))
     function(CMH('exit', owner.exit.init))
