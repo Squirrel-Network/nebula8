@@ -11,6 +11,8 @@ def init(update,context):
     if row:
         data = [(chat.title,chat.id)]
         CommunityRepository().update(data)
+        message(update,context,"Update Community")
     else:
         data = [(chat.title,chat.id,link)]
         CommunityRepository().add(data)
+        message(update,context,"Insert Community")
