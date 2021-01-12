@@ -30,7 +30,7 @@ class UserRepository(Connection):
         return self._insert(q, args)
 
     def add_into_mtm(self, args=None):
-        q = "INSERT IGNORE INTO group_users (tg_id, tg_group_id) VALUES (%s,%s)"
+        q = "INSERT IGNORE INTO group_users (tg_id, tg_group_id, warn_count) VALUES (%s,%s,%s)"
         return self._insert(q, args)
 
     def update(self, args=None):

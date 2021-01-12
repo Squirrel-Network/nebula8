@@ -25,6 +25,7 @@ def core_handlers(dsp):
     function(MH(Filters.document.exe, test_handler))
     function(MH(Filters.status_update.new_chat_members, handlers.welcome.init, run_async=True))
     function(MH(Filters.chat_type.groups, group_handlers, run_async=True))
+    #function(MH(Filters.status_update.migrate, handlers.migrate_chat.init, run_async=True))
 
 def group_handlers(update,context):
     handlers.check_status_user.check_status(update,context)

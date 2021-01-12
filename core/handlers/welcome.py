@@ -25,19 +25,16 @@ def has_arabic_character(string):
 def save_user(member, chat):
     # Save the user in the database and check that it exists if it exists and has changed nickname overwrite
     user = UserRepository().getById(member.id)
+    username = "@"+member.username
+    default_count_warn = 0
     if user:
-        username = "@"+member.username
         data = [(username,member.id)]
         UserRepository().update(data)
-        data_mtm = [(member.id, chat)]
-        UserRepository().add_into_mtm(data_mtm)
     else:
-        username = "@"+member.username
-        default_warn = 0
-        data = [(member.id,username,default_warn)]
+        data = [(member.id,username,default_count_warn)]
         UserRepository().add(data)
-        data_mtm = [(member.id, chat)]
-        UserRepository().add_into_mtm(data_mtm)
+    data_mtm = [(member.id, chat, default_count_warn)]
+    UserRepository().add_into_mtm(data_mtm)
 
 def save_group(update):
     chat = update.effective_message.chat_id

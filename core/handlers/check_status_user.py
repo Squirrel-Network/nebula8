@@ -12,6 +12,7 @@ def check_status(update,context):
     get_superban_user_id = update.effective_user.id
     user_db = UserRepository().getById(user.id)
     get_superban = SuperbanRepository().getById(get_superban_user_id)
+    default_count_warn = 0
     #get_group = GroupRepository().getById(chat.id)
     #warn_count = user_db['warn_count'] if user_db is not None else 0
     #max_warn = get_group['max_warn']
@@ -29,14 +30,14 @@ def check_status(update,context):
         username = "@"+user.username
         data = [(username,user.id)]
         UserRepository().update(data)
-        data_mtm = [(user.id, chat.id)]
+        data_mtm = [(user.id, chat.id, default_count_warn)]
         UserRepository().add_into_mtm(data_mtm)
     if user_db is None or "":
         username = "@"+user.username
         default_warn = 0
         data = [(user.id,username,default_warn)]
         UserRepository().add(data)
-        data_mtm = [(user.id, chat.id)]
+        data_mtm = [(user.id, chat.id, default_count_warn)]
         UserRepository().add_into_mtm(data_mtm)
     if get_superban:
         msg = "I got super banned <code>{}</code>".format(user.id)
