@@ -9,5 +9,6 @@ Italian =	{
   "BAN_BOT": "Non posso bannarmi da sola!",
   "BAN_ERROR": "Sintassi del comando errata o utente non riconosciuto: {}",
   "BAN_USER_ERROR": "Si è verificato un problema per il ban dell'utente %s",
-  "SAY_MESSAGE": "Errore il messaggio non può essere vuoto!"
+  "SAY_MESSAGE": "Errore il messaggio non può essere vuoto!",
+  "DELETE_MESSAGE": "Devi utilizzare questo comando in risposta ad un messaggio!"
 }

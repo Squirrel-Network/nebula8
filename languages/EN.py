@@ -9,5 +9,6 @@ English =	{
   "BAN_BOT": "I can't ban myself!",
   "BAN_ERROR": "Incorrect command syntax or unrecognized user: {}",
   "BAN_USER_ERROR": "There was a problem with the user ban %s",
-  "SAY_MESSAGE": "Error the message cannot be empty!"
+  "SAY_MESSAGE": "Error the message cannot be empty!",
+  "DELETE_MESSAGE": "You must use this command in response to a message!"
 }

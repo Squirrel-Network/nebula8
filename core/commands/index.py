@@ -24,7 +24,7 @@ def admin_command(dsp):
     function(CMH('status', admin.info_group.init))
     function(CMH('lang', admin.set_lang.init))
     function(CMH('mute', admin.mute.init))
-    #function(CMH('warn', admin.warn.init))
+    function(CMH('warn', admin.warn.init))
     function(CMH('info', admin.user_info.init))
     function(CMH('say', admin.say.init))
     function(CMH('settings', admin.settings.init))

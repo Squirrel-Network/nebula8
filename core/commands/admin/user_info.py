@@ -14,20 +14,23 @@ from core.utilities.strings import Strings
 def init(update, context):
     user = user_reply_object(update)
     chat = chat_object(update)
-    row = UserRepository().getById(user.id)
-    if row:
+    user_db = UserRepository().getById(user.id)
+    get_warn = UserRepository().getUserByGroup([user.id,chat.id])
+    default_warn = 0
+    if user_db:
         username = "@"+user.username
         data = [(username,user.id)]
         UserRepository().update(data)
-        warn_count = row['warn_count']
+        warn_count = get_warn['warn_count']
+        data_mtm = [(user.id, chat.id, default_warn)]
+        UserRepository().add_into_mtm(data_mtm)
         msg = Strings.USER_INFO.format(id=user.id,username=user.username,chat=chat.title,warn=warn_count)
         PrivateMessage(update,context,msg)
     else:
         username = "@"+user.username
-        default_warn = 0
         data = [(user.id,username,default_warn)]
         UserRepository().add(data)
-        data_mtm = [(user.id, chat.id)]
+        data_mtm = [(user.id, chat.id, default_warn)]
         UserRepository().add_into_mtm(data_mtm)
         msg = Strings.USER_INFO.format(id=user.id,username=user.username,chat=chat.title,warn=default_warn)
         PrivateMessage(update,context,msg)

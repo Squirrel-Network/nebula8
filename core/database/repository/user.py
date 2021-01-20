@@ -16,7 +16,7 @@ class UserRepository(Connection):
         return self._select(q, args)
 
     def getUserByGroup(self, args=None):
-        q = "SELECT * FROM users u INNER JOIN group_users gu ON gu.tg_id = u.tg_id INNER JOIN groups gr ON gu.tg_group_id = gr.id_group WHERE u.tg_id = %s AND gr.id_group = %s"
+        q = "SELECT u.tg_id,u.tg_username,gr.id_group,gu.warn_count, gr.max_warn FROM users u INNER JOIN group_users gu ON gu.tg_id = u.tg_id INNER JOIN groups gr ON gu.tg_group_id = gr.id_group WHERE u.tg_id = %s AND gr.id_group = %s"
         return self._select(q, args)
 
     def getAll(self, args=None):
@@ -38,5 +38,5 @@ class UserRepository(Connection):
         return self._update(q, args)
 
     def updateWarn(self, args=None):
-        q = "UPDATE users SET warn_count = warn_count + 1 WHERE tg_id = %s"
+        q = "UPDATE group_users SET warn_count = warn_count + 1 WHERE tg_id = %s AND tg_group_id = %s"
         return self._update(q, args)
