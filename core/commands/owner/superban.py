@@ -25,7 +25,7 @@ def init(update,context):
             ban_user_reply(update,context)
             delete_message_reply(update,context)
             logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
-            message(update,context,"You got super banned <code>{}</code>".format(user_id))
+            message(update,context,"You got super banned <code>{}</code>\nGo to: https://squirrel-network.online/knowhere".format(user_id))
             telegram_loggers(update,context,logs_text)
             formatter = "Superban eseguito da: {}".format(update.message.from_user.id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)

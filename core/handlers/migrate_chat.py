@@ -1,5 +1,10 @@
+from core.utilities.message import message
+from core.database.repository.group import GroupRepository
+
 def init(update, context):
-    old_chat_id = update.message.migrate_from_chat_id
-    new_chat_id = update.message.chat.id
-    print(old_chat_id)
-    print(new_chat_id)
+    if update.message.migrate_from_chat_id:
+        old_chat_id = update.message.migrate_from_chat_id
+        new_chat_id = update.message.chat.id
+        data = [(new_chat_id, old_chat_id)]
+        GroupRepository().update(data)
+        message(update,context,"<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
