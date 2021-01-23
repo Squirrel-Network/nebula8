@@ -26,7 +26,6 @@ def check_status(update,context):
         msg = "#Automatic Handler\n<code>{}</code> set a username! You were kicked for safety!"
         message(update,context,msg.format(user.id))
     if user_db:
-        print("checkstatus")
         username = "@"+user.username
         data = [(username,user.id)]
         UserRepository().update(data)
