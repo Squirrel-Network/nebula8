@@ -2,7 +2,7 @@ from core.utilities.message import message
 from core.database.repository.group import GroupRepository
 
 def init(update, context):
-    if update.message.migrate_from_chat_id is not None:
+    if update.effective_message.migrate_from_chat_id is not None:
         old_chat_id = update.message.migrate_from_chat_id
         new_chat_id = update.message.chat.id
         data = [(new_chat_id, old_chat_id)]
