@@ -45,6 +45,7 @@ def keyboard_settings(update,context,editkeyboard = False):
 def keyboard_filters(update,context,editkeyboard = False):
     bot = context.bot
     chat = update.message.chat_id
+    test = 1
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Exe Filters', callback_data='exe_filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
@@ -94,6 +95,8 @@ def update_settings(update,context):
     if query.data == 'Filters':
         return keyboard_filters(query, context, True)
         #query.edit_message_text("#FEATURE FUNCTION",parse_mode='HTML')
+    if query.data == 'exe_filters':
+        query.edit_message_text("EXE FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
     # Close Menu
     if query.data == 'close':
         query.edit_message_text("You have closed the settings menu",parse_mode='HTML')
