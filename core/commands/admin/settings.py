@@ -45,7 +45,6 @@ def keyboard_settings(update,context,editkeyboard = False):
 def keyboard_filters(update,context,editkeyboard = False):
     bot = context.bot
     chat = update.message.chat_id
-    test = 1
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Exe Filters', callback_data='exe_filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
