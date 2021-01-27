@@ -1,6 +1,7 @@
 from core import decorators
 from core.utilities.menu import build_menu
 from languages.getLang import languages
+from core.commands.admin import set_lang
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
 from core.database.repository.group import GroupRepository
 from telegram.ext import CallbackQueryHandler
@@ -33,6 +34,7 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Welcome %s' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
     list_buttons.append(InlineKeyboardButton('Silence %s' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
+    list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Filters', callback_data='Filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
@@ -45,8 +47,11 @@ def keyboard_settings(update,context,editkeyboard = False):
 def keyboard_filters(update,context,editkeyboard = False):
     bot = context.bot
     chat = update.message.chat_id
+    group = GroupRepository().getById(chat)
     list_buttons = []
-    list_buttons.append(InlineKeyboardButton('Exe Filters', callback_data='exe_filters'))
+    list_buttons.append(InlineKeyboardButton('Exe Filters %s' % ('✅' if group['exe_filter'] == 1 else '❌'), callback_data='exe_filters'))
+    list_buttons.append(InlineKeyboardButton('Zip Filters', callback_data='zip_filters'))
+    list_buttons.append(InlineKeyboardButton('TarGZ Filters', callback_data='targz_filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
@@ -64,6 +69,7 @@ def init(update,context):
 @decorators.admin.user_admin
 def update_settings(update,context):
     bot = context.bot
+    languages(update,context)
     query = update.callback_query
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
@@ -93,9 +99,23 @@ def update_settings(update,context):
             return keyboard_settings(query,context,True)
     if query.data == 'Filters':
         return keyboard_filters(query, context, True)
-        #query.edit_message_text("#FEATURE FUNCTION",parse_mode='HTML')
     if query.data == 'exe_filters':
-        query.edit_message_text("EXE FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+        row = group['exe_filter']
+        if row == 0:
+            data = [(1, chat)]
+            GroupRepository().setExeFilter(data)
+            query.edit_message_text("<b>EXE FILTERS ACTIVATED!</b>",parse_mode='HTML')
+        else:
+            data = [(0, chat)]
+            GroupRepository().setExeFilter(data)
+            query.edit_message_text("<b>EXE FILTERS DEACTIVATED!</b>",parse_mode='HTML')
+    if query.data == 'zip_filters':
+        query.edit_message_text("ZIP FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+    if query.data == 'targz_filters':
+        query.edit_message_text("TARGZ FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+    if query.data == 'lang':
+        set_lang.init(update, context)
+        query.edit_message_text("You have closed the settings menu and open languages menu",parse_mode='HTML')
     # Close Menu
     if query.data == 'close':
-        query.edit_message_text("You have closed the settings menu",parse_mode='HTML')
+        query.edit_message_text(languages.close_menu_msg, parse_mode='HTML')

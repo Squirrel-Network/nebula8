@@ -12,6 +12,7 @@ def user_command(dsp):
     ### CommandHandler ###
     ######################
     function(CMH('start', public.start.init))
+    function(CMH('help', public.help.init))
     function(CMH('rules', public.rules.init))
     function(CMH('source', public.source.init))
 

@@ -9,9 +9,11 @@ LANGUAGE_KEYBOARD = [[
 
 @decorators.admin.user_admin
 def init(update,context):
+    bot = context.bot
+    chat = update.effective_message.chat_id
     reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
     msg = "Please select your preferred language\n\nPerfavore seleziona la tua lingua di preferenza"
-    update.message.reply_text(msg,reply_markup=reply_markup)
+    bot.send_message(chat,msg,reply_markup=reply_markup)
 
 @decorators.admin.user_admin
 def language_en(update, context):

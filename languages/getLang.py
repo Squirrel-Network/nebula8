@@ -38,4 +38,7 @@ def languages(update,context):
     languages.ban_user_error = setLang["BAN_USER_ERROR"]
     languages.say_error = setLang["SAY_MESSAGE"]
     languages.delete_error_msg = setLang["DELETE_MESSAGE"]
+    languages.close_menu_msg = setLang["CLOSE_SETTINGS"]
+    languages.main_menu_msg = setLang["MAIN_TEXT_SETTINGS"]
+    languages.welcome_set = setLang["WELCOME_SETTINGS"]
     return LANGUAGE
