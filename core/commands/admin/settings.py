@@ -97,6 +97,7 @@ def update_settings(update,context):
             GroupRepository().setSilence(data)
             bot.set_chat_permissions(update.effective_chat.id, permission_true)
             return keyboard_settings(query,context,True)
+    #Set Filters
     if query.data == 'Filters':
         return keyboard_filters(query, context, True)
     if query.data == 'exe_filters':

@@ -14,6 +14,7 @@ def user_command(dsp):
     function(CMH('start', public.start.init))
     function(CMH('help', public.help.init))
     function(CMH('rules', public.rules.init))
+    function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
 
 def admin_command(dsp):
