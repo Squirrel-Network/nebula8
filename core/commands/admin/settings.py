@@ -34,6 +34,7 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Welcome %s' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
     list_buttons.append(InlineKeyboardButton('Silence %s' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
+    list_buttons.append(InlineKeyboardButton('Block Entry %s' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Filters', callback_data='Filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
@@ -96,6 +97,17 @@ def update_settings(update,context):
             data = [(0,chat)]
             GroupRepository().setSilence(data)
             bot.set_chat_permissions(update.effective_chat.id, permission_true)
+            return keyboard_settings(query,context,True)
+    # Set Block Entry
+    if query.data == 'setBlockEntry':
+        row = group['block_new_member']
+        if row == 0:
+            data = [(0,1,chat)]
+            GroupRepository().set_block_entry(data)
+            return keyboard_settings(query,context,True)
+        else:
+            data = [(1,0,chat)]
+            GroupRepository().set_block_entry(data)
             return keyboard_settings(query,context,True)
     #Set Filters
     if query.data == 'Filters':

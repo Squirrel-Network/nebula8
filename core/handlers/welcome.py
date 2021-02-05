@@ -53,7 +53,8 @@ def save_group(update):
         default_max_warn = 3
         default_global_silence = 0
         default_exe_filter = 0
-        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter)]
+        default_block_user = 0
+        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter, default_block_user)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -101,8 +102,15 @@ def init(update, context):
 
     if group:
         row = group['set_welcome']
+        block_user = group['block_new_member']
     else:
         row = 1
+        block_user = 0
+
+    if row == 0 and block_user == 1:
+        for member in update.message.new_chat_members:
+            kick_user(update, context)
+            message(update, context, "<b>#Automatic Handler:</b> Kick User for group protection")
 
     if row == 1 and row is not None:
         for member in update.message.new_chat_members:

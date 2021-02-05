@@ -4,5 +4,6 @@ def init(fn):
     if message.chat.type == 'private':
       return fn(*args,**kwargs)
     else:
+      print("Private Only")
       return False
   return wrapper
