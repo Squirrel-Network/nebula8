@@ -22,6 +22,14 @@ def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
     return not not arabic
 
+def has_cirillic_character(string):
+    arabic = re.search(Regex.HAS_CIRILLIC, string)
+    return not not arabic
+
+def has_chinese_character(string):
+    arabic = re.search(Regex.HAS_CHINESE, string)
+    return not not arabic
+
 def save_user(member, chat):
     # Save the user in the database and check that it exists if it exists and has changed nickname overwrite
     user = UserRepository().getById(member.id)
@@ -132,6 +140,12 @@ def init(update, context):
             ban_user(update, context)
             message(update,context,"I got super banned <code>{}</code>".format(user_id))
         elif has_arabic_character(user_first):
+            ban_user(update, context)
+            message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+        elif has_cirillic_character(user_first):
+            ban_user(update, context)
+            message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+        elif has_chinese_character(user_first):
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
         else:
