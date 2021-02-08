@@ -11,3 +11,4 @@ def function_plugins(dsp):
     function(CMH('distro',plugins.distrowatch.init))
     function(CMH('google',plugins.google.init))
     function(CMH('mdn',plugins.mdn_search.init))
+    function(CMH('wiki',plugins.wikipedia.init))
