@@ -62,7 +62,11 @@ def save_group(update):
         default_global_silence = 0
         default_exe_filter = 0
         default_block_user = 0
-        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter, default_block_user)]
+        default_arabic_filter = 1
+        default_cirillic_filter = 1
+        default_chinese_filter = 1
+        default_user_profile_photo = 0
+        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter, default_block_user, default_arabic_filter, default_cirillic_filter, default_chinese_filter, default_user_profile_photo)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -111,9 +115,17 @@ def init(update, context):
     if group:
         row = group['set_welcome']
         block_user = group['block_new_member']
+        arabic_filter = group['set_arabic_filter']
+        cirillic_filter = group['set_cirillic_filter']
+        chinese_filter = group['set_chinese_filter']
+        user_profile_photo = group['set_user_profile_picture']
     else:
         row = 1
         block_user = 0
+        arabic_filter =  1
+        cirillic_filter = 1
+        chinese_filter = 1
+        user_profile_photo = 0
 
     if row == 0 and block_user == 1:
         for member in update.message.new_chat_members:
@@ -128,24 +140,32 @@ def init(update, context):
             chat_title = update.effective_chat.title
             chat_id = update.effective_chat.id
             bot = bot_object(update,context)
+            user_photo = member.get_profile_photos(member.id)
 
         if bot.id == user_id:
             welcome_bot(update, context)
             l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
             telegram_loggers(update,context,l_txt)
+        # Banned user because username field is empty
         elif user is None:
             kick_user(update, context)
             message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
+        elif user_photo.total_count == 0 and user_profile_photo == 1:
+            kick_user(update, context)
+            message(update,context,"<code>{}</code> set a profile picture! You were kicked for safety!".format(user_id))
         elif is_in_blacklist(user_id):
             ban_user(update, context)
             message(update,context,"I got super banned <code>{}</code>".format(user_id))
-        elif has_arabic_character(user_first):
+        # Banned user with arabic characters
+        elif has_arabic_character(user_first) and arabic_filter == 1:
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
-        elif has_cirillic_character(user_first):
+        # Banned user with cirillic characters
+        elif has_cirillic_character(user_first) and cirillic_filter == 1:
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
-        elif has_chinese_character(user_first):
+        # Banned user with chinese characters
+        elif has_chinese_character(user_first) and chinese_filter == 1:
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
         else:

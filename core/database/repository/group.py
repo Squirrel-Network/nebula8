@@ -26,7 +26,7 @@ class GroupRepository(Connection):
     def add(self, args=None):
         #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')
         #q = query.get_sql(quote_char=None)
-        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
     #TODO logic error
@@ -55,4 +55,20 @@ class GroupRepository(Connection):
 
     def set_block_entry(self, args=None):
         q = "UPDATE groups SET set_welcome = %s, block_new_member = %s WHERE id_group = %s"
+        return self._update(q, args)
+
+    def set_user_profile_photo(self, args=None):
+        q = "UPDATE groups SET set_user_profile_picture = %s WHERE id_group = %s"
+        return self._update(q, args)
+
+    def set_arabic_filter(self, args=None):
+        q = "UPDATE groups SET set_arabic_filter = %s WHERE id_group = %s"
+        return self._update(q, args)
+
+    def set_cirillic_filter(self, args=None):
+        q = "UPDATE groups SET set_cirillic_filter = %s WHERE id_group = %s"
+        return self._update(q, args)
+
+    def set_chinese_filter(self, args=None):
+        q = "UPDATE groups SET set_chinese_filter = %s WHERE id_group = %s"
         return self._update(q, args)

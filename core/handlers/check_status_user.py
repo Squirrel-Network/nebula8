@@ -13,7 +13,9 @@ def check_status(update,context):
     user_db = UserRepository().getById(user.id)
     get_superban = SuperbanRepository().getById(get_superban_user_id)
     default_count_warn = 0
-    #get_group = GroupRepository().getById(chat.id)
+    get_group = GroupRepository().getById(chat.id)
+    user_photo = user.get_profile_photos(user.id)
+    user_set_photo = get_group['set_user_profile_picture']
     #warn_count = user_db['warn_count'] if user_db is not None else 0
     #max_warn = get_group['max_warn']
     #if warn_count == max_warn:
@@ -24,6 +26,10 @@ def check_status(update,context):
     if user.username is None or "":
         kick_user(update, context)
         msg = "#Automatic Handler\n<code>{}</code> set a username! You were kicked for safety!"
+        message(update,context,msg.format(user.id))
+    if user_photo.total_count == 0 and user_set_photo == 1:
+        kick_user(update, context)
+        msg = "#Automatic Handler\n<code>{}</code> set a profile picture! You were kicked for safety!"
         message(update,context,msg.format(user.id))
     if user_db:
         username = "@"+user.username

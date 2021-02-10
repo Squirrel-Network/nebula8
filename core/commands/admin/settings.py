@@ -34,9 +34,13 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Welcome %s' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
     list_buttons.append(InlineKeyboardButton('Silence %s' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
-    list_buttons.append(InlineKeyboardButton('Block Entry %s' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
+    list_buttons.append(InlineKeyboardButton('Deny All Entry %s' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
+    list_buttons.append(InlineKeyboardButton('No User Photo Entry %s' % ('✅' if group['set_user_profile_picture'] == 1 else '❌'), callback_data='userPhoto'))
+    list_buttons.append(InlineKeyboardButton('No Arabic Entry %s' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
+    list_buttons.append(InlineKeyboardButton('No Russian Entry %s' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
+    list_buttons.append(InlineKeyboardButton('No Chinese Entry %s' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
-    list_buttons.append(InlineKeyboardButton('Filters', callback_data='Filters'))
+    list_buttons.append(InlineKeyboardButton('Chat Filters', callback_data='Filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
@@ -83,7 +87,9 @@ def update_settings(update,context):
             return keyboard_settings(query,context,True)
         else:
             data = [(1,chat)]
+            data_block = [(1,0,chat)]
             GroupRepository().SetWelcome(data)
+            GroupRepository().set_block_entry(data_block)
             return keyboard_settings(query,context,True)
     # Set Global Silence
     if query.data == 'setSilence':
@@ -109,7 +115,56 @@ def update_settings(update,context):
             data = [(1,0,chat)]
             GroupRepository().set_block_entry(data)
             return keyboard_settings(query,context,True)
-    #Set Filters
+
+    ###################################
+    ####  SET WELCOME FILTERS      ####
+    ###################################
+    # Set Block Arabic Entry
+    if query.data == 'arabic':
+        row = group['set_arabic_filter']
+        if row == 1:
+            data = [(0,chat)]
+            GroupRepository().set_arabic_filter(data)
+            return keyboard_settings(query,context,True)
+        else:
+            data = [(1,chat)]
+            GroupRepository().set_arabic_filter(data)
+            return keyboard_settings(query,context,True)
+    # Set Block Cirillic Entry
+    if query.data == 'cirillic':
+        row = group['set_cirillic_filter']
+        if row == 1:
+            data = [(0,chat)]
+            GroupRepository().set_cirillic_filter(data)
+            return keyboard_settings(query,context,True)
+        else:
+            data = [(1,chat)]
+            GroupRepository().set_cirillic_filter(data)
+            return keyboard_settings(query,context,True)
+    if query.data == 'chinese':
+        row = group['set_chinese_filter']
+        if row == 1:
+            data = [(0,chat)]
+            GroupRepository().set_chinese_filter(data)
+            return keyboard_settings(query,context,True)
+        else:
+            data = [(1,chat)]
+            GroupRepository().set_chinese_filter(data)
+            return keyboard_settings(query,context,True)
+    if query.data == 'userPhoto':
+        row = group['set_user_profile_picture']
+        if row == 1:
+            data = [(0,chat)]
+            GroupRepository().set_user_profile_photo(data)
+            return keyboard_settings(query,context,True)
+        else:
+            data = [(1,chat)]
+            GroupRepository().set_user_profile_photo(data)
+            return keyboard_settings(query,context,True)
+
+    ###################################
+    ####     SET CHAT FILTERS      ####
+    ###################################
     if query.data == 'Filters':
         return keyboard_filters(query, context, True)
     if query.data == 'exe_filters':
