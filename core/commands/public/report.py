@@ -1,5 +1,5 @@
 from core.handlers.logs import telegram_loggers, staff_loggers
-from core.utilities.message import message, reply_message
+from core.utilities.message import reply_message
 from core.utilities.strings import Strings
 
 def init(update,context):

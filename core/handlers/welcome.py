@@ -6,8 +6,6 @@
 import re
 import json
 from config import Config
-from core import decorators
-from languages.getLang import languages
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
 from core.database.repository.superban import SuperbanRepository

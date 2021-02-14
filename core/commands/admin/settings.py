@@ -4,7 +4,6 @@ from languages.getLang import languages
 from core.commands.admin import set_lang
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
 from core.database.repository.group import GroupRepository
-from telegram.ext import CallbackQueryHandler
 
 permission_false = ChatPermissions(
     can_send_messages=False,
