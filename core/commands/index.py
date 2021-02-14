@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 
 from core.commands import public ,admin, owner
-from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH,MessageHandler as MH,Filters)
+from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 
 def user_command(dsp):
     function = dsp.add_handler
@@ -29,6 +29,7 @@ def admin_command(dsp):
     function(CMH('warn', admin.warn.init))
     function(CMH('info', admin.user_info.init))
     function(CMH('say', admin.say.init))
+    function(CMH('welcome', admin.set_welcome.init))
     function(CMH('settings', admin.settings.init))
     function(CMH('delete', admin.delete_message.init))
     #############################

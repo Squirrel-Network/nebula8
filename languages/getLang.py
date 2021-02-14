@@ -41,4 +41,6 @@ def languages(update,context):
     languages.close_menu_msg = setLang["CLOSE_SETTINGS"]
     languages.main_menu_msg = setLang["MAIN_TEXT_SETTINGS"]
     languages.welcome_set = setLang["WELCOME_SETTINGS"]
+    languages.set_welcome_main = setLang["SET_MAIN_WELCOME"]
+    languages.set_welcome_help = setLang["WELCOME_MAIN_HELP_SET"]
     return LANGUAGE

@@ -72,3 +72,7 @@ class GroupRepository(Connection):
     def set_chinese_filter(self, args=None):
         q = "UPDATE groups SET set_chinese_filter = %s WHERE id_group = %s"
         return self._update(q, args)
+
+    def update_group_welcome(self, args=None):
+        q = "UPDATE groups SET welcome_text = %s WHERE id_group = %s"
+        return self._update(q, args)

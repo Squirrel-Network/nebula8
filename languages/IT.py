@@ -13,5 +13,7 @@ Italian =	{
   "DELETE_MESSAGE": "Devi utilizzare questo comando in risposta ad un messaggio!",
   "CLOSE_SETTINGS": "Hai chiuso il menu impostazioni del bot!",
   "MAIN_TEXT_SETTINGS": "Menu Impostazioni del bot",
-  "WELCOME_SETTINGS": "Benvenuto %s"
+  "WELCOME_SETTINGS": "Benvenuto %s",
+  "SET_MAIN_WELCOME": "<b>Istruzioni per il benvenuto del Gruppo:</b>\nDovete utilizzare il comando in questo modo <code>/welcome args</code>\ndove args è il testo che dovete inserire\nè possibilie utilizzare dei tag speciali che vengono interpretati dal bot:\n<code>{username} = username utente\n{chat} = nome del gruppo\n{first_name} = nome utente</code>\nè possibile utilizzare anche i tag HTML\n<code>b , i, code</code>\ne possono essere usate anche le Emoji\n\n<b>ESEMPIO:</b>\n<code>Benvenuto {username} in {chat}</code>",
+  "WELCOME_MAIN_HELP_SET": "Ho modificato il welcome del gruppo!\nse vuoi un aiuto digita <code>/welcome</code> senza nessun messaggio"
 }
