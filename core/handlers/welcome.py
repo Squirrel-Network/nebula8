@@ -64,7 +64,8 @@ def save_group(update):
         default_cirillic_filter = 1
         default_chinese_filter = 1
         default_user_profile_photo = 0
-        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter, default_block_user, default_arabic_filter, default_cirillic_filter, default_chinese_filter, default_user_profile_photo)]
+        default_gif_filter = 0
+        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter, default_block_user, default_arabic_filter, default_cirillic_filter, default_chinese_filter, default_user_profile_photo, default_gif_filter)]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):

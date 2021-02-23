@@ -54,6 +54,7 @@ def keyboard_filters(update,context,editkeyboard = False):
     group = GroupRepository().getById(chat)
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Exe Filters %s' % ('✅' if group['exe_filter'] == 1 else '❌'), callback_data='exe_filters'))
+    list_buttons.append(InlineKeyboardButton('GIF Filters %s' % ('✅' if group['gif_filter'] == 1 else '❌'), callback_data='gif_filters'))
     list_buttons.append(InlineKeyboardButton('Zip Filters', callback_data='zip_filters'))
     list_buttons.append(InlineKeyboardButton('TarGZ Filters', callback_data='targz_filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
@@ -180,6 +181,19 @@ def update_settings(update,context):
         query.edit_message_text("ZIP FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
     if query.data == 'targz_filters':
         query.edit_message_text("TARGZ FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+    if query.data == 'gif_filters':
+        row = group['gif_filter']
+        if row == 0:
+            data = [(1, chat)]
+            GroupRepository().setGifFilter(data)
+            query.edit_message_text("<b>GIF FILTERS ACTIVATED!</b>",parse_mode='HTML')
+        else:
+            data = [(0, chat)]
+            GroupRepository().setGifFilter(data)
+            query.edit_message_text("<b>GIF FILTERS DEACTIVATED!</b>",parse_mode='HTML')
+    ###################################
+    ####     SET CHAT LANGUAGE     ####
+    ###################################
     if query.data == 'lang':
         set_lang.init(update, context)
         query.edit_message_text("You have closed the settings menu and open languages menu",parse_mode='HTML')

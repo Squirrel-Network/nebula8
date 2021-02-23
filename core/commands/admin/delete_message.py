@@ -4,6 +4,8 @@ from core.utilities.functions import delete_message_reply
 from core.utilities.message import message
 
 @decorators.admin.user_admin
+@decorators.bot.check_is_admin
+@decorators.bot.check_can_delete
 @decorators.delete.init
 def init(update,context):
     languages(update,context)

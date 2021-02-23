@@ -31,8 +31,9 @@ def init(update, context):
         if msg.document.mime_type == exe and group['exe_filter'] == 1:
             delete_message(update,context)
             message(update, context, "#Automatic Filter Handler: <b>No EXE Allowed!</b>")
-        if msg.document.mime_type == gif:
-            print("NO GIF ALLOWED")
+        if msg.document.mime_type == gif and group['gif_filter'] == 1:
+            delete_message(update,context)
+            message(update, context, "#Automatic Filter Handler: <b>No GIF Allowed!</b>")
         if msg.document.mime_type == jpg:
             print("NO JPG ALLOWED")
         if msg.document.mime_type == mp3:

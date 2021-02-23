@@ -2,15 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import os
 from config import Config
 from functools import wraps
 from telegram import Chat, ChatMember
 
-DEL_CMDS = bool(os.environ.get("DEL_CMDS", False))
 LIST_OF_ADMINS = list(Config.SUPERADMIN.values())
 
-#New Function
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if chat.type == 'private' \
             or user_id in LIST_OF_ADMINS \
@@ -31,10 +28,7 @@ def user_admin(func):
         elif not user:
             pass
 
-        elif DEL_CMDS and " " not in update.effective_message.text:
-            update.effective_message.delete()
-
         else:
-            update.effective_message.reply_text("Non sei un amministratore!")
+            print("Unauthorized access denied for {}.".format(user.id))
 
     return is_admin

@@ -8,7 +8,9 @@ from core.utilities.message import message
 from core import decorators
 
 @decorators.admin.user_admin
+@decorators.bot.check_is_admin
 @decorators.public.init
+@decorators.bot.check_can_delete
 @decorators.delete.init
 def init(update, context):
     languages(update,context)
