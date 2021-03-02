@@ -16,6 +16,7 @@ def user_command(dsp):
     function(CMH('rules', public.rules.init))
     function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
+    function(CMH('report', public.report.global_report))
 
 def admin_command(dsp):
     function = dsp.add_handler
