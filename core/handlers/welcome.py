@@ -17,7 +17,6 @@ from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 
 OWNER_LIST = list(Config.OWNER.values())
-print(OWNER_LIST)
 
 def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
