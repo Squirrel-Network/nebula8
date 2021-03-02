@@ -16,6 +16,9 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 
+OWNER_LIST = list(Config.OWNER.values())
+print(OWNER_LIST)
+
 def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
     return not not arabic
@@ -65,7 +68,24 @@ def save_group(update):
         default_chinese_filter = 1
         default_user_profile_photo = 0
         default_gif_filter = 0
-        data = [(chat,default_welcome,default_buttons,default_rules,default_community,default_lang,default_set_welcome,default_max_warn,default_global_silence,default_exe_filter, default_block_user, default_arabic_filter, default_cirillic_filter, default_chinese_filter, default_user_profile_photo, default_gif_filter)]
+
+        data = [(
+            chat,default_welcome,
+            default_buttons,
+            default_rules,
+            default_community,
+            default_lang,
+            default_set_welcome,
+            default_max_warn,
+            default_global_silence,
+            default_exe_filter,
+            default_block_user,
+            default_arabic_filter,
+            default_cirillic_filter,
+            default_chinese_filter,
+            default_user_profile_photo,
+            default_gif_filter
+            )]
         GroupRepository().add(data)
 
 def is_in_blacklist(uid):
@@ -154,7 +174,7 @@ def init(update, context):
             message(update,context,"<code>{}</code> set a profile picture! You were kicked for safety!".format(user_id))
         elif is_in_blacklist(user_id):
             ban_user(update, context)
-            message(update,context,"I got super banned <code>{}</code>".format(user_id))
+            message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a>'.format(user_id,user_first))
         # Banned user with arabic characters
         elif has_arabic_character(user_first) and arabic_filter == 1:
             ban_user(update, context)
@@ -167,6 +187,8 @@ def init(update, context):
         elif has_chinese_character(user_first) and chinese_filter == 1:
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+        elif user_id in OWNER_LIST:
+            message(update, context, 'The bot operator <a href="tg://user?id={}">{}</a> has just joined the group'.format(user_id,user_first))
         else:
             save_user(member, chat_id)
             welcome_user(update,context,member)
