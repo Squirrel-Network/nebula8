@@ -14,7 +14,7 @@ def check_status(update, context):
         GroupRepository().update(data)
         message(update,context,"<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
 
-    if update.effective_message.group_chat_created is not None:
+    if update.effective_message.group_chat_created == True or update.effective_message.supergroup_chat_created == True:
         welcome_bot(update,context)
         l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
         telegram_loggers(update,context,l_txt)
