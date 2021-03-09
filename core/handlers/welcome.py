@@ -52,7 +52,6 @@ def save_group(update):
         #data = [(chat,chat)]
         #GroupRepository().update(data)
     else:
-        print("SAVE GROUP")
         default_welcome = Config.DEFAULT_WELCOME.format("{username}","{chat}")
         default_buttons = ""
         default_rules = Config.DEFAULT_RULES
