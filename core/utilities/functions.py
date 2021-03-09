@@ -4,8 +4,11 @@
 # Copyright SquirrelNetwork
 
 import time
-
 from core.database.repository.user import UserRepository
+
+#######################
+### USER FUNCTIONS ####
+#######################
 
 #Ban a user
 def ban_user(update,context):
@@ -43,6 +46,10 @@ def kick_user(update,context):
     kick_temp = bot.kick_chat_member(chat, update.message.from_user.id,until_date=int(time.time()+30))
     return kick_temp
 
+##########################
+### MESSAGE FUNCTIONS  ###
+##########################
+
 #Delete a message
 def delete_message(update, context):
     bot = context.bot
@@ -58,9 +65,10 @@ def delete_message_reply(update,context):
     delete = bot.delete_message(chat, update.message.reply_to_message.message_id)
     return delete
 
-##############################
-###Object entity definition###
-##############################
+################################
+### OBJECT ENTITY DEFINITION ###
+################################
+
 def bot_object(update,context):
     bot = context.bot
     return bot

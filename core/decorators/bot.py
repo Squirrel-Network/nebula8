@@ -27,7 +27,7 @@ def check_can_delete(func):
         get_bot = bot.getChatMember(chat,bot.id)
         perm_delete = get_bot.can_delete_messages
         print(perm_delete)
-        if perm_delete is not False:
+        if perm_delete is not False or not None:
             print("can_delete")
         else:
             update.effective_message.reply_text("I can't delete messages here!\nMake sure I'm admin and can delete other user's messages.")

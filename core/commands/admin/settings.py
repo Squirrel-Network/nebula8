@@ -67,6 +67,7 @@ def keyboard_filters(update,context,editkeyboard = False):
 
 @decorators.public.init
 @decorators.admin.user_admin
+@decorators.bot.check_is_admin
 @decorators.delete.init
 def init(update,context):
     keyboard_settings(update,context)

@@ -13,6 +13,6 @@ def core_handlers(dsp):
 
 def group_handlers(update,context):
     handlers.check_status_user.check_status(update, context)
-    handlers.migrate_chat.init(update, context)
+    handlers.check_status_chat.check_status(update, context)
     public.report.init(update,context)
     handlers.filters_chat.init(update, context)

@@ -4,6 +4,7 @@ from core.utilities.message import reply_message, message
 from core.utilities.strings import Strings
 from core.utilities.functions import chat_object
 
+@decorators.public.init
 def init(update,context):
     chat = update.effective_chat
     if str(update.effective_message.text).lower().startswith("@admin"):

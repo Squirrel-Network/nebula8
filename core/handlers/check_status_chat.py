@@ -1,0 +1,20 @@
+from core.utilities.message import message
+from core.handlers.welcome import welcome_bot
+from core.handlers.logs import telegram_loggers
+from core.database.repository.group import GroupRepository
+
+def check_status(update, context):
+    chat_title = update.effective_chat.title
+    chat_id = update.effective_chat.id
+
+    if update.effective_message.migrate_from_chat_id is not None:
+        old_chat_id = update.message.migrate_from_chat_id
+        new_chat_id = update.message.chat.id
+        data = [(new_chat_id, old_chat_id)]
+        GroupRepository().update(data)
+        message(update,context,"<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
+
+    if update.effective_message.group_chat_created is not None:
+        welcome_bot(update,context)
+        l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
+        telegram_loggers(update,context,l_txt)
