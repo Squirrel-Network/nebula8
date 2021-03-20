@@ -56,6 +56,7 @@ cat "/opt/service/scripts/templates/config.tmp.py" \
     | sed "s;%DEFAULT_LOG_CHANNEL%;$DEFAULT_LOG_CHANNEL;g" \
     | sed "s;%DEFAULT_STAFF_GROUP%;$DEFAULT_STAFF_GROUP;g" \
     \
+    | sed "s;%OPENWEATHER_API%;$OPENWEATHER_API;g" \
     | sed "s;%ENABLE_PLUGINS%;$ENABLE_PLUGINS;g" \
     | sed "s;%DEFAULT_LANGUAGE%;$DEFAULT_LANGUAGE;g" \
     | sed "s;%VERSION%;$VERSION;g" \

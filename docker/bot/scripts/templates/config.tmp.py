@@ -20,6 +20,7 @@ class Config(object):
      ###########################
      ##   PROJECT SETTINGS   ##
      ##########################
+     OPENWEATHER_API = '%OPENWEATHER_API%'
      ENABLE_PLUGINS = %ENABLE_PLUGINS%
      DEFAULT_LANGUAGE = "%DEFAULT_LANGUAGE%"
      VERSION = '%VERSION%'

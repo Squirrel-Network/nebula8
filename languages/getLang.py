@@ -43,4 +43,5 @@ def languages(update,context):
     languages.welcome_set = setLang["WELCOME_SETTINGS"]
     languages.set_welcome_main = setLang["SET_MAIN_WELCOME"]
     languages.set_welcome_help = setLang["WELCOME_MAIN_HELP_SET"]
+    languages.weather_message = setLang["WEATHER_MSG"]
     return LANGUAGE

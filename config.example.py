@@ -31,9 +31,7 @@ class Config(object):
      ###########################
      ##   PROJECT SETTINGS   ##
      ##########################
-     DEVS = {
-          'foo': 123456789
-     }
+     OPENWEATHER_API = 'Insert Token'
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
      VERSION = '8.0.0'
