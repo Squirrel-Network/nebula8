@@ -17,6 +17,10 @@ def user_command(dsp):
     function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
     function(CMH('report', public.report.global_report))
+    #############################
+    ### CallbackQuery Handler ###
+    #############################
+    function(CQH(owner.superban.update_superban))
 
 def admin_command(dsp):
     function = dsp.add_handler

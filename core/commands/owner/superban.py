@@ -4,33 +4,78 @@
 # Copyright SquirrelNetwork
 import datetime
 from core import decorators
+from core.utilities.menu import build_menu
 from core.utilities.message import message
+from telegram.error import BadRequest
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
 from core.handlers.logs import sys_loggers,telegram_loggers
 from core.utilities.strings import Strings
 from core.utilities.functions import ban_user_reply,delete_message_reply
 
+save_date = datetime.datetime.utcnow().isoformat()
+
 @decorators.owner.init
 @decorators.delete.init
-def init(update,context):
-    motivation = update.message.text[2:].strip()
-    reply = update.message.reply_to_message
-    if reply is not None:
-        if motivation != "":
-            user_id = reply.from_user.id
-            save_date = datetime.datetime.utcnow().isoformat()
-            operator_id = update.message.from_user.id
+def init(update, context):
+    bot = context.bot
+    text = update.message.text
+    chat = update.effective_chat.id
+    operator_id = update.message.from_user.id
+    buttons = []
+    buttons.append(InlineKeyboardButton('Spam', callback_data='mSpam'))
+    buttons.append(InlineKeyboardButton('Scam', callback_data='mScam'))
+    buttons.append(InlineKeyboardButton('Userbot', callback_data='mUserbot'))
+    buttons.append(InlineKeyboardButton('Porn', callback_data='mPorn'))
+    buttons.append(InlineKeyboardButton('Other', callback_data='mOther'))
+    menu = build_menu(buttons,2)
+    if update.message.reply_to_message:
+        user_id = update.message.reply_to_message.from_user.id
+        update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
+    else:
+        user_id = text[2:].strip()
+        try:
+            if user_id != "":
+                default_motivation = "Other"
+                data = [(user_id,default_motivation,save_date,operator_id)]
+                SuperbanRepository().add(data)
+                bot.kick_chat_member(chat, user_id)
+                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id)
+                message(update,context,msg)
+                logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_id)
+                telegram_loggers(update,context,logs_text)
+                formatter = "Superban eseguito da: {}".format(operator_id)
+                sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+            else:
+                message(update,context,"Attention you can not superbanned without entering an ID!")
+        except BadRequest:
+            message(update,context,"Attention the user id you entered does not exist!")
+
+@decorators.owner.init
+def update_superban(update, context):
+    bot = context.bot
+    query = update.callback_query
+    if query.data.startswith("m"):
+        #Variables
+        chat_id = query.message.chat_id
+        operator_id = query.from_user.id
+        user_id = query.message.reply_to_message.from_user.id
+        motivation = query.data[1:]
+        row = SuperbanRepository().getById(user_id)
+        if row:
+            text = "Attention already superbanned user!"
+            query.edit_message_text(text, parse_mode='HTML')
+        else:
             data = [(user_id,motivation,save_date,operator_id)]
             SuperbanRepository().add(data)
-            ban_user_reply(update,context)
-            delete_message_reply(update,context)
+            #Kick the User
+            bot.kick_chat_member(chat_id, user_id)
+            #Telegram Logs
             logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
-            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere'.format(user_id,user_id)
-            message(update,context,msg)
             telegram_loggers(update,context,logs_text)
-            formatter = "Superban eseguito da: {}".format(update.message.from_user.id)
+            #Edit Message Text after push the button
+            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id)
+            query.edit_message_text(msg, parse_mode='HTML')
+            #System Logs
+            formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
-        else:
-            message(update,context,"You need to specify a reason for the <b>superban!</b>")
-    else:
-        message(update,context,"You must use this command in response to a user!")
