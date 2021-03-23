@@ -28,6 +28,7 @@ def init(update, context):
     buttons.append(InlineKeyboardButton('Userbot', callback_data='mUserbot'))
     buttons.append(InlineKeyboardButton('Porn', callback_data='mPorn'))
     buttons.append(InlineKeyboardButton('Other', callback_data='mOther'))
+    buttons.append(InlineKeyboardButton('Close', callback_data='close'))
     menu = build_menu(buttons,2)
     if update.message.reply_to_message:
         user_id = update.message.reply_to_message.from_user.id
@@ -79,3 +80,5 @@ def update_superban(update, context):
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+    if query.data == 'close':
+        query.edit_message_text("You have closed the Menu", parse_mode='HTML')

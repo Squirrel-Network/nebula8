@@ -17,10 +17,6 @@ def user_command(dsp):
     function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
     function(CMH('report', public.report.global_report))
-    #############################
-    ### CallbackQuery Handler ###
-    #############################
-    function(CQH(owner.superban.update_superban))
 
 def admin_command(dsp):
     function = dsp.add_handler
@@ -44,6 +40,7 @@ def admin_command(dsp):
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
     function(CQH(admin.settings.update_settings))
+    function(CQH(owner.superban.update_superban))
 
 def owner_command(dsp):
     function = dsp.add_handler
