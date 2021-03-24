@@ -11,7 +11,6 @@ def sendWeatherMessage(update,context,city,mintemp,maxtemp,humidity,icon):
     msg = message(update,context,stringMessage)
     return msg
 
-@decorators.bot.check_is_admin
 @decorators.delete.init
 def init(update, context):
     text = update.message.text[8:].strip().capitalize()

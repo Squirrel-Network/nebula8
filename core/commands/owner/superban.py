@@ -11,7 +11,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
 from core.handlers.logs import sys_loggers,telegram_loggers
 from core.utilities.strings import Strings
-from core.utilities.functions import ban_user_reply,delete_message_reply
 
 save_date = datetime.datetime.utcnow().isoformat()
 
@@ -71,12 +70,12 @@ def update_superban(update, context):
             SuperbanRepository().add(data)
             #Kick the User
             bot.kick_chat_member(chat_id, user_id)
-            #Telegram Logs
-            logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
-            telegram_loggers(update,context,logs_text)
             #Edit Message Text after push the button
             msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id)
             query.edit_message_text(msg, parse_mode='HTML')
+            #Telegram Logs
+            logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
+            telegram_loggers(update,context,logs_text)
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
