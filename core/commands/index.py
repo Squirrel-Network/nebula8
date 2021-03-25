@@ -38,6 +38,7 @@ def admin_command(dsp):
     ### CallbackQuery Handler ###
     #############################
     function(CQH(owner.superban.update_superban, pattern='m'))
+    function(CQH(owner.superban.update_superban, pattern='closeMenu'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
     function(CQH(admin.settings.update_settings))
