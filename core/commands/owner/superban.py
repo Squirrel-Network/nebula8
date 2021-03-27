@@ -17,10 +17,12 @@ save_date = datetime.datetime.utcnow().isoformat()
 @decorators.owner.init
 @decorators.delete.init
 def init(update, context):
+    #Variables
     bot = context.bot
     text = update.message.text
     chat = update.effective_chat.id
     operator_id = update.message.from_user.id
+    #Build a Keyboard Buttons
     buttons = []
     buttons.append(InlineKeyboardButton('Spam', callback_data='mSpam'))
     buttons.append(InlineKeyboardButton('Scam', callback_data='mScam'))
@@ -33,7 +35,8 @@ def init(update, context):
         user_id = update.message.reply_to_message.from_user.id
         update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
     else:
-        user_id = text[2:].strip()
+        input_user_id = text[2:].strip().split(" ", 1)
+        user_id = input_user_id[0]
         try:
             if user_id != "":
                 default_motivation = "Other"

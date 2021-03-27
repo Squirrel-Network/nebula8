@@ -14,17 +14,14 @@ def check_status(update,context):
     get_superban = SuperbanRepository().getById(get_superban_user_id)
     default_count_warn = 0
     get_group = GroupRepository().getById(chat.id)
+    get_user = UserRepository().getUserByGroup([user.id,chat.id])
+    warn_count = get_user['warn_count'] if get_user is not None else 0
+    max_warn = get_group['max_warn']
     user_photo = user.get_profile_photos(user.id)
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']
     else:
         user_set_photo = 0
-    #warn_count = user_db['warn_count'] if user_db is not None else 0
-    #max_warn = get_group['max_warn']
-    #if warn_count == max_warn:
-        #ban_user(update,context)
-        #msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
-        #message(update,context,msg.format(user.id))
 
     if user.username is None or "":
         kick_user(update, context)
@@ -52,3 +49,7 @@ def check_status(update,context):
         message(update,context,msg)
         delete_message(update,context)
         ban_user(update,context)
+    if warn_count == max_warn:
+        ban_user(update,context)
+        msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
+        message(update,context,msg.format(user.id))

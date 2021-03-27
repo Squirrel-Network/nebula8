@@ -25,7 +25,6 @@ def init(update, context):
             maxtemp = temp['temp_max']
             humidity = w.humidity
             status = w.status
-            print(status)
             if status == 'Clear':
                 sendWeatherMessage(update,context,text,mintemp,maxtemp,humidity,'☀️')
             elif status == 'Clouds':

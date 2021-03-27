@@ -5,6 +5,7 @@
 
 import time
 from core.database.repository.user import UserRepository
+from telegram import ChatPermissions
 
 #######################
 ### USER FUNCTIONS ####
@@ -26,6 +27,7 @@ def ban_user_reply(update,context):
     ban = bot.kick_chat_member(chat,user.id)
     return ban
 
+#Ban a user by Username
 def ban_user_by_username(update, context, username):
     bot = context.bot
     chat = update.effective_chat.id
@@ -33,6 +35,7 @@ def ban_user_by_username(update, context, username):
     ban = bot.kick_chat_member(chat, user['tg_id'])
     return ban
 
+#Ban a user by telegram_id
 def ban_user_by_id(update, context, id):
     bot = context.bot
     chat = update.effective_chat.id
@@ -45,6 +48,68 @@ def kick_user(update,context):
     chat = update.effective_chat.id
     kick_temp = bot.kick_chat_member(chat, update.message.from_user.id,until_date=int(time.time()+30))
     return kick_temp
+
+#Mute/Unmute User
+def mute_user(update, context, value):
+    bot = context.bot
+    chat = update.effective_chat.id
+    user = update.message.from_user.id
+    if value == True:
+        mute = bot.restrict_chat_member(chat,user,ChatPermissions(
+            can_send_messages=False,
+            can_send_media_messages=False,
+            can_send_other_messages=False,
+            can_add_web_page_previews=False)
+            )
+    else:
+        mute = bot.restrict_chat_member(chat,user,ChatPermissions(
+            can_send_messages=True,
+            can_send_media_messages=True,
+            can_send_other_messages=True,
+            can_add_web_page_previews=True)
+            )
+    return mute
+
+#Mute/Unmute User in response
+def mute_user_reply(update, context, value):
+    bot = context.bot
+    chat = update.effective_chat.id
+    user = update.message.reply_to_message.from_user
+    if value == True:
+        mute = bot.restrict_chat_member(chat,user.id,ChatPermissions(
+            can_send_messages=False,
+            can_send_media_messages=False,
+            can_send_other_messages=False,
+            can_add_web_page_previews=False)
+            )
+    else:
+        mute = bot.restrict_chat_member(chat,user.id,ChatPermissions(
+            can_send_messages=True,
+            can_send_media_messages=True,
+            can_send_other_messages=True,
+            can_add_web_page_previews=True)
+            )
+    return mute
+
+#Mute/Unmute User by telegram_id
+def mute_user_by_id(update, context, user, value):
+    bot = context.bot
+    chat = update.effective_chat.id
+    if value == True:
+        mute = bot.restrict_chat_member(chat,user,ChatPermissions(
+            can_send_messages=False,
+            can_send_media_messages=False,
+            can_send_other_messages=False,
+            can_add_web_page_previews=False)
+            )
+    else:
+        mute = bot.restrict_chat_member(chat,user,ChatPermissions(
+            can_send_messages=True,
+            can_send_media_messages=True,
+            can_send_other_messages=True,
+            can_add_web_page_previews=True)
+            )
+    return mute
 
 ##########################
 ### MESSAGE FUNCTIONS  ###
