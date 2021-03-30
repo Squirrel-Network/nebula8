@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 
 from core.commands import public ,admin, owner
-from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
+from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH, MessageHandler as MH)
 
 def user_command(dsp):
     function = dsp.add_handler
@@ -53,5 +53,5 @@ def owner_command(dsp):
     function(CMH('s', owner.superban.init, run_async=True))
     function(CMH('server', owner.server_info.init))
     function(CMH('community', owner.add_community.init))
-    function(CMH('test', owner.test.init))
+    #function(MH(None, owner.test.init))
     function(CMH('exit', owner.exit.init))

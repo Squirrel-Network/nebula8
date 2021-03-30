@@ -3,13 +3,14 @@
 
 # Copyright SquirrelNetwork
 import datetime
+from config import Config
 from core import decorators
 from core.utilities.menu import build_menu
-from core.utilities.message import message
+from core.utilities.message import message, messageWithId
 from telegram.error import BadRequest
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
-from core.handlers.logs import sys_loggers,telegram_loggers
+from core.handlers.logs import sys_loggers
 from core.utilities.strings import Strings
 
 save_date = datetime.datetime.utcnow().isoformat()
@@ -46,7 +47,7 @@ def init(update, context):
                 msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id)
                 message(update,context,msg)
                 logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_id)
-                telegram_loggers(update,context,logs_text)
+                messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
                 formatter = "Superban eseguito da: {}".format(operator_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
             else:
@@ -78,7 +79,7 @@ def update_superban(update, context):
             query.edit_message_text(msg, parse_mode='HTML')
             #Telegram Logs
             logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
-            telegram_loggers(update,context,logs_text)
+            messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
