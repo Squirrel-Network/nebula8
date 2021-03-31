@@ -53,7 +53,7 @@ def set_log_channel(update,context):
         if chat.type == 'channel' and str(update.effective_message.text).lower().startswith("/setlog"):
             msg.reply_text("Now, forward the /setlog to the group you want to tie this channel to!")
 
-        elif msg.forward_from_chat:
+        elif msg.forward_from_chat and msg.text == '/setlog':
             data = [(msg.forward_from_chat.id, chat.id)]
             GroupRepository().update_log_channel(data)
             try:
@@ -70,7 +70,7 @@ def set_log_channel(update,context):
                 if excp.message == "Forbidden: bot is not a member of the channel chat":
                     message(update,context, "Successfully set log channel!")
                 else:
-                    print("ERROR in setting the log channel.")
+                    message(update,context,"ERROR in setting the log channel.")
 
             message(update,context, "Successfully set log channel!")
 
