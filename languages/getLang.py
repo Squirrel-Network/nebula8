@@ -15,7 +15,7 @@ def get(update, context):
     else:
         return row['languages']
 
-def languages(update,context):
+def languages(update, context):
     LANGUAGE = get(update,context)
 
     if LANGUAGE == "" or LANGUAGE is None:
@@ -44,4 +44,5 @@ def languages(update,context):
     languages.set_welcome_main = setLang["SET_MAIN_WELCOME"]
     languages.set_welcome_help = setLang["WELCOME_MAIN_HELP_SET"]
     languages.weather_message = setLang["WEATHER_MSG"]
+    languages.report_msg = setLang["REPORT_ADMIN_MSG"]
     return LANGUAGE
