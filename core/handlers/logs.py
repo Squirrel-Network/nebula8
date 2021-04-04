@@ -50,10 +50,13 @@ def staff_loggers(update,context,msg = ""):
 def set_log_channel(update,context):
         msg = update.effective_message
         chat = update.effective_chat
+        user = update.effective_user
+        if user is not None:
+            member = chat.get_member(user.id)
         if chat.type == 'channel' and str(update.effective_message.text).lower().startswith("/setlog"):
             msg.reply_text("Now, forward the /setlog to the group you want to tie this channel to!")
 
-        elif msg.forward_from_chat and msg.text == '/setlog':
+        elif msg.forward_from_chat and msg.text == '/setlog' and member.status == 'creator':
             data = [(msg.forward_from_chat.id, chat.id)]
             GroupRepository().update_log_channel(data)
             try:
@@ -79,4 +82,5 @@ def set_log_channel(update,context):
                 msg.reply_text("The steps to set a log channel are:\n"
                                " - add bot to the desired channel\n"
                                " - send /setlog to the channel\n"
-                               " - forward the /setlog to the group\n")
+                               " - forward the /setlog to the group\n"
+                               " - You need to be a creator of the group")
