@@ -84,3 +84,7 @@ class GroupRepository(Connection):
     def update_log_channel(self, args=None):
         q = "UPDATE groups SET log_channel = %s WHERE id_group = %s"
         return self._update(q, args)
+
+    def update_group_settings(self, record, args=None):
+        q = "UPDATE groups SET @record = %s WHERE id_group = %s".replace('@record',record)
+        return self._update(q, args)
