@@ -1,5 +1,6 @@
 from core import decorators
 from core.utilities.menu import build_menu
+from core.utilities.functions import update_db_settings
 from languages.getLang import languages
 from core.commands.admin import set_lang
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
@@ -81,28 +82,26 @@ def update_settings(update,context):
     group = GroupRepository().getById(chat)
     # Set Welcome
     if query.data == 'setWelcome':
+        record = GroupRepository.SET_WELCOME
         row = group['set_welcome']
         if row == 1:
-            data = [(0,chat)]
-            GroupRepository().SetWelcome(data)
+            update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
         else:
-            data = [(1,chat)]
             data_block = [(1,0,chat)]
-            GroupRepository().SetWelcome(data)
+            update_db_settings(update, record, False)
             GroupRepository().set_block_entry(data_block)
             return keyboard_settings(query,context,True)
     # Set Global Silence
     if query.data == 'setSilence':
+        record = GroupRepository.SET_SILENCE
         row = group['set_silence']
         if row == 0:
-            data = [(1,chat)]
-            GroupRepository().setSilence(data)
+            update_db_settings(update, record, False)
             bot.set_chat_permissions(update.effective_chat.id, permission_false)
             return keyboard_settings(query,context,True)
         else:
-            data = [(0,chat)]
-            GroupRepository().setSilence(data)
+            update_db_settings(update, record, True)
             bot.set_chat_permissions(update.effective_chat.id, permission_true)
             return keyboard_settings(query,context,True)
     # Set Block Entry
@@ -122,45 +121,41 @@ def update_settings(update,context):
     ###################################
     # Set Block Arabic Entry
     if query.data == 'arabic':
+        record = GroupRepository.SET_ARABIC
         row = group['set_arabic_filter']
         if row == 1:
-            data = [(0,chat)]
-            GroupRepository().set_arabic_filter(data)
+            update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
         else:
-            data = [(1,chat)]
-            GroupRepository().set_arabic_filter(data)
+            update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
     # Set Block Cirillic Entry
     if query.data == 'cirillic':
+        record = GroupRepository.SET_CIRILLIC
         row = group['set_cirillic_filter']
         if row == 1:
-            data = [(0,chat)]
-            GroupRepository().set_cirillic_filter(data)
+            update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
         else:
-            data = [(1,chat)]
-            GroupRepository().set_cirillic_filter(data)
+            update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
     if query.data == 'chinese':
+        record = GroupRepository.SET_CHINESE
         row = group['set_chinese_filter']
         if row == 1:
-            data = [(0,chat)]
-            GroupRepository().set_chinese_filter(data)
+            update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
         else:
-            data = [(1,chat)]
-            GroupRepository().set_chinese_filter(data)
+            update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
     if query.data == 'userPhoto':
+        record = GroupRepository.SET_USER_PROFILE_PICT
         row = group['set_user_profile_picture']
         if row == 1:
-            data = [(0,chat)]
-            GroupRepository().set_user_profile_photo(data)
+            update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
         else:
-            data = [(1,chat)]
-            GroupRepository().set_user_profile_photo(data)
+            update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
 
     ###################################
@@ -169,28 +164,28 @@ def update_settings(update,context):
     if query.data == 'Filters':
         return keyboard_filters(query, context, True)
     if query.data == 'exe_filters':
+        record = GroupRepository.EXE_FILTER
         row = group['exe_filter']
         if row == 0:
-            data = [(1, chat)]
-            GroupRepository().setExeFilter(data)
+            update_db_settings(update, record, False)
             query.edit_message_text("<b>EXE FILTERS ACTIVATED!</b>",parse_mode='HTML')
         else:
-            data = [(0, chat)]
-            GroupRepository().setExeFilter(data)
+            update_db_settings(update, record, True)
             query.edit_message_text("<b>EXE FILTERS DEACTIVATED!</b>",parse_mode='HTML')
     if query.data == 'zip_filters':
         query.edit_message_text("ZIP FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+
     if query.data == 'targz_filters':
         query.edit_message_text("TARGZ FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+
     if query.data == 'gif_filters':
+        record = GroupRepository.GIF_FILTER
         row = group['gif_filter']
         if row == 0:
-            data = [(1, chat)]
-            GroupRepository().setGifFilter(data)
+            update_db_settings(update, record, False)
             query.edit_message_text("<b>GIF FILTERS ACTIVATED!</b>",parse_mode='HTML')
         else:
-            data = [(0, chat)]
-            GroupRepository().setGifFilter(data)
+            update_db_settings(update, record, True)
             query.edit_message_text("<b>GIF FILTERS DEACTIVATED!</b>",parse_mode='HTML')
     ###################################
     ####     SET CHAT LANGUAGE     ####

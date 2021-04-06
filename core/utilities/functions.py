@@ -5,6 +5,7 @@
 
 import time
 from core.database.repository.user import UserRepository
+from core.database.repository.group import GroupRepository
 from telegram import ChatPermissions
 
 #######################
@@ -129,6 +130,20 @@ def delete_message_reply(update,context):
     chat = update.effective_chat.id
     delete = bot.delete_message(chat, update.message.reply_to_message.message_id)
     return delete
+
+##########################
+###   GROUP FUNCTIONS  ###
+##########################
+
+def update_db_settings(update,record, options):
+    chat = update.effective_message.chat_id
+    if options == True:
+        data = [(0,chat)]
+        upd = GroupRepository().update_group_settings(record, data)
+    else:
+        data = [(1,chat)]
+        upd = GroupRepository().update_group_settings(record, data)
+    return upd
 
 ################################
 ### OBJECT ENTITY DEFINITION ###

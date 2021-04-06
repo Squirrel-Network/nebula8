@@ -9,6 +9,7 @@ from config import Config
 from telegram.error import BadRequest, Unauthorized
 from core.utilities.message import messageWithId, message
 from core.database.repository.group import GroupRepository
+from core.utilities.functions import update_db_settings
 
 def sys_loggers(name="",message="",debugs = False,info = False,warning = False,errors = False, critical = False):
     logger = logging.getLogger(name)
@@ -51,6 +52,7 @@ def set_log_channel(update,context):
         msg = update.effective_message
         chat = update.effective_chat
         user = update.effective_user
+        record = GroupRepository.SET_LOG_CHANNEL
         if user is not None:
             member = chat.get_member(user.id)
         if chat.type == 'channel' and str(update.effective_message.text).lower().startswith("/setlog"):
@@ -58,7 +60,7 @@ def set_log_channel(update,context):
 
         elif msg.forward_from_chat and msg.text == '/setlog' and member.status == 'creator':
             data = [(msg.forward_from_chat.id, chat.id)]
-            GroupRepository().update_log_channel(data)
+            GroupRepository().update_group_settings(record, data)
             try:
                 msg.delete()
             except BadRequest as excp:

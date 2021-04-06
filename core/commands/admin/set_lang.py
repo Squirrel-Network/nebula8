@@ -7,6 +7,8 @@ LANGUAGE_KEYBOARD = [[
     InlineKeyboardButton("IT", callback_data='language_it')
     ]]
 
+record = GroupRepository.SET_LANGUAGE
+
 @decorators.admin.user_admin
 def init(update,context):
     bot = context.bot
@@ -23,7 +25,7 @@ def language_en(update, context):
     query.answer()
     lang = "EN"
     data = [(lang,chat)]
-    GroupRepository().update_language(data)
+    GroupRepository().update_group_settings(record, data)
     query.edit_message_text(msg,parse_mode='HTML')
 
 @decorators.admin.user_admin
@@ -34,5 +36,5 @@ def language_it(update, context):
     query.answer()
     lang = "IT"
     data = [(lang,chat)]
-    GroupRepository().update_language(data)
+    GroupRepository().update_group_settings(record, data)
     query.edit_message_text(msg,parse_mode='HTML')
