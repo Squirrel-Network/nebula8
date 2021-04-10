@@ -22,7 +22,7 @@ def ban_error(update, context, username = None, id = None):
 def ban_success(update, context, chat, username = None, id = None):
 	languages(update,context)
 	message(update,context,languages.user_ban % (username if username is not None else id))
-	logs_text = "<b>#Log User Banned!</b>\nGroup: {}\nUser: {}".format(chat.id,username or id)
+	logs_text = "<b>#Log User Banned!</b>\nGroup: {}\nUser: {}".format(chat.title,username or id)
 	telegram_loggers(update,context,logs_text)
 
 @decorators.admin.user_admin
@@ -65,7 +65,7 @@ def init(update, context):
 
 		is_user_id = Try.of(lambda: int(ban_argument)).valueOf() is not None
 
-		if ban_argument[0] is '@':
+		if ban_argument[0] == '@':
 			username = ban_argument
 
 			Try.of(lambda: ban_user_by_username(update, context, username)) \

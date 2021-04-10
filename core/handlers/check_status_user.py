@@ -16,7 +16,7 @@ def check_status(update,context):
     get_group = GroupRepository().getById(chat.id)
     get_user = UserRepository().getUserByGroup([user.id,chat.id])
     warn_count = get_user['warn_count'] if get_user is not None else 0
-    max_warn = get_group['max_warn']
+    max_warn = get_group['max_warn'] if get_group is not None else 3
     user_photo = user.get_profile_photos(user.id)
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']

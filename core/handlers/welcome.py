@@ -70,7 +70,8 @@ def save_group(update):
         default_log_channel = Config.DEFAULT_LOG_CHANNEL
 
         data = [(
-            chat,default_welcome,
+            chat,
+            default_welcome,
             default_buttons,
             default_rules,
             default_community,
@@ -161,7 +162,7 @@ def init(update, context):
             chat_id = update.effective_chat.id
             bot = bot_object(update,context)
             user_photo = member.get_profile_photos(member.id)
-
+        # Welcome the bot when it is added
         if bot.id == user_id:
             welcome_bot(update, context)
             l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
@@ -170,9 +171,11 @@ def init(update, context):
         elif user is None:
             kick_user(update, context)
             message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
+        # They ban the user because he doesn't have a profile picture
         elif user_photo.total_count == 0 and user_profile_photo == 1:
             kick_user(update, context)
             message(update,context,"<code>{}</code> set a profile picture! You were kicked for safety!".format(user_id))
+        # They ban the user because he is blacklisted
         elif is_in_blacklist(user_id):
             ban_user(update, context)
             message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a>'.format(user_id,user_first))
@@ -188,8 +191,10 @@ def init(update, context):
         elif has_chinese_character(user_first) and chinese_filter == 1:
             ban_user(update, context)
             message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+        # Welcome for bot owner
         elif user_id in OWNER_LIST:
             message(update, context, 'The bot operator <a href="tg://user?id={}">{}</a> has just joined the group'.format(user_id,user_first))
         else:
             save_user(member, chat_id)
+            save_group(update)
             welcome_user(update,context,member)

@@ -22,6 +22,7 @@ def init(update, context):
             row['id_group'],
             row['welcome_text'],
             row['rules_text'],
-            row['languages']))
+            row['languages'],
+            row['max_warn']))
     else:
         save_group(update)

@@ -8,7 +8,10 @@ def init(update, context):
     arg = update.message.text[5:]
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
-    lang = group['languages']
+    if group is None:
+        lang = 'EN'
+    else:
+        lang = group['languages']
     wiki.set_lang(lang.lower())
     try:
         pg = wiki.page(wiki.search(arg)[0])
