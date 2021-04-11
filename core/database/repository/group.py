@@ -12,8 +12,10 @@ class GroupRepository(Connection):
     SET_ARABIC = "set_arabic_filter"
     SET_CHINESE = "set_chinese_filter"
     SET_CIRILLIC = "set_cirillic_filter"
+    SET_RULES_TEXT = "rules_text"
     SET_WELCOME_TEXT = "welcome_text"
     SET_LOG_CHANNEL = "log_channel"
+    SET_MAX_WARN = "max_warn"
     # Filters
     EXE_FILTER = "exe_filter"
     GIF_FILTER = "gif_filter"

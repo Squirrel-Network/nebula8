@@ -10,6 +10,8 @@ from core.utilities.functions import user_reply_object, chat_object
 from core.utilities.functions import ban_user_reply
 from core.utilities.message import message
 from core.handlers.logs import telegram_loggers
+from core.utilities.menu import build_menu
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -47,3 +49,35 @@ def init(update,context):
     else:
         ban_user_reply(update,context)
         message(update,context,"User @{} has reached the maximum number\n of warns in the {} group and has been banned".format(user.username,chat.title))
+
+
+
+@decorators.admin.user_admin
+@decorators.delete.init
+def set_warn(update, context):
+    bot = context.bot
+    chat = update.effective_message.chat_id
+    buttons = []
+    buttons.append(InlineKeyboardButton('2', callback_data='w2'))
+    buttons.append(InlineKeyboardButton('3', callback_data='w3'))
+    buttons.append(InlineKeyboardButton('4', callback_data='w4'))
+    buttons.append(InlineKeyboardButton('5', callback_data='w5'))
+    buttons.append(InlineKeyboardButton('6', callback_data='w6'))
+    buttons.append(InlineKeyboardButton('7', callback_data='w7'))
+    buttons.append(InlineKeyboardButton('8', callback_data='w8'))
+    buttons.append(InlineKeyboardButton('9', callback_data='w9'))
+    buttons.append(InlineKeyboardButton('10', callback_data='w10'))
+    menu = build_menu(buttons,3)
+    bot.send_message(chat,"Warn Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML' )
+
+@decorators.admin.user_admin
+def update_set_warn(update, context):
+    query = update.callback_query
+    if query.data.startswith("w"):
+        chat_id = query.message.chat_id
+        warn_limit = query.data[1:]
+        record = GroupRepository.SET_MAX_WARN
+        data = [(warn_limit,chat_id)]
+        GroupRepository().update_group_settings(record, data)
+        text = "You have changed the maximum number\nof warns in this group to <code>{}</code>".format(warn_limit)
+        query.edit_message_text(text, parse_mode='HTML')

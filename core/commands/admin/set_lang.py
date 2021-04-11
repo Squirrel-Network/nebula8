@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import decorators
 from core.database.repository.group import GroupRepository
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup

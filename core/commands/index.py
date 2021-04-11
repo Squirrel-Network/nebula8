@@ -33,12 +33,15 @@ def admin_command(dsp):
     function(CMH('say', admin.say.init))
     function(CMH('welcome', admin.set_welcome.init))
     function(CMH('settings', admin.settings.init))
+    function(CMH('setwarn', admin.warn.set_warn))
+    function(CMH('setrules', admin.set_rules.init))
     function(CMH('delete', admin.delete_message.init))
     #############################
     ### CallbackQuery Handler ###
     #############################
     function(CQH(owner.superban.update_superban, pattern='m'))
     function(CQH(owner.superban.update_superban, pattern='closeMenu'))
+    function(CQH(admin.warn.update_set_warn, pattern='w'))
     function(CQH(admin.mute.update_mute, pattern='unmute'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
