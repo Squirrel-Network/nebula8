@@ -26,7 +26,7 @@ class UserRepository(Connection):
         return self._selectAll(q, args)
 
     def add(self, args=None):
-        q = "INSERT INTO users (tg_id, tg_username, warn_count) VALUES (%s,%s,%s)"
+        q = "INSERT IGNORE INTO users (tg_id, tg_username, created_at, updated_at) VALUES (%s,%s,%s,%s)"
         return self._insert(q, args)
 
     def add_into_mtm(self, args=None):
@@ -34,7 +34,7 @@ class UserRepository(Connection):
         return self._insert(q, args)
 
     def update(self, args=None):
-        q = "UPDATE users SET tg_username = %s WHERE tg_id = %s"
+        q = "UPDATE users SET tg_username = %s, updated_at = %s WHERE tg_id = %s"
         return self._update(q, args)
 
     def updateWarn(self, args=None):

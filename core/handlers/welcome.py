@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-
+import datetime
 import re
 import json
 from config import Config
@@ -35,11 +35,12 @@ def save_user(member, chat):
     user = UserRepository().getById(member.id)
     username = "@"+member.username
     default_count_warn = 0
+    current_time = datetime.datetime.utcnow().isoformat()
     if user:
-        data = [(username,member.id)]
+        data = [(username,current_time,member.id)]
         UserRepository().update(data)
     else:
-        data = [(member.id,username,default_count_warn)]
+        data = [(member.id,username,current_time,current_time)]
         UserRepository().add(data)
     data_mtm = [(member.id, chat, default_count_warn)]
     UserRepository().add_into_mtm(data_mtm)
@@ -162,39 +163,38 @@ def init(update, context):
             chat_id = update.effective_chat.id
             bot = bot_object(update,context)
             user_photo = member.get_profile_photos(member.id)
-        # Welcome the bot when it is added
-        if bot.id == user_id:
-            welcome_bot(update, context)
-            l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
-            telegram_loggers(update,context,l_txt)
-        # Banned user because username field is empty
-        elif user is None:
-            kick_user(update, context)
-            message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
-        # They ban the user because he doesn't have a profile picture
-        elif user_photo.total_count == 0 and user_profile_photo == 1:
-            kick_user(update, context)
-            message(update,context,"<code>{}</code> set a profile picture! You were kicked for safety!".format(user_id))
-        # They ban the user because he is blacklisted
-        elif is_in_blacklist(user_id):
-            ban_user(update, context)
-            message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a>'.format(user_id,user_first))
-        # Banned user with arabic characters
-        elif has_arabic_character(user_first) and arabic_filter == 1:
-            ban_user(update, context)
-            message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
-        # Banned user with cirillic characters
-        elif has_cirillic_character(user_first) and cirillic_filter == 1:
-            ban_user(update, context)
-            message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
-        # Banned user with chinese characters
-        elif has_chinese_character(user_first) and chinese_filter == 1:
-            ban_user(update, context)
-            message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
-        # Welcome for bot owner
-        elif user_id in OWNER_LIST:
-            message(update, context, 'The bot operator <a href="tg://user?id={}">{}</a> has just joined the group'.format(user_id,user_first))
-        else:
-            save_user(member, chat_id)
-            save_group(update)
-            welcome_user(update,context,member)
+            # Welcome the bot when it is added
+            if bot.id == user_id:
+                l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
+                telegram_loggers(update,context,l_txt)
+                welcome_bot(update, context)
+            # Banned user because username field is empty
+            elif user is None:
+                kick_user(update, context)
+                message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
+            # They ban the user because he is blacklisted
+            elif is_in_blacklist(user_id):
+                ban_user(update, context)
+                message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a>'.format(user_id,user_first))
+            # They ban the user because he doesn't have a profile picture
+            elif user_photo.total_count == 0 and user_profile_photo == 1:
+                kick_user(update, context)
+                message(update,context,"<code>{}</code> set a profile picture! You were kicked for safety!".format(user_id))
+            # Banned user with arabic characters
+            elif has_arabic_character(user_first) and arabic_filter == 1:
+                ban_user(update, context)
+                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+            # Banned user with cirillic characters
+            elif has_cirillic_character(user_first) and cirillic_filter == 1:
+                ban_user(update, context)
+                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+            # Banned user with chinese characters
+            elif has_chinese_character(user_first) and chinese_filter == 1:
+                ban_user(update, context)
+                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+            # Welcome for bot owner
+            elif user_id in OWNER_LIST:
+                message(update, context, 'The bot operator <a href="tg://user?id={}">{}</a> has just joined the group'.format(user_id,user_first))
+            else:
+                save_user(member, chat_id)
+                welcome_user(update,context,member)

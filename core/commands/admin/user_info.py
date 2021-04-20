@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-
+import datetime
 from core import decorators
 from core.utilities.message import PrivateMessage
 from core.utilities.functions import user_reply_object, chat_object
@@ -16,10 +16,11 @@ def init(update, context):
     chat = chat_object(update)
     user_db = UserRepository().getById(user.id)
     get_warn = UserRepository().getUserByGroup([user.id,chat.id])
+    current_time = datetime.datetime.utcnow().isoformat()
     default_warn = 0
     if user_db:
         username = "@"+user.username
-        data = [(username,user.id)]
+        data = [(username,current_time,user.id)]
         UserRepository().update(data)
         warn_count = get_warn['warn_count']
         data_mtm = [(user.id, chat.id, default_warn)]
@@ -28,7 +29,7 @@ def init(update, context):
         PrivateMessage(update,context,msg)
     else:
         username = "@"+user.username
-        data = [(user.id,username,default_warn)]
+        data = [(user.id,username,current_time,current_time)]
         UserRepository().add(data)
         data_mtm = [(user.id, chat.id, default_warn)]
         UserRepository().add_into_mtm(data_mtm)
