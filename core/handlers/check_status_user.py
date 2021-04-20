@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+import datetime
 from core import decorators
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
@@ -18,6 +23,7 @@ def check_status(update,context):
     warn_count = get_user['warn_count'] if get_user is not None else 0
     max_warn = get_group['max_warn'] if get_group is not None else 3
     user_photo = user.get_profile_photos(user.id)
+    current_time = datetime.datetime.utcnow().isoformat()
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']
     else:
@@ -33,14 +39,13 @@ def check_status(update,context):
         message(update,context,msg.format(user.id))
     if user_db:
         username = "@"+user.username
-        data = [(username,user.id)]
+        data = [(username,current_time,user.id)]
         UserRepository().update(data)
         data_mtm = [(user.id, chat.id, default_count_warn)]
         UserRepository().add_into_mtm(data_mtm)
     if user_db is None or "":
         username = "@"+user.username
-        default_warn = 0
-        data = [(user.id,username,default_warn)]
+        data = [(user.id,username,current_time,current_time)]
         UserRepository().add(data)
         data_mtm = [(user.id, chat.id, default_count_warn)]
         UserRepository().add_into_mtm(data_mtm)
