@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-
+import datetime
 from core import decorators
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
@@ -22,13 +22,14 @@ def init(update,context):
     get_group = GroupRepository().getById(chat.id)
     warn_count = get_user['warn_count'] if get_user is not None else 0
     max_warn = get_group['max_warn']
+    current_time = datetime.datetime.utcnow().isoformat()
     default_warn = 1
 
     if warn_count != max_warn:
         if get_user:
             default_warn_count = 0
             username = "@"+user.username
-            data = [(username,user.id)]
+            data = [(username,current_time,user.id)]
             UserRepository().update(data)
             data_mtm = [(user.id, chat.id, default_warn_count)]
             UserRepository().add_into_mtm(data_mtm)
@@ -39,7 +40,7 @@ def init(update,context):
             telegram_loggers(update,context,log_txt)
         else:
             username = "@"+user.username
-            data = [(user.id,username,default_warn)]
+            data = [(user.id,username,current_time,current_time)]
             UserRepository().add(data)
             data_mtm = [(user.id, chat.id, default_warn)]
             UserRepository().add_into_mtm(data_mtm)
