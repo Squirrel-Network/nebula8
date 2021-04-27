@@ -6,6 +6,7 @@ from core.database.repository.group import GroupRepository
 def check_status(update, context):
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
+    record_title = GroupRepository.SET_GROUP_NAME
 
     if update.effective_message.migrate_from_chat_id is not None:
         old_chat_id = update.message.migrate_from_chat_id
@@ -18,3 +19,7 @@ def check_status(update, context):
         welcome_bot(update,context)
         l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
         telegram_loggers(update,context,l_txt)
+
+    if update.effective_message.new_chat_title:
+        data = [(chat_title,chat_id)]
+        GroupRepository().update_group_settings(record_title,data)

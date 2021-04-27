@@ -47,11 +47,12 @@ def save_user(member, chat):
 
 def save_group(update):
     chat = update.effective_message.chat_id
+    chat_title = update.effective_chat.title
+    record = GroupRepository.SET_GROUP_NAME
     group = GroupRepository().getById(chat)
     if group:
-        print('update group')
-        #data = [(chat,chat)]
-        #GroupRepository().update(data)
+        data = [(chat_title, chat)]
+        GroupRepository().update_group_settings(record, data)
     else:
         default_welcome = Config.DEFAULT_WELCOME.format("{username}","{chat}")
         default_buttons = ""
@@ -72,6 +73,7 @@ def save_group(update):
 
         data = [(
             chat,
+            chat_title,
             default_welcome,
             default_buttons,
             default_rules,

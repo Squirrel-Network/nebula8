@@ -5,6 +5,7 @@ groups = Table("groups")
 
 class GroupRepository(Connection):
     ###### Column constants of the table ######
+    SET_GROUP_NAME = "group_name"
     SET_WELCOME = "set_welcome"
     SET_SILENCE = "set_silence"
     SET_LANGUAGE = "languages"
@@ -42,7 +43,7 @@ class GroupRepository(Connection):
     def add(self, args=None):
         #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')
         #q = query.get_sql(quote_char=None)
-        q = "INSERT INTO groups (id_group, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, log_channel) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        q = "INSERT INTO groups (id_group, group_name, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, log_channel) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
     #TODO logic error
