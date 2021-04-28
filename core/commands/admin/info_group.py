@@ -16,9 +16,14 @@ from core import decorators
 def init(update, context):
     languages(update,context)
     chat = update.effective_message.chat_id
+    chat_title = update.effective_chat.title
+    record = GroupRepository.SET_GROUP_NAME
     row = GroupRepository().getById([chat])
     if row:
+        data = [(chat_title, chat)]
+        GroupRepository().update_group_settings(record, data)
         message(update,context,languages.group_info.format(
+            row['group_name'],
             row['id_group'],
             row['welcome_text'],
             row['rules_text'],
