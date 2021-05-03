@@ -13,3 +13,4 @@ def function_plugins(dsp):
     function(CMH('mdn',plugins.mdn_search.init))
     function(CMH('wiki',plugins.wikipedia.init))
     function(CMH('weather',plugins.weather.init))
+    function(CMH('inspire',plugins.inspire.init))

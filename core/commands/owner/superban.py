@@ -23,6 +23,7 @@ def init(update, context):
     text = update.message.text
     chat = update.effective_chat.id
     operator_id = update.message.from_user.id
+    operator_username = "@"+update.message.from_user.username
     #Build a Keyboard Buttons
     buttons = []
     buttons.append(InlineKeyboardButton('Spam', callback_data='mSpam'))
@@ -44,9 +45,9 @@ def init(update, context):
                 data = [(user_id,default_motivation,save_date,operator_id)]
                 SuperbanRepository().add(data)
                 bot.kick_chat_member(chat, user_id)
-                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id)
+                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id,default_motivation)
                 message(update,context,msg)
-                logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_id)
+                logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
                 messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
                 formatter = "Superban eseguito da: {}".format(operator_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
@@ -63,10 +64,15 @@ def update_superban(update, context):
         #Variables
         chat_id = query.message.chat_id
         operator_id = query.from_user.id
+        operator_username = "@"+query.from_user.username
         user_id = query.message.reply_to_message.from_user.id
         motivation = query.data[1:]
         row = SuperbanRepository().getById(user_id)
-        if row:
+        whitelist = SuperbanRepository().getWhitelistById(user_id)
+        if whitelist:
+            text_w = "This user is whitelisted you cannot blacklist!"
+            query.edit_message_text(text_w, parse_mode='HTML')
+        elif row:
             text = "Attention already superbanned user!"
             query.edit_message_text(text, parse_mode='HTML')
         else:
@@ -75,10 +81,10 @@ def update_superban(update, context):
             #Kick the User
             bot.kick_chat_member(chat_id, user_id)
             #Edit Message Text after push the button
-            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id)
+            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id,motivation)
             query.edit_message_text(msg, parse_mode='HTML')
             #Telegram Logs
-            logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_id)
+            logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_username,operator_id)
             messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
