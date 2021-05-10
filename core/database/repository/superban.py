@@ -17,6 +17,10 @@ class SuperbanRepository(Connection):
 
         return self._select(q, args)
 
+    def addWhitelist(self, args=None):
+        q = "INSERT IGNORE INTO whitelist_table(tg_id, tg_username) VALUES (%s,%s)"
+        return self._insert(q, args)
+
     def getAll(self, args=None):
         query = Query.from_(superban).select("user_id").where(superban.user_id == '%s')
         q = query.get_sql(quote_char=None)

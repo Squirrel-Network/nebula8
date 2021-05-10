@@ -11,4 +11,4 @@ def init(update,context):
     url = r"http://inspirobot.me/api?generate=true"
     get = requests.get(url)
     img = get.text
-    bot.sendPhoto(chat_id=update.effective_chat.id, photo=img)
+    bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption="Want another one? click /inspire")
