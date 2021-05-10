@@ -9,14 +9,14 @@ commonmark==0.9.1
 cryptography==3.3.2
 decorator==4.4.2
 idna==2.10
-psutil==5.7.3
+psutil==5.8.0
 pycparser==2.20
 Pygments==2.7.4
 PyMySQL==0.10.1
 pyowm==3.2.0
 PyPika==0.42.1
 PySocks==1.7.1
-python-telegram-bot==13.1
+python-telegram-bot==13.5
 pytz==2020.4
 requests==2.24.0
 rich==7.1.0
