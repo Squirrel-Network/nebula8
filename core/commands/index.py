@@ -35,6 +35,7 @@ def admin_command(dsp):
     function(CMH('settings', admin.settings.init))
     function(CMH('setwarn', admin.warn.set_warn))
     function(CMH('setrules', admin.set_rules.init))
+    function(CMH('usearch', admin.user_search.init))
     function(CMH('delete', admin.delete_message.init))
     #############################
     ### CallbackQuery Handler ###

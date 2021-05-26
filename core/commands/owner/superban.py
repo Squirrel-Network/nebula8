@@ -39,22 +39,18 @@ def init(update, context):
     else:
         input_user_id = text[2:].strip().split(" ", 1)
         user_id = input_user_id[0]
-        try:
-            if user_id != "":
-                default_motivation = "Other"
-                data = [(user_id,default_motivation,save_date,operator_id)]
-                SuperbanRepository().add(data)
-                bot.kick_chat_member(chat, user_id)
-                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id,default_motivation)
-                message(update,context,msg)
-                logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
-                messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
-                formatter = "Superban eseguito da: {}".format(operator_id)
-                sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
-            else:
-                message(update,context,"Attention you can not superbanned without entering an ID!")
-        except BadRequest:
-            message(update,context,"Attention the user id you entered does not exist!")
+        if user_id != "":
+            default_motivation = "Other"
+            data = [(user_id,default_motivation,save_date,operator_id)]
+            SuperbanRepository().add(data)
+            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id,default_motivation)
+            message(update,context,msg)
+            logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
+            messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
+            formatter = "Superban eseguito da: {}".format(operator_id)
+            sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+        else:
+            message(update,context,"Attention you can not superbanned without entering an ID!")
 
 @decorators.owner.init
 def update_superban(update, context):
