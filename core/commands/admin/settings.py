@@ -39,6 +39,7 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('No Arabic Entry %s' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
     list_buttons.append(InlineKeyboardButton('No Russian Entry %s' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
     list_buttons.append(InlineKeyboardButton('No Chinese Entry %s' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
+    list_buttons.append(InlineKeyboardButton('CAS BAN %s' % ('✅' if group['set_cas_ban'] == 1 else '❌'), callback_data='casban'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Chat Filters', callback_data='Filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
@@ -114,6 +115,15 @@ def update_settings(update,context):
         else:
             data = [(1,0,chat)]
             GroupRepository().set_block_entry(data)
+            return keyboard_settings(query,context,True)
+    if query.data == 'casban':
+        record = GroupRepository.SET_CAS_BAN
+        row = group['set_cas_ban']
+        if row == 0:
+            update_db_settings(update, record, False)
+            return keyboard_settings(query,context,True)
+        else:
+            update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
 
     ###################################

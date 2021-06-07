@@ -69,6 +69,7 @@ def save_group(update):
         default_chinese_filter = 1
         default_user_profile_photo = 0
         default_gif_filter = 0
+        default_set_cas_ban = 1
         default_log_channel = Config.DEFAULT_LOG_CHANNEL
 
         data = [(
@@ -89,6 +90,7 @@ def save_group(update):
             default_chinese_filter,
             default_user_profile_photo,
             default_gif_filter,
+            default_set_cas_ban,
             default_log_channel
             )]
         GroupRepository().add(data)
