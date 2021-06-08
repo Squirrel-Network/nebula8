@@ -11,38 +11,36 @@ from core.database.repository.superban import SuperbanRepository
 from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message
 from core.utilities.message import message
 
+#Constants
 API_CAS = 'https://api.cas.chat/check?user_id={}'
+DEFAULT_COUNT_WARN = 0
 
 @decorators.public.init
 def check_status(update,context):
-    # Variables
+    # Telegram Variables
     chat = chat_object(update)
     user = user_object(update)
-
     get_superban_user_id = update.effective_user.id
-
-    user_db = UserRepository().getById(user.id)
-
-    get_superban = SuperbanRepository().getById(get_superban_user_id)
-
-    default_count_warn = 0
-
-    get_group = GroupRepository().getById(chat.id)
-
-    get_user = UserRepository().getUserByGroup([user.id,chat.id])
-
-    warn_count = get_user['warn_count'] if get_user is not None else 0
-
-    max_warn = get_group['max_warn'] if get_group is not None else 3
-
     user_photo = user.get_profile_photos(user.id)
 
+    #Get Group via Database
+    get_group = GroupRepository().getById(chat.id)
+    #Get User via Database
+    user_db = UserRepository().getById(user.id)
+    #Get User via Database in Many to Many Association
+    get_user = UserRepository().getUserByGroup([user.id,chat.id])
+    #Get User in Superban Table
+    get_superban = SuperbanRepository().getById(get_superban_user_id)
+    #Get User Warn
+    warn_count = get_user['warn_count'] if get_user is not None else 0
+    #Get Max Warn in group
+    max_warn = get_group['max_warn'] if get_group is not None else 3
+    #Get the Current Time
     current_time = datetime.datetime.utcnow().isoformat()
 
+    #CAS BAN Variables
     api_cas =  requests.get(API_CAS.format(get_superban_user_id))
-
     response = api_cas.json()
-
     cas_ban = response["ok"]
 
     if get_group:
@@ -64,13 +62,13 @@ def check_status(update,context):
         username = "@"+user.username
         data = [(username,current_time,user.id)]
         UserRepository().update(data)
-        data_mtm = [(user.id, chat.id, default_count_warn)]
+        data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
         UserRepository().add_into_mtm(data_mtm)
     if user_db is None or "":
         username = "@"+user.username
         data = [(user.id,username,current_time,current_time)]
         UserRepository().add(data)
-        data_mtm = [(user.id, chat.id, default_count_warn)]
+        data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
         UserRepository().add_into_mtm(data_mtm)
     if get_superban:
         msg = '#Automatic Handler\nI got super banned <a href="tg://user?id={}">{}</a>'.format(user.id,user.first_name)

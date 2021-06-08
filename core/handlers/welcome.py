@@ -5,6 +5,7 @@
 import datetime
 import re
 import json
+import requests
 from config import Config
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
@@ -15,8 +16,20 @@ from core.utilities.functions import kick_user, ban_user, bot_object
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
+from core.utilities.strings import Strings
 
 OWNER_LIST = list(Config.OWNER.values())
+API_CAS = 'https://api.cas.chat/check?user_id={}'
+
+#CAS BAN Variables
+def cas_ban_check(string):
+    api_cas =  requests.get(API_CAS.format(string))
+    response = api_cas.json()
+    cas_ban = response["ok"]
+    if cas_ban == True:
+        return True
+    else:
+        return False
 
 def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
@@ -129,9 +142,8 @@ def welcome_user(update, context, member):
 
 
 def welcome_bot(update, context):
-    msg = "Please select your language => /lang \n\nRemember to make me administrator to work properly"
     save_group(update)
-    update.message.reply_text(msg)
+    update.message.reply_text(Strings.WELCOME_BOT.format(Config.VERSION,Config.VERSION_NAME))
 
 def init(update, context):
     # Get settings
@@ -145,6 +157,7 @@ def init(update, context):
         cirillic_filter = group['set_cirillic_filter']
         chinese_filter = group['set_chinese_filter']
         user_profile_photo = group['set_user_profile_picture']
+        cas_ban_row = group['set_cas_ban']
     else:
         row = 1
         block_user = 0
@@ -152,6 +165,7 @@ def init(update, context):
         cirillic_filter = 1
         chinese_filter = 1
         user_profile_photo = 0
+        cas_ban_row = 1
 
     if row == 0 and block_user == 1:
         for member in update.message.new_chat_members:
@@ -175,15 +189,19 @@ def init(update, context):
             # Banned user because username field is empty
             elif user is None:
                 kick_user(update, context)
-                message(update,context,"<code>{}</code> set a username! You were kicked for safety!".format(user_id))
+                message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b> You were kicked for safety!'.format(user_id,user_first))
             # They ban the user because he is blacklisted
             elif is_in_blacklist(user_id):
                 ban_user(update, context)
                 message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a>'.format(user_id,user_first))
+            # They ban the user because he is blacklisted in CAS BAN
+            elif cas_ban_check(user_id) == True and cas_ban_row == 1:
+                ban_user(update, context)
+                message(update, context, 'I got CAS banned <a href="tg://user?id={}">{}</a>\n\nhttps://cas.chat/query?u={}'.format(user_id,user_first,user_id))
             # They ban the user because he doesn't have a profile picture
             elif user_photo.total_count == 0 and user_profile_photo == 1:
                 kick_user(update, context)
-                message(update,context,"<code>{}</code> set a profile picture! You were kicked for safety!".format(user_id))
+                message(update,context,'<a href="tg://user?id={}">{}</a> set a profile picture! You were kicked for safety!'.format(user_id,user_first))
             # Banned user with arabic characters
             elif has_arabic_character(user_first) and arabic_filter == 1:
                 ban_user(update, context)
