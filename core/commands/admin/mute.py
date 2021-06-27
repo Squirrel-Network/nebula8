@@ -4,7 +4,6 @@
 # Copyright SquirrelNetwork
 
 from core import decorators
-from telegram import ChatPermissions
 from core.utilities.message import message
 from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup

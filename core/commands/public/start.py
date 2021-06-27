@@ -5,8 +5,6 @@
 from languages.getLang import languages
 from core.utilities.message import message
 from core import decorators
-from core.utilities.menu import build_menu
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.functions import bot_object, user_object
 
 @decorators.private.init

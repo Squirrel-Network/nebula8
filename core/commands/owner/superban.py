@@ -7,7 +7,6 @@ from config import Config
 from core import decorators
 from core.utilities.menu import build_menu
 from core.utilities.message import message, messageWithId
-from telegram.error import BadRequest
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
 from core.handlers.logs import sys_loggers
@@ -43,7 +42,7 @@ def init(update, context):
             default_motivation = "Other"
             data = [(user_id,default_motivation,save_date,operator_id)]
             SuperbanRepository().add(data)
-            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id,default_motivation)
+            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
             message(update,context,msg)
             logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
             messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
@@ -77,7 +76,7 @@ def update_superban(update, context):
             #Kick the User
             bot.kick_chat_member(chat_id, user_id)
             #Edit Message Text after push the button
-            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere to search for blacklisted users'.format(user_id,user_id,motivation)
+            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user_id,user_id,motivation,user_id)
             query.edit_message_text(msg, parse_mode='HTML')
             #Telegram Logs
             logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_username,operator_id)

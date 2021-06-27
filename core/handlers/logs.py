@@ -4,12 +4,10 @@
 # Copyright SquirrelNetwork
 # Credits https://github.com/PaulSonOfLars/tgbot/
 import logging
-from core import decorators
 from config import Config
 from telegram.error import BadRequest, Unauthorized
 from core.utilities.message import messageWithId, message
 from core.database.repository.group import GroupRepository
-from core.utilities.functions import update_db_settings
 
 def sys_loggers(name="",message="",debugs = False,info = False,warning = False,errors = False, critical = False):
     logger = logging.getLogger(name)

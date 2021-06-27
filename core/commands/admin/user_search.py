@@ -1,4 +1,7 @@
-from datetime import date
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import decorators
 from core.utilities.functions import user_reply_object
 from core.utilities.message import message
