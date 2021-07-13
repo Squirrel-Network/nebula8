@@ -34,3 +34,7 @@ class SuperbanRepository(Connection):
     def add(self, args=None):
         q = "INSERT IGNORE INTO superban_table(user_id, motivation_text, user_date, id_operator) VALUES (%s,%s,%s,%s)"
         return self._insert(q, args)
+
+    def delete(self, args=None):
+        q = "DELETE FROM superban_table WHERE user_id = %s"
+        return self._delete(q, args)

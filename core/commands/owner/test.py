@@ -3,7 +3,10 @@
 
 # Copyright SquirrelNetwork
 from core import decorators
+from config import Config
+
+OWNERS = list(Config.OWNER.values())
 
 @decorators.owner.init
 def init(update,context):
-    pass
+    print(OWNERS)

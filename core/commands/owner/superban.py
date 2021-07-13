@@ -30,8 +30,10 @@ def init(update, context):
     buttons.append(InlineKeyboardButton('Userbot', callback_data='mUserbot'))
     buttons.append(InlineKeyboardButton('Porn', callback_data='mPorn'))
     buttons.append(InlineKeyboardButton('Other', callback_data='mOther'))
+    buttons.append(InlineKeyboardButton('Illegal Content', callback_data='mIllegal_Content'))
+    buttons.append(InlineKeyboardButton('Remove Superban', callback_data='removeSuperban'))
     buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
-    menu = build_menu(buttons,2)
+    menu = build_menu(buttons,3)
     if update.message.reply_to_message:
         user_id = update.message.reply_to_message.from_user.id
         update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
@@ -84,5 +86,15 @@ def update_superban(update, context):
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+    if query.data == "removeSuperban":
+        user_id = query.message.reply_to_message.from_user.id
+        row = SuperbanRepository().getById(user_id)
+        if row:
+            data = [(user_id)]
+            SuperbanRepository().delete(data)
+            msg = "I removed the superban to user <code>{}</code>".format(user_id)
+            query.edit_message_text(msg,parse_mode='HTML')
+        else:
+            query.edit_message_text("Attention this user not super banned!!!",parse_mode='HTML')
     if query.data == 'closeMenu':
         query.edit_message_text("You have closed the Menu", parse_mode='HTML')

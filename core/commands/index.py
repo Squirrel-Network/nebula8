@@ -42,6 +42,7 @@ def admin_command(dsp):
     #############################
     function(CQH(owner.superban.update_superban, pattern='m'))
     function(CQH(owner.superban.update_superban, pattern='closeMenu'))
+    function(CQH(owner.superban.update_superban, pattern='removeSuperban'))
     function(CQH(admin.warn.update_set_warn, pattern='w'))
     function(CQH(admin.mute.update_mute, pattern='unmute'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
