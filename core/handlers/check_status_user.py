@@ -71,7 +71,7 @@ def check_status(update,context):
         data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
         UserRepository().add_into_mtm(data_mtm)
     if get_superban:
-        msg = '#Automatic Handler\nI got super banned <a href="tg://user?id={}">{}</a>'.format(user.id,user.first_name)
+        msg = '#Automatic Handler\nI got super banned <a href="tg://user?id={}">{}</a> [{}]'.format(user.id,user.first_name,user.id)
         message(update,context,msg)
         delete_message(update,context)
         ban_user(update,context)

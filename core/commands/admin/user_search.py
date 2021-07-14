@@ -26,7 +26,7 @@ def init(update,context):
         input_user_id = text[8:].strip().split(" ", 1)
         user_id = input_user_id[0]
         if user_id != "":
-            row = UserRepository().getById(int(user_id))
+            row = UserRepository().getByUsername(user_id)
             if row:
                 message(update, context, text="<b>The user search returned the following results:</b>\nTelegram Id: <code>{}</code>\nUsername: {}\nLast Update: {}"
                 .format(
