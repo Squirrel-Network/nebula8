@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import re
 import datetime
 from config import Config
 from core import decorators
@@ -11,6 +12,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
 from core.handlers.logs import sys_loggers
 from core.utilities.strings import Strings
+from core.utilities.regex import Regex
 
 save_date = datetime.datetime.utcnow().isoformat()
 
@@ -33,7 +35,7 @@ def init(update, context):
     buttons.append(InlineKeyboardButton('Illegal Content', callback_data='mIllegal_Content'))
     buttons.append(InlineKeyboardButton('Remove Superban', callback_data='removeSuperban'))
     buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
-    menu = build_menu(buttons,3)
+    menu = build_menu(buttons,2)
     if update.message.reply_to_message:
         user_id = update.message.reply_to_message.from_user.id
         update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
@@ -41,15 +43,19 @@ def init(update, context):
         input_user_id = text[2:].strip().split(" ", 1)
         user_id = input_user_id[0]
         if user_id != "":
-            default_motivation = "Other"
-            data = [(user_id,default_motivation,save_date,operator_id)]
-            SuperbanRepository().add(data)
-            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
-            message(update,context,msg)
-            logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
-            messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
-            formatter = "Superban eseguito da: {}".format(operator_id)
-            sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+            number = re.search(Regex.HAS_NUMBER, user_id)
+            if number is None:
+                message(update,context,"Attention you must enter a number not letters!")
+            else:
+                default_motivation = "Other"
+                data = [(user_id,default_motivation,save_date,operator_id)]
+                SuperbanRepository().add(data)
+                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
+                message(update,context,msg)
+                logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
+                messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
+                formatter = "Superban eseguito da: {}".format(operator_id)
+                sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
         else:
             message(update,context,"Attention you can not superbanned without entering an ID!")
 

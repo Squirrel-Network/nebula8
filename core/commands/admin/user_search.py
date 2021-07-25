@@ -8,6 +8,7 @@ from core.utilities.message import message
 from core.database.repository.user import UserRepository
 
 @decorators.admin.user_admin
+@decorators.delete.init
 def init(update,context):
     text = update.message.text
     if update.message.reply_to_message:
