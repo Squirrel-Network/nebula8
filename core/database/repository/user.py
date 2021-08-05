@@ -48,3 +48,11 @@ class UserRepository(Connection):
     def updateWarn(self, args=None):
         q = "UPDATE group_users SET warn_count = warn_count + 1 WHERE tg_id = %s AND tg_group_id = %s"
         return self._update(q, args)
+
+    def downWarn(self, args=None):
+        q = "UPDATE group_users SET warn_count = warn_count - 1 WHERE tg_id = %s AND tg_group_id = %s"
+        return self._update(q, args)
+
+    def removeWarn(self, args=None):
+        q = "UPDATE group_users SET warn_count = 0 WHERE tg_id = %s AND tg_group_id = %s"
+        return self._update(q, args)
