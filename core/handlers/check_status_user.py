@@ -52,31 +52,29 @@ def check_status(update,context):
         user_set_photo = 0
         cas_ban_row = 1
     #Check if the user has a username if he does not have a username I perform a temporary kick and check that the user is not a service account
-    if (user.username is None or " ") and (777000 not in SERVICE_ACCOUNT):
+    if user.username is None or "" and user.id not in SERVICE_ACCOUNT:
         kick_user(update, context)
         msg = "#Automatic Handler\n<code>{}</code> set a username! You were kicked for safety!"
         message(update,context,msg.format(user.id))
+    else:
+        #Check if the user exists on the database if it exists makes an update of his username and his latest update if not exist insert it
+        if user_db:
+            username = "@"+user.username
+            data = [(username,current_time,user.id)]
+            UserRepository().update(data)
+            data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
+            UserRepository().add_into_mtm(data_mtm)
+        else:
+            username = "@"+user.username
+            data = [(user.id,username,current_time,current_time)]
+            UserRepository().add(data)
+            data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
+            UserRepository().add_into_mtm(data_mtm)
     #Check if the user has a profile photo
     if user_photo.total_count == 0 and user_set_photo == 1:
         kick_user(update, context)
         msg = "#Automatic Handler\n<code>{}</code> set a profile picture! You were kicked for safety!"
         message(update,context,msg.format(user.id))
-    #Check if the user exists on the database if it exists makes an update of his username and his latest update
-    if user_db:
-        username = "@"+user.username
-        if username is None:
-            username =  "@nousername"
-        data = [(username,current_time,user.id)]
-        UserRepository().update(data)
-        data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
-        UserRepository().add_into_mtm(data_mtm)
-    #Checks if the user is not in the database and inserts the user into the database
-    if user_db is None or "":
-        username = "@"+user.username
-        data = [(user.id,username,current_time,current_time)]
-        UserRepository().add(data)
-        data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
-        UserRepository().add_into_mtm(data_mtm)
     #Check if the user has been blacklisted
     if get_superban:
         superban_reason = get_superban['motivation_text']

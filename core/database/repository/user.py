@@ -45,6 +45,10 @@ class UserRepository(Connection):
         q = "UPDATE users SET tg_username = %s, updated_at = %s WHERE tg_id = %s"
         return self._update(q, args)
 
+    def delete_user(self, args=None):
+        q = "DELETE FROM users WHERE tg_id = %s"
+        return self._delete(q, args)
+
     def updateWarn(self, args=None):
         q = "UPDATE group_users SET warn_count = warn_count + 1 WHERE tg_id = %s AND tg_group_id = %s"
         return self._update(q, args)
