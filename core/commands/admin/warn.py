@@ -13,7 +13,7 @@ from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 @decorators.admin.user_admin
-#@decorators.delete.init
+@decorators.delete.init
 def init(update,context):
     chat = chat_object(update)
     get_group = GroupRepository().getById(chat.id)
