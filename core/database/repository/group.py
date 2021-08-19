@@ -22,6 +22,7 @@ class GroupRepository(Connection):
     SET_LOG_CHANNEL = "log_channel"
     SET_MAX_WARN = "max_warn"
     SET_CAS_BAN = "set_cas_ban"
+    SET_TPNU = "type_no_username"
     # Filters
     EXE_FILTER = "exe_filter"
     GIF_FILTER = "gif_filter"

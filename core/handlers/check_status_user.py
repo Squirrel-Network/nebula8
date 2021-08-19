@@ -8,7 +8,7 @@ from core import decorators
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message
+from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message, mute_user_by_id
 from core.utilities.message import message
 
 #Constants
@@ -48,14 +48,23 @@ def check_status(update,context):
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']
         cas_ban_row = get_group['set_cas_ban']
+        type_no_username = get_group['type_no_username']
     else:
         user_set_photo = 0
         cas_ban_row = 1
     #Check if the user has a username if he does not have a username I perform a temporary kick and check that the user is not a service account
     if user.username is None or "" and user.id not in SERVICE_ACCOUNT:
-        kick_user(update, context)
-        msg = "#Automatic Handler\n<code>{}</code> set a username! You were kicked for safety!"
-        message(update,context,msg.format(user.id))
+        if type_no_username == 1:
+            kick_user(update, context)
+            msg = "#Automatic Handler\n<code>{}</code> set a username! You were kicked for safety!"
+            message(update,context,msg.format(user.id))
+        elif type_no_username == 2:
+            msg = "#Automatic Handler\n<code>{}</code> set a username!"
+            message(update,context,msg.format(user.id))
+        else:
+            mute_user_by_id(update, context, user.id, True)
+            msg = "#Automatic Handler\n<code>{}</code> set a username! You were Muted for safety!"
+            message(update,context,msg.format(user.id))
     else:
         #Check if the user exists on the database if it exists makes an update of his username and his latest update if not exist insert it
         if user_db:
