@@ -35,6 +35,7 @@ def admin_command(dsp):
     function(CMH('settings', admin.settings.init))
     function(CMH('setwarn', admin.warn.set_warn))
     function(CMH('setrules', admin.set_rules.init))
+    function(CMH('setnousername', admin.set_welcome.set_type_no_username))
     function(CMH('usearch', admin.user_search.init))
     function(CMH('delete', admin.delete_message.init))
     #############################
@@ -49,6 +50,7 @@ def admin_command(dsp):
     function(CQH(admin.warn.update_warn, pattern='upWarn'))
     function(CQH(admin.warn.update_warn, pattern='downWarn'))
     function(CQH(admin.warn.update_warn, pattern='removeWarn'))
+    function(CQH(admin.set_welcome.update_set_tpnu, pattern='tpnu'))
     function(CQH(admin.mute.update_mute, pattern='unmute'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))

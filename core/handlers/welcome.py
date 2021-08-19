@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import time
 import datetime
 import re
 import json
@@ -12,7 +13,7 @@ from core.database.repository.user import UserRepository
 from core.database.repository.superban import SuperbanRepository
 from core.utilities.message import message, reply_message
 from core.utilities.regex import Regex
-from core.utilities.functions import kick_user, ban_user, bot_object
+from core.utilities.functions import kick_user, ban_user, bot_object, mute_user_by_id
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
@@ -83,6 +84,7 @@ def save_group(update):
         default_user_profile_photo = 0
         default_gif_filter = 0
         default_set_cas_ban = 1
+        default_type_no_username = 1
         default_log_channel = Config.DEFAULT_LOG_CHANNEL
 
         data = [(
@@ -104,6 +106,7 @@ def save_group(update):
             default_user_profile_photo,
             default_gif_filter,
             default_set_cas_ban,
+            default_type_no_username,
             default_log_channel
             )]
         GroupRepository().add(data)
@@ -117,12 +120,11 @@ def welcome_user(update, context, member):
 
     group = GroupRepository().getById(chat)
     if group is not None:
-        parsed_message = group['welcome_text'].replace(
-            '{first_name}',
-            update.message.from_user.first_name).replace('{chat}',
-            update.message.chat.title).replace('{username}',
-            "@"+member.username
-        )
+        parsed_message = group['welcome_text'].replace('{first_name}',
+        member.first_name).replace('{chat}',
+        update.message.chat.title).replace('{username}',
+        "@"+member.username).replace('{userid}'
+        ,str(member.id))
         format_message = "{}".format(parsed_message)
         buttons = GroupRepository().getById(chat)
         try:
@@ -158,6 +160,7 @@ def init(update, context):
         chinese_filter = group['set_chinese_filter']
         user_profile_photo = group['set_user_profile_picture']
         cas_ban_row = group['set_cas_ban']
+        type_no_username = group['type_no_username']
     else:
         row = 1
         block_user = 0
@@ -186,14 +189,21 @@ def init(update, context):
                 l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
                 telegram_loggers(update,context,l_txt)
                 welcome_bot(update, context)
-            # Banned user because username field is empty
+            # Kicked user because username field is empty
             elif user is None:
-                kick_user(update, context)
-                message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b> You were kicked for safety!'.format(user_id,user_first))
+                if type_no_username == 1:
+                    message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b> You were kicked for safety!'.format(user_id,user_first))
+                    time.sleep(2)
+                    kick_user(update, context)
+                elif type_no_username == 2:
+                    message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b>'.format(user_id,user_first))
+                else:
+                    message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b> You were Muted for safety!'.format(user_id,user_first))
+                    mute_user_by_id(update, context, member.id, True)
             # They ban the user because he is blacklisted
             elif is_in_blacklist(user_id):
                 ban_user(update, context)
-                message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a>'.format(user_id,user_first))
+                message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a> [{}]'.format(user_id,user_first,user_id))
             # They ban the user because he is blacklisted in CAS BAN
             elif cas_ban_check(user_id) == True and cas_ban_row == 1:
                 ban_user(update, context)

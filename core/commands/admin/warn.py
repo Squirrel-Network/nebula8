@@ -13,7 +13,7 @@ from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 @decorators.admin.user_admin
-@decorators.delete.init
+#@decorators.delete.init
 def init(update,context):
     chat = chat_object(update)
     get_group = GroupRepository().getById(chat.id)
@@ -107,8 +107,8 @@ def update_warn(update,context):
         if warn_count != max_warn:
             data_warn = [(user_id,chat_id)]
             UserRepository().updateWarn(data_warn)
-            #msg = 'You Upwarned: <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
-            #query.edit_message_text(msg, parse_mode='HTML')
+            msg = 'You Upwarned: <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
+            query.edit_message_text(msg, parse_mode='HTML')
         else:
             ban_user_by_id(update,context,user_id)
             msg = "The user has been banned because it has reached the maximum number of warns"
@@ -117,8 +117,8 @@ def update_warn(update,context):
         if warn_count != 0:
             data_warn = [(user_id,chat_id)]
             UserRepository().downWarn(data_warn)
-            #msg = 'You Downwarned: <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
-            #query.edit_message_text(msg, parse_mode='HTML')
+            msg = 'You Downwarned: <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
+            query.edit_message_text(msg, parse_mode='HTML')
         else:
             msg = "The user cannot be downwarned anymore!"
             query.edit_message_text(msg, parse_mode='HTML')
