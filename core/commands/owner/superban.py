@@ -14,17 +14,14 @@ from core.handlers.logs import sys_loggers
 from core.utilities.strings import Strings
 from core.utilities.regex import Regex
 
-save_date = datetime.datetime.utcnow().isoformat()
-
 @decorators.owner.init
 @decorators.delete.init
 def init(update, context):
     #Variables
-    bot = context.bot
     text = update.message.text
-    chat = update.effective_chat.id
     operator_id = update.message.from_user.id
     operator_username = "@"+update.message.from_user.username
+    save_date = datetime.datetime.utcnow().isoformat()
     #Build a Keyboard Buttons
     buttons = []
     buttons.append(InlineKeyboardButton('Spam', callback_data='mSpam'))
@@ -63,6 +60,7 @@ def init(update, context):
 def update_superban(update, context):
     bot = context.bot
     query = update.callback_query
+    save_date = datetime.datetime.utcnow().isoformat()
     if query.data.startswith("m"):
         #Variables
         chat_id = query.message.chat_id
