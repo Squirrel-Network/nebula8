@@ -30,4 +30,9 @@ async def messageWithAsync(update,context,delay,text = ""):
     await asyncio.sleep(delay)
     msg = bot.send_message(chat,text,parse_mode='HTML')
     return msg
-    
+
+async def messageWithAsyncById(update,context,chat,delay,text = ""):
+    bot = context.bot
+    await asyncio.sleep(delay)
+    msg = bot.send_message(chat,text,parse_mode='HTML')
+    return msg
