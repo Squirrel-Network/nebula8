@@ -94,7 +94,7 @@ def update_set_warn(update, context):
         text = "You have changed the maximum number\nof warns in this group to <code>{}</code>".format(warn_limit)
         query.edit_message_text(text, parse_mode='HTML')
 
-
+@decorators.admin.user_admin
 def update_warn(update,context):
     query = update.callback_query
     user_id = query.message.reply_to_message.from_user.id
