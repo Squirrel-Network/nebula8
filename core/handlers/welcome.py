@@ -65,6 +65,7 @@ def save_group(update):
     record = GroupRepository.SET_GROUP_NAME
     group = GroupRepository().getById(chat)
     if group:
+        print("UPDATE GROUP")
         data = [(chat_title, chat)]
         GroupRepository().update_group_settings(record, data)
     else:
@@ -110,6 +111,7 @@ def save_group(update):
             default_log_channel
             )]
         GroupRepository().add(data)
+        print("CREATE GROUP")
 
 def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)
@@ -130,9 +132,12 @@ def welcome_user(update, context, member):
         try:
             welcome_buttons = buttons['welcome_buttons']
             format_json = json.loads(welcome_buttons)
+            x = format_json['buttons']
             arr_buttons = []
-            for key, value in format_json.items():
-                arr_buttons.append(InlineKeyboardButton(text=key, url=value))
+            for a in x:
+                title = a['title']
+                url = a['url']
+                arr_buttons.append(InlineKeyboardButton(text=title, url=url))
             menu = build_menu(arr_buttons, 2)
             update.message.reply_text(format_message,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         except ValueError:
