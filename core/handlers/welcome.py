@@ -65,7 +65,6 @@ def save_group(update):
     record = GroupRepository.SET_GROUP_NAME
     group = GroupRepository().getById(chat)
     if group:
-        print("UPDATE GROUP")
         data = [(chat_title, chat)]
         GroupRepository().update_group_settings(record, data)
     else:
@@ -111,7 +110,6 @@ def save_group(update):
             default_log_channel
             )]
         GroupRepository().add(data)
-        print("CREATE GROUP")
 
 def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)
