@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 from core.database.db_connect import Connection
 from pypika import Query, Table
+from config import Config
 
 groups = Table("groups")
 
@@ -46,12 +47,11 @@ class GroupRepository(Connection):
         return self._selectAll(q)
 
     # Save group by Welcome
-    def add(self, args=None):
-        #query = Query.into(groups).columns('id_group', 'welcome_text', 'rules_text', 'community', 'languages').insert('%s','%s','%s','%s',%s')
-        #q = query.get_sql(quote_char=None)
-        q = "INSERT INTO groups (id_group, group_name, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, set_cas_ban, type_no_username, log_channel) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    def add(self,args=None):
+        q = "INSERT INTO groups (id_group, group_name, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, set_cas_ban, type_no_username, log_channel) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         return self._insert(q, args)
 
+    #Update welcome buttons
     def updateWelcomeButtonsByGroupId(self, group_id, button):
         query = Query.update(groups).set(groups.welcome_buttons, '%s').where(groups.id_group == '%s')
         query = query.get_sql(quote_char='`')

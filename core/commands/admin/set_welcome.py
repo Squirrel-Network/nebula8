@@ -43,18 +43,22 @@ def _add_button(group_id, btn):
 @decorators.admin.user_admin
 @decorators.delete.init
 def set_welcome_buttons(update, context):
-    cmd_args = update.message.text[17:].strip().split()
-    action = cmd_args[0]
-    group_id = update.effective_chat.id
+    try:
+        cmd_args = update.message.text[17:].strip().split()
+        action = cmd_args[0]
+        group_id = update.effective_chat.id
+        if action == 'add':
+            title = cmd_args[1][1:-1]
+            url = cmd_args[2][1:-1]
+            button = {'title': title, 'url': url}
 
-    if action == 'add':
-        title = cmd_args[1][1:-1]
-        url = cmd_args[2][1:-1]
-        button = {'title': title, 'url': url}
-
-        _add_button(group_id, button)
-    else:
-        message(update, context, "Guidelines:\nUNDER CONSTRUCTION")
+            _add_button(group_id, button)
+        elif action == 'remove':
+            print("REMOVE")
+        else:
+            message(update, context, "No action")
+    except IndexError:
+        message(update, context, "TEST")
 
 @decorators.admin.user_admin
 @decorators.delete.init
