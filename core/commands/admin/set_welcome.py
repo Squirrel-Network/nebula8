@@ -7,36 +7,36 @@ from core.utilities.menu import build_menu
 import json
 
 def _remove_button(group_id, btn_id):
-    """ 
-    group_id, int che indica l'id del gruppo
-    btn_id, id del bottone json da rimuovere
     """
-    # selezione
+    group_id, int indicating the id of the group
+    btn_id, json button id to remove
+    """
+    # select
     group_record = GroupRepository().getById(group_id)
     welcome_btns = group_record['welcome_buttons']
     welcome_btns = json.loads(welcome_btns)['buttons']
 
-    # rimozione
+    # remove
     welcome_btns = [ btn for btn in welcome_btns if btn['id'] != btn_id]
 
-    # inserimento
+    # insert
     welcome_btns_text = json.dumps({"buttons": welcome_btns})
     GroupRepository().updateWelcomeButtonsByGroupId(group_id, welcome_btns_text)
 
 def _add_button(group_id, btn):
-    """ 
-    group_id, int che indica l'id del gruppo
-    btn, dict che rappresenta un bottone in json
     """
-    # selezione
+    group_id, int indicating the id of the group
+    btn, dict representing a json button
+    """
+    # select
     group_record = GroupRepository().getById(group_id)
     welcome_btns = group_record['welcome_buttons']
     welcome_btns = json.loads(welcome_btns)['buttons']
 
-    # aggiunta
+    # add
     welcome_btns.append(btn)
 
-    # inserimento
+    # insert
     welcome_btns_text = json.dumps({"buttons": welcome_btns})
     GroupRepository().updateWelcomeButtonsByGroupId(group_id, welcome_btns_text)
 
@@ -46,13 +46,15 @@ def set_welcome_buttons(update, context):
     cmd_args = update.message.text[17:].strip().split()
     action = cmd_args[0]
     group_id = update.effective_chat.id
-    
+
     if action == 'add':
         title = cmd_args[1][1:-1]
         url = cmd_args[2][1:-1]
         button = {'title': title, 'url': url}
-        
+
         _add_button(group_id, button)
+    else:
+        message(update, context, "Guidelines:\nUNDER CONSTRUCTION")
 
 @decorators.admin.user_admin
 @decorators.delete.init
