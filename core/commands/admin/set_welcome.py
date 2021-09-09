@@ -34,6 +34,11 @@ def _add_button(group_id, btn):
     welcome_btns = json.loads(welcome_btns)['buttons']
 
     # add
+    if len(welcome_btns) == 0:
+        btn['id'] = 0
+    else:
+        btn['id'] = welcome_btns[-1]['id'] + 1
+
     welcome_btns.append(btn)
 
     # insert
@@ -47,6 +52,7 @@ def set_welcome_buttons(update, context):
         cmd_args = update.message.text[16:].strip().split()
         action = cmd_args[0]
         group_id = update.effective_chat.id
+
         # Add Welcome Buttons /welcomebuttons add "title" "url"
         if action == 'add':
             title = cmd_args[1][1:-1]
@@ -70,7 +76,10 @@ def set_welcome_buttons(update, context):
             x = format_json['buttons']
             options = ""
             for a in x:
-                button_id = a['id']
+                if 'id' in a:
+                    button_id = a['id']
+                else:
+                    button_id = -1
                 title = a['title']
                 url = a['url']
                 options += "Button Id: <code>{}</code>\n".format(button_id)
