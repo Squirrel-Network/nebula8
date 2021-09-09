@@ -44,21 +44,39 @@ def _add_button(group_id, btn):
 @decorators.delete.init
 def set_welcome_buttons(update, context):
     try:
-        cmd_args = update.message.text[17:].strip().split()
+        cmd_args = update.message.text[16:].strip().split()
         action = cmd_args[0]
         group_id = update.effective_chat.id
+        # Add Welcome Buttons /welcomebuttons add "title" "url"
         if action == 'add':
             title = cmd_args[1][1:-1]
             url = cmd_args[2][1:-1]
             button = {'title': title, 'url': url}
 
             _add_button(group_id, button)
+        # Remove Welcome Buttons /welcomebuttons remove "buttonid"
         elif action == 'remove':
-            print("REMOVE")
+            button_id = cmd_args[1][1:-1]
+            _remove_button(group_id, button_id)
+        # If no action has been taken, this error is returned
         else:
-            message(update, context, "No action")
+            message(update, context, "The action you requested is incorrect type <code>add</code> or <code>remove</code>")
     except IndexError:
-        message(update, context, "TEST")
+        # List Welcome Buttons /welcomebuttons with no args
+            chat = update.effective_message.chat_id
+            buttons = GroupRepository().getById(chat)
+            welcome_buttons = buttons['welcome_buttons']
+            format_json = json.loads(welcome_buttons)
+            x = format_json['buttons']
+            options = ""
+            for a in x:
+                button_id = a['id']
+                title = a['title']
+                url = a['url']
+                options += "Button Id: <code>{}</code>\n".format(button_id)
+                options += "Button Text: <b>{}</b>\n".format(title)
+                options += "Button Url: <code>{}</code>\n\n\n".format(url)
+            message(update, context, options)
 
 @decorators.admin.user_admin
 @decorators.delete.init
