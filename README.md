@@ -14,7 +14,10 @@ Add the beta to your telegram group
 
 
 ## Official API
-- <a href="https://github.com/Squirrel-Network/api_nebula">Go Here</a>
+- <a href="https://api.nebula.squirrel-network.online">Home</a>
+- <a href="https://api.nebula.squirrel-network.online/apidocs/">Docs</a>
+- <a href="https://github.com/Squirrel-Network/api_nebula">Source</a>
 
 ## Official Resources
 - <a href="https://squirrel-network.online/knowhere/">Knowhere (Blacklist Search)</a>
+- <a href="https://api.nebula.squirrel-network.online/users">Nebula's public user search </a>
