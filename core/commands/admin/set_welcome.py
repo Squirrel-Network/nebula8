@@ -7,11 +7,11 @@ from core.utilities.menu import build_menu
 import json
 
 def _remove_button(group_id, btn_id):
-    """ 
-    group_id, int che indica l'id del gruppo
-    btn_id, id del bottone json da rimuovere
     """
-    # selezione
+     group_id, int indicating the id of the group
+     btn_id, json button id to remove
+    """
+    # select
     group_record = GroupRepository().getById(group_id)
     welcome_btns = group_record['welcome_buttons']
     welcome_btns = json.loads(welcome_btns)['buttons']
@@ -19,21 +19,21 @@ def _remove_button(group_id, btn_id):
     new_welcome_btns = [btn for btn in welcome_btns if btn['id'] != int(btn_id)]
     print(new_welcome_btns)
 
-    # inserimento
+    # insert
     welcome_btns_text = json.dumps({"buttons": new_welcome_btns})
     GroupRepository().updateWelcomeButtonsByGroupId(group_id, welcome_btns_text)
 
 def _add_button(group_id, btn):
-    """ 
-    group_id, int che indica l'id del gruppo
-    btn, dict che rappresenta un bottone in json
     """
-    # selezione
+    group_id, int indicating the id of the group
+    btn, dict representing a json button
+    """
+    # select
     group_record = GroupRepository().getById(group_id)
     welcome_btns = group_record['welcome_buttons']
     welcome_btns = (json.loads(welcome_btns))['buttons']
 
-    # aggiunta
+    # add
     if len(welcome_btns) == 0:
         btn['id'] = 0
     else:
@@ -42,7 +42,7 @@ def _add_button(group_id, btn):
     welcome_btns.append(btn)
     print(welcome_btns)
 
-    # inserimento
+    # insert
     welcome_btns_text = json.dumps({"buttons": welcome_btns})
     GroupRepository().updateWelcomeButtonsByGroupId(group_id, welcome_btns_text)
 
