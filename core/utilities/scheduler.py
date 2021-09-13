@@ -1,7 +1,31 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 import asyncio
 from time import time
 from typing import Callable, List, Dict, Any
 
+"""
+=============
+How to Use:
+=============
+@test.repeat(3600, False)
+async def handler():
+  It will be repeated at 16:30
+  It will be repeated at 17:30
+  It will be repeated at 18:30
+
+OR...
+
+@test.repeat(3600, True)
+async def handler():
+  It will be repeated at 16:00
+  It will be repeated at 17:00
+  It will be repeated at 18:00
+
+"""
 
 class Scheduler:
     def __init__(self):

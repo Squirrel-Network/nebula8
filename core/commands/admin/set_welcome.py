@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
+
 from core import decorators
 from core.utilities.message import message
 from languages.getLang import languages
