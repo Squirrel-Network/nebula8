@@ -6,7 +6,9 @@
 import time
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
+from core import decorators
 from telegram import ChatPermissions
+from languages.getLang import languages
 
 #######################
 ### USER FUNCTIONS ####
@@ -144,6 +146,13 @@ def update_db_settings(update,record, options):
         data = [(1,chat)]
         upd = GroupRepository().update_group_settings(record, data)
     return upd
+
+@decorators.admin.user_admin
+def close_menu(update, context):
+    query = update.callback_query
+    languages(update,context)
+    if query.data == 'closeMenu':
+        query.edit_message_text(languages.close_menu_general, parse_mode='HTML')
 
 ################################
 ### OBJECT ENTITY DEFINITION ###

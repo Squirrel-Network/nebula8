@@ -5,6 +5,7 @@
 
 from core.commands import public ,admin, owner
 from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
+from core.utilities.functions import close_menu
 
 def user_command(dsp):
     function = dsp.add_handler
@@ -43,7 +44,7 @@ def admin_command(dsp):
     ### CallbackQuery Handler ###
     #############################
     function(CQH(owner.superban.update_superban, pattern='m'))
-    function(CQH(owner.superban.update_superban, pattern='closeMenu'))
+    function(CQH(close_menu, pattern='closeMenu'))
     function(CQH(owner.superban.update_superban, pattern='removeSuperban'))
     function(CQH(owner.whitelist.remove_blacklist, pattern='removeBL'))
     function(CQH(owner.whitelist.remove_blacklist, pattern='closed'))
@@ -52,6 +53,7 @@ def admin_command(dsp):
     function(CQH(admin.warn.update_warn, pattern='downWarn'))
     function(CQH(admin.warn.update_warn, pattern='removeWarn'))
     function(CQH(admin.set_welcome.update_set_tpnu, pattern='tpnu'))
+    function(CQH(owner.add_community.callback_community, pattern='comm'))
     function(CQH(admin.mute.update_mute, pattern='unmute'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))

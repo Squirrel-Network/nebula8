@@ -49,4 +49,5 @@ def languages(update, context):
     languages.rules_error_msg = setLang["RULES_ERROR_MSG"]
     languages.perm_error = setLang["PERM_MSG_ERROR"]
     languages.perm_ok = setLang["PERM_MSG_OK"]
+    languages.close_menu_general = setLang["CLOSE_MENU"]
     return LANGUAGE

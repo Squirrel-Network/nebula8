@@ -21,5 +21,6 @@ Italian =	{
   "RULES_MSG": "Hai cambiato correttamente le regole del gruppo!",
   "RULES_ERROR_MSG": "Il messaggio è vuoto! Il formato corretto è: <code>/setrules args</code>",
   "PERM_MSG_ERROR": "Il bot non ha i permessi corretti per funzionare correttamente!❌\nPromuovi il bot come amministratore",
-  "PERM_MSG_OK": "Il bot ha i permessi corretti per funzionare correttamente ✅"
+  "PERM_MSG_OK": "Il bot ha i permessi corretti per funzionare correttamente ✅",
+  "CLOSE_MENU": "Hai chiuso il Menu"
 }

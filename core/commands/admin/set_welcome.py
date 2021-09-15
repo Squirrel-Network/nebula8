@@ -22,7 +22,6 @@ def _remove_button(group_id, btn_id):
     welcome_btns = json.loads(welcome_btns)['buttons']
 
     new_welcome_btns = [btn for btn in welcome_btns if btn['id'] != int(btn_id)]
-    print(new_welcome_btns)
 
     # insert
     welcome_btns_text = json.dumps({"buttons": new_welcome_btns})
@@ -45,7 +44,6 @@ def _add_button(group_id, btn):
         btn['id'] = welcome_btns[-1]['id'] + 1
 
     welcome_btns.append(btn)
-    print(welcome_btns)
 
     # insert
     welcome_btns_text = json.dumps({"buttons": welcome_btns})
@@ -119,6 +117,7 @@ def set_type_no_username(update, context):
     buttons.append(InlineKeyboardButton('Kick Only', callback_data='tpnu1'))
     buttons.append(InlineKeyboardButton('Message Only', callback_data='tpnu2'))
     buttons.append(InlineKeyboardButton('Mute Only', callback_data='tpnu3'))
+    buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
     menu = build_menu(buttons,3)
     bot.send_message(chat,"No Username Filter Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
 

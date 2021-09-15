@@ -24,5 +24,5 @@ class CommunityRepository(Connection):
         return self._update(q, args)
 
     def add(self, args=None):
-        q = "INSERT INTO community(tg_group_name, tg_group_id, tg_group_link) VALUES (%s,%s,%s)"
+        q = "INSERT INTO community(tg_group_name, tg_group_id, tg_group_link, language, type) VALUES (%s,%s,%s,%s,%s)"
         return self._insert(q, args)
