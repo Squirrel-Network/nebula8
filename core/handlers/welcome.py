@@ -69,7 +69,7 @@ def save_group(update):
         GroupRepository().update_group_settings(record, data)
     else:
         default_welcome = Config.DEFAULT_WELCOME.format("{username}","{chat}")
-        default_buttons = ""
+        default_buttons = '{"buttons": [{"id": 0,"title": "Bot Logs","url": "https://t.me/nebulalogs"}]}'
         default_rules = Config.DEFAULT_RULES
         default_lang = Config.DEFAULT_LANGUAGE
         default_community = 0

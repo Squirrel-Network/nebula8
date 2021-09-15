@@ -45,4 +45,8 @@ def languages(update, context):
     languages.set_welcome_help = setLang["WELCOME_MAIN_HELP_SET"]
     languages.weather_message = setLang["WEATHER_MSG"]
     languages.report_msg = setLang["REPORT_ADMIN_MSG"]
+    languages.rules_msg = setLang["RULES_MSG"]
+    languages.rules_error_msg = setLang["RULES_ERROR_MSG"]
+    languages.perm_error = setLang["PERM_MSG_ERROR"]
+    languages.perm_ok = setLang["PERM_MSG_OK"]
     return LANGUAGE

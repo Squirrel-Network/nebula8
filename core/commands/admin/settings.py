@@ -1,31 +1,11 @@
 from core import decorators
 from core.utilities.menu import build_menu
 from core.utilities.functions import update_db_settings
+from core.utilities.constants import PERM_TRUE, PERM_FALSE
 from languages.getLang import languages
-from core.commands.admin import set_lang, warn
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
+from core.commands.admin import set_lang
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
-
-permission_false = ChatPermissions(
-    can_send_messages=False,
-    can_send_media_messages=False,
-    can_send_polls=False,
-    can_send_other_messages=False,
-    can_add_web_page_previews=False,
-    can_change_info=False,
-    can_invite_users=False,
-    can_pin_messages=False
-    )
-permission_true = ChatPermissions(
-    can_send_messages=True,
-    can_send_media_messages=True,
-    can_send_polls=True,
-    can_send_other_messages=True,
-    can_add_web_page_previews=True,
-    can_change_info=False,
-    can_invite_users=False,
-    can_pin_messages=False
-    )
 
 def keyboard_settings(update,context,editkeyboard = False):
     bot = context.bot
@@ -99,11 +79,11 @@ def update_settings(update,context):
         row = group['set_silence']
         if row == 0:
             update_db_settings(update, record, False)
-            bot.set_chat_permissions(update.effective_chat.id, permission_false)
+            bot.set_chat_permissions(update.effective_chat.id, PERM_FALSE)
             return keyboard_settings(query,context,True)
         else:
             update_db_settings(update, record, True)
-            bot.set_chat_permissions(update.effective_chat.id, permission_true)
+            bot.set_chat_permissions(update.effective_chat.id, PERM_TRUE)
             return keyboard_settings(query,context,True)
     # Set Block Entry
     if query.data == 'setBlockEntry':

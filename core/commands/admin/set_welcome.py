@@ -66,10 +66,12 @@ def set_welcome_buttons(update, context):
             button = {'title': title, 'url': url}
 
             _add_button(group_id, button)
+            message(update, context, "You have added a button to the welcome!")
         # Remove Welcome Buttons /welcomebuttons remove "buttonid"
         elif action == 'remove':
             button_id = cmd_args[1][1:-1]
             _remove_button(group_id, button_id)
+            message(update, context, "You have removed the button with id: <code>{}</code>".format(button_id))
         # If no action has been taken, this error is returned
         else:
             message(update, context, "The action you requested is incorrect type <code>add</code> or <code>remove</code>")
