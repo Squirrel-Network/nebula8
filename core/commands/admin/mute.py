@@ -8,11 +8,13 @@ from core.utilities.message import message
 from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.functions import mute_user_reply, mute_user_by_id
+from languages.getLang import languages
 
 @decorators.admin.user_admin
 @decorators.delete.init
 def init(update,context):
     user = update.message.reply_to_message.from_user
+    languages(update,context)
     if update.message.reply_to_message:
         buttons = []
         buttons.append(InlineKeyboardButton('Unmute', callback_data='unmute'))
@@ -21,7 +23,7 @@ def init(update,context):
         update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         mute_user_reply(update,context,True)
     else:
-        message(update,context,"You must use this command in response to a user")
+        message(update,context,languages.error_response_user_msg)
 
 @decorators.admin.user_admin
 def update_mute(update,context):

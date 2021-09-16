@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["constants","menu","message","functions","strings","regex","monads"]
+__all__ = ["constants","menu","message","functions","strings","regex","monads","parser"]
 
 from core.utilities import *

@@ -1,6 +1,6 @@
 English =	{
   "START_COMMAND": "Hi, my name is {} and I am a tool for managing groups with many special functions to be discovered and I am Open Source! If you want to see my source type: /source If you need help, type /help",
-  "HELP_COMMAND": "Comando Help eng",
+  "HELP_COMMAND": "Hi my name is {}\nDo You need Help?",
   "GROUP_INFO": "<b>Group Title:</b> <code>{}</code>\n\n<b>Group Id:</b> <code>{}</code>\n\n<b>Group's Welcome:</b> <code>{}</code>\n\n<b>Group's Rules:</b> <code>{}</code>\n\n<b>Group's Language:</b> <code>{}</code>\n\nWarn Limit: <code>{}</code>",
   "BOT_WELCOME": "Thank you for adding me to the {} group\nFor working properly i need admins privileges!",
   "BAN_MESSAGE": '<a href="tg://user?id={userid}">{user}</a> has been <b>banned</b> from: {chat}',
@@ -22,5 +22,7 @@ English =	{
   "RULES_ERROR_MSG": "The message is empty! The correct format is: <code>/setrules args</code>",
   "PERM_MSG_ERROR": "The bot does not have the correct permissions to function properly!❌\nPlease promote the bot as an admin",
   "PERM_MSG_OK": "The bot has the correct permissions to function properly ✅",
-  "CLOSE_MENU": "You have closed the Menu"
+  "CLOSE_MENU": "You have closed the Menu",
+  "GLOBAL_REPORT_MSG": "You have reported a problem to the bot staff, an available operator will come to assist",
+  "ERROR_RESPONSE_USER_MSG": "You must use this command in response to a user"
 }

@@ -36,11 +36,12 @@ def init(update,context):
 def global_report(update, context):
     bot = context.bot
     chat = chat_object(update)
+    languages(update,context)
     if update.effective_message.reply_to_message:
-        message(update, context, "This command is not used in response to a message")
+        message(update, context, languages.delete_error_msg)
     else:
         link = bot.export_chat_invite_link(chat.id)
         msg = "#GlobalReport\nChatId: {}\nChat: {}\nLink: {}".format(chat.id, chat.title, link)
-        msg_report = "You have reported a problem to the bot staff, an available operator will come to assist"
+        msg_report = languages.global_report_msg
         staff_loggers(update, context, msg)
         message(update, context, msg_report)

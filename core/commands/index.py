@@ -18,6 +18,7 @@ def user_command(dsp):
     function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
     function(CMH('report', public.report.global_report))
+    function(CMH('lost', public.eggs.egg_lost))
 
 def admin_command(dsp):
     function = dsp.add_handler
