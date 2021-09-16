@@ -20,8 +20,8 @@ table = Table(show_header=True, header_style="bold blue")
 
 # if version < 3.6, stop bot.
 LOGGER = logging.getLogger(__name__)
-if sys.version_info[0] < 3 or sys.version_info[1] < 6:
-    LOGGER.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
+if sys.version_info[0] < 3 or sys.version_info[1] < 7:
+    LOGGER.error("You MUST have a python version of at least 3.7! Multiple features depend on this. Bot quitting.")
     quit(1)
 
 # Print start with datetime
