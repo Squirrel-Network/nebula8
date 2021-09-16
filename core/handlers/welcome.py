@@ -23,14 +23,14 @@ OWNER_LIST = list(Config.OWNER.values())
 API_CAS = 'https://api.cas.chat/check?user_id={}'
 
 #CAS BAN Variables
-def cas_ban_check(string):
+"""def cas_ban_check(string):
     api_cas =  requests.get(API_CAS.format(string))
     response = api_cas.json()
     cas_ban = response["ok"]
     if cas_ban == True:
         return True
     else:
-        return False
+        return False"""
 
 def has_arabic_character(string):
     arabic = re.search(Regex.HAS_ARABIC, string)
@@ -208,9 +208,9 @@ def init(update, context):
                 ban_user(update, context)
                 message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a> [{}]'.format(user_id,user_first,user_id))
             # They ban the user because he is blacklisted in CAS BAN
-            elif cas_ban_check(user_id) == True and cas_ban_row == 1:
-                ban_user(update, context)
-                message(update, context, 'I got CAS banned <a href="tg://user?id={}">{}</a>\n\nhttps://cas.chat/query?u={}'.format(user_id,user_first,user_id))
+            #elif cas_ban_check(user_id) == True and cas_ban_row == 1:
+                #ban_user(update, context)
+                #message(update, context, 'I got CAS banned <a href="tg://user?id={}">{}</a>\n\nhttps://cas.chat/query?u={}'.format(user_id,user_first,user_id))
             # They ban the user because he doesn't have a profile picture
             elif user_photo.total_count == 0 and user_profile_photo == 1:
                 kick_user(update, context)

@@ -28,9 +28,6 @@ def init(update,context):
             bot.send_message(chat_id=update.effective_chat.id,text="Please select the language of the community",reply_markup=InlineKeyboardMarkup(menu))
     else:
         message(update,context,"Attention! this command can only be used in public supergroups!")
-        #data = [(chat.title,chat.id,link)]
-        #CommunityRepository().add(data)
-        #message(update,context,"Insert Community")
 
 @decorators.owner.init
 def callback_community(update,context):
@@ -41,7 +38,7 @@ def callback_community(update,context):
         chat_id = query.message.chat_id
         chat_title = query.message.chat.title
         chat_username = query.message.chat.username
-        print(chat_username)
         link = "https://t.me/{}".format(chat_username)
         data = [(chat_title,chat_id,link,lang_set,type_community)]
-        print(data)
+        CommunityRepository().add(data)
+        query.edit_message_text("Insert Community", parse_mode='HTML')
