@@ -8,9 +8,9 @@
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/Getting-Started">Getting Started</a>
 - <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
 
-Add the beta to your telegram group
+Nebula 8.0 Stable released
 <br>
-==> http://t.me/nebuladevbot
+==><a href="h.me/thenebulabot">Try it now!</a>
 
 
 ## Official API
