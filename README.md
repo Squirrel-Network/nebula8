@@ -10,7 +10,7 @@
 
 Nebula 8.0 Stable released
 <br>
-==><a href="h.me/thenebulabot">Try it now!</a>
+==><a href="https://t.me/thenebulabot">Try it now!</a>
 
 
 ## Official API
