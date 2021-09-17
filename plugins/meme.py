@@ -3,9 +3,11 @@
 
 # Copyright SquirrelNetwork
 import requests
+from core import decorators
 from languages.getLang import languages
 from core.database.repository.group import GroupRepository
 
+@decorators.delete.init
 def init(update, context):
     bot = context.bot
     languages(update,context)
