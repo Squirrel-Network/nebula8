@@ -1,4 +1,5 @@
 Italian =	{
+  "LANG_DEFAULT": "it",
   "START_COMMAND": "Ciao io mi chiamo {} e sono uno strumento per la gestione dei gruppi con tante funzioni speciali tutte da scoprire e sono Open Source! Se vuoi vedere il mio sorgente digita: /source Se hai bisogno di aiuto digita /help",
   "HELP_COMMAND": "Ciao mi chiamo {}\nHai bisogno di aiuto?",
   "GROUP_INFO": "<b>Titolo Gruppo:</b> <code>{}</code>\n\n<b>Id del gruppo:</b> <code>{}</code>\n\n<b>Welcome del gruppo:</b> <code>{}</code>\n\n<b>Regole del gruppo:</b> <code>{}</code>\n\n<b>Lingua del gruppo:</b> <code>{}</code>\n\nLimite Warn: <code>{}</code>",

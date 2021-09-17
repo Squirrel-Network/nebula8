@@ -26,6 +26,7 @@ def languages(update, context):
     elif LANGUAGE == "EN":
         setLang = EN.English
 
+    languages.lang_default = setLang["LANG_DEFAULT"]
     languages.start = setLang["START_COMMAND"]
     languages.helps = setLang["HELP_COMMAND"]
     languages.group_info = setLang["GROUP_INFO"]
