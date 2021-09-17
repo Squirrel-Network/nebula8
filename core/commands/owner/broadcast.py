@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 import asyncio
 from core import decorators
-from core.utilities.message import message,messageWithId, messageWithAsyncById
+from core.utilities.message import message,messageWithAsyncById
 from core.utilities.strings import Strings
 from core.database.repository.community import CommunityRepository
 from telegram.error import BadRequest
@@ -20,7 +20,6 @@ def init(update, context):
         try:
             if msg != "":
                 loop.run_until_complete(messageWithAsyncById(update,context,id_groups,2,msg))
-                #messageWithId(update,context,id_groups,msg)
             else:
                 message(update,context,"You cannot send an empty message!")
         except BadRequest:

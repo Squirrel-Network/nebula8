@@ -6,7 +6,7 @@ import time
 import datetime
 import re
 import json
-import requests
+#import requests
 from config import Config
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository

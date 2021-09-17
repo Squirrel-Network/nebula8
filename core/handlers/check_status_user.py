@@ -47,11 +47,11 @@ def check_status(update,context):
 
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']
-        cas_ban_row = get_group['set_cas_ban']
+        #cas_ban_row = get_group['set_cas_ban']
         type_no_username = get_group['type_no_username']
     else:
         user_set_photo = 0
-        cas_ban_row = 1
+        #cas_ban_row = 1
     #Check if the user has a username if he does not have a username I perform a temporary kick and check that the user is not a service account
     if user.username is None or "" and user.id not in SERVICE_ACCOUNT:
         if type_no_username == 1:
