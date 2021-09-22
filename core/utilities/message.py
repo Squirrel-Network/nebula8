@@ -24,6 +24,11 @@ def PrivateMessage(update,context, text = ""):
     msg = bot.send_message(update.message.from_user.id,text,parse_mode='HTML')
     return msg
 
+def messagePhoto(update, context, img, desc = ''):
+    bot = context.bot
+    photo = bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption=desc, parse_mode='HTML')
+    return photo
+
 async def messageWithAsync(update,context,delay,text = ""):
     bot = context.bot
     chat = update.effective_chat.id
