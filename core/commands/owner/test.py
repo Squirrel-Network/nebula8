@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import asyncio
-from core import decorators
-from core.utilities.message import messageWithAsync
 
-loop = asyncio.get_event_loop()
+from core import decorators
+from core.utilities.message import ApiMessage
 
 @decorators.owner.init
+@decorators.delete.init
 def init(update,context):
-      loop.run_until_complete(messageWithAsync(update,context,1,"ASYNC TEST"))
+      text = update.message.text[5:].strip()
+      chat = update.effective_chat.id
+      ApiMessage(text, chat)
