@@ -22,12 +22,14 @@ def init(update, context):
     if row:
         data = [(chat_title, chat)]
         GroupRepository().update_group_settings(record, data)
+        counter = GroupRepository().getUpdatesByChat(chat)
         message(update,context,languages.group_info.format(
             row['group_name'],
             row['id_group'],
             row['welcome_text'],
             row['rules_text'],
             row['languages'],
-            row['max_warn']))
+            row['max_warn'],
+            counter['counter']))
     else:
         save_group(update)

@@ -3,12 +3,13 @@
 
 # Copyright SquirrelNetwork
 
+import datetime
 from core import decorators
-from core.utilities.message import ApiMessage
+from core.utilities.functions import chat_object
+from core.database.repository.group import GroupRepository
 
 @decorators.owner.init
-@decorators.delete.init
 def init(update,context):
-      text = update.message.text[5:].strip()
-      chat = update.effective_chat.id
-      ApiMessage(text, chat)
+      chat = chat_object(update)
+      row = GroupRepository().getUpdatesByChat(chat.id)
+      print(row)

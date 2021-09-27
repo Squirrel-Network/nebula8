@@ -34,7 +34,7 @@ class Config(object):
      OPENWEATHER_API = 'Insert Token'
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
-     VERSION = '8.0.5'
+     VERSION = '8.0.7'
      VERSION_NAME = 'Hatterene'
      REPO = 'https://github.com/Squirrel-Network/nebula8'
      DEBUG = True
