@@ -15,7 +15,7 @@ from core.utilities.message import message
 API_CAS = 'https://api.cas.chat/check?user_id={}'
 DEFAULT_COUNT_WARN = 0
 DEFAULT_MAX_WARN = 3
-SERVICE_ACCOUNT = [777000]
+SERVICE_ACCOUNT = 777000
 
 @decorators.public.init
 def check_status(update,context):
@@ -53,18 +53,26 @@ def check_status(update,context):
         user_set_photo = 0
         #cas_ban_row = 1
     #Check if the user has a username if he does not have a username I perform a temporary kick and check that the user is not a service account
-    if user.username is None or "" and user.id not in SERVICE_ACCOUNT:
+    if update.effective_user.id == SERVICE_ACCOUNT:
+        print("Service Account")
+    elif user.username is None or user.username == "":
         if type_no_username == 1:
             kick_user(update, context)
-            msg = "#Automatic Handler\n<code>{}</code> set a username! You were kicked for safety!"
+            msg = "#Automatic Handler\n<code>{}</code> set an username! You were kicked for safety!"
             message(update,context,msg.format(user.id))
         elif type_no_username == 2:
-            msg = "#Automatic Handler\n<code>{}</code> set a username!"
+            msg = "#Automatic Handler\n<code>{}</code> set an username!"
+            message(update,context,msg.format(user.id))
+        elif type_no_username == 3:
+            mute_user_by_id(update, context, user.id, True)
+            msg = "#Automatic Handler\n<code>{}</code> set an username! You were Muted for safety!"
+            message(update,context,msg.format(user.id))
+        elif type_no_username == 4:
+            ban_user(update,context)
+            msg = "#Automatic Handler\n<code>{}</code> was banned because they didn't have an username"
             message(update,context,msg.format(user.id))
         else:
-            mute_user_by_id(update, context, user.id, True)
-            msg = "#Automatic Handler\n<code>{}</code> set a username! You were Muted for safety!"
-            message(update,context,msg.format(user.id))
+            kick_user(update, context)
     else:
         #Check if the user exists on the database if it exists makes an update of his username and his latest update if not exist insert it
         if user_db:
