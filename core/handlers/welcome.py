@@ -206,8 +206,10 @@ def init(update, context):
                 elif type_no_username == 4:
                     ban_user(update,context)
                     message(update,context,'<a href="tg://user?id={}">{}</a> was banned because they did not have an username'.format(user_id,user_first))
-                else:
+                elif type_no_username == 5:
                     kick_user(update, context)
+                else:
+                    print("No action even if you don't have a username")
             # They ban the user because he is blacklisted
             elif is_in_blacklist(user_id):
                 ban_user(update, context)

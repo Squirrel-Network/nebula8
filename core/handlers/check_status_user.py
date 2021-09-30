@@ -71,8 +71,10 @@ def check_status(update,context):
             ban_user(update,context)
             msg = "#Automatic Handler\n<code>{}</code> was banned because they didn't have an username"
             message(update,context,msg.format(user.id))
-        else:
+        elif type_no_username == 5:
             kick_user(update, context)
+        else:
+            print("No action even if you don't have a username")
     else:
         #Check if the user exists on the database if it exists makes an update of his username and his latest update if not exist insert it
         if user_db:

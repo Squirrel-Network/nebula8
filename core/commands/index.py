@@ -42,6 +42,7 @@ def admin_command(dsp):
     function(CMH('usearch', admin.user_search.init))
     function(CMH('delete', admin.delete_message.init))
     function(CMH('welcomebuttons', admin.set_welcome.set_welcome_buttons))
+    function(CMH('shield', admin.shield.init))
     #############################
     ### CallbackQuery Handler ###
     #############################
