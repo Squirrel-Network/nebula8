@@ -59,10 +59,24 @@ class GroupRepository(Connection):
 
         self._update(query, [(button, group_id)])
 
-    #TODO logic error
+    # I update the group id if the group changes from group to supergroup
     def update(self, args=None):
         q = "UPDATE groups SET id_group = %s WHERE id_group = %s"
         return self._update(q, args)
+
+    def insert_updates(self, args=None):
+        q = "INSERT INTO nebula_updates (update_id, tg_group_id, date) VALUES (%s,%s,%s)"
+        return self._insert(q, args)
+
+    def getUpdatesByChat(self, args=None):
+        q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE tg_group_id = %s'
+
+        return self._select(q, args)
+
+    def getAllUpdates(self):
+        q = 'SELECT COUNT(*) AS counter FROM nebula_updates'
+
+        return self._select(q)
 
     ##########################
     ##### GROUP SETTINGS #####

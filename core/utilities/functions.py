@@ -52,6 +52,13 @@ def kick_user(update,context):
     kick_temp = bot.kick_chat_member(chat, update.message.from_user.id,until_date=int(time.time()+30))
     return kick_temp
 
+#Kicks a user, not a ban by Id
+def kick_user_by_id(update,context,user):
+    bot = context.bot
+    chat = update.effective_chat.id
+    kick_temp = bot.kick_chat_member(chat, user, until_date=int(time.time()+30))
+    return kick_temp
+
 #Mute/Unmute User
 def mute_user(update, context, value):
     bot = context.bot

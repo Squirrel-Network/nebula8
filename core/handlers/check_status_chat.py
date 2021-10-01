@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import datetime
 from core.utilities.message import message
 from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers
 from core.database.repository.group import GroupRepository
+from core.utilities.functions import chat_object
 
 def check_status(update, context):
     chat_title = update.effective_chat.title
@@ -27,3 +29,10 @@ def check_status(update, context):
     if update.effective_message.new_chat_title:
         data = [(chat_title,chat_id)]
         GroupRepository().update_group_settings(record_title,data)
+
+def check_updates(update):
+      chat = chat_object(update)
+      date = datetime.datetime.utcnow().isoformat()
+      if chat.type == "supergroup" or chat.type == "group":
+          data = [(update.update_id, chat.id, date)]
+          GroupRepository().insert_updates(data)

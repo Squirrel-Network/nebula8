@@ -117,9 +117,12 @@ def set_type_no_username(update, context):
     buttons.append(InlineKeyboardButton('Kick Only', callback_data='tpnu1'))
     buttons.append(InlineKeyboardButton('Message Only', callback_data='tpnu2'))
     buttons.append(InlineKeyboardButton('Mute Only', callback_data='tpnu3'))
+    buttons.append(InlineKeyboardButton('Ban Only', callback_data='tpnu4'))
+    buttons.append(InlineKeyboardButton('Silent Kick', callback_data='tpnu5'))
+    buttons.append(InlineKeyboardButton('No action', callback_data='tpnu6'))
     buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
     menu = build_menu(buttons,3)
-    bot.send_message(chat,"No Username Filter Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+    bot.send_message(chat,"No Username Filter Settings\nThe message is always present except for the Silent Kick and No Action", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
 
 
 @decorators.admin.user_admin
@@ -131,5 +134,5 @@ def update_set_tpnu(update, context):
         record = GroupRepository.SET_TPNU
         data = [(tpnu_set,chat_id)]
         GroupRepository().update_group_settings(record, data)
-        text = "You have set the filter to <code>{}</code>\nLegend:\n<code>1 == Kick\n2 == Message\n3 == Mute</code>".format(tpnu_set)
+        text = "You have set the filter to <code>{}</code>\nLegend:\n<code>1 == Kick\n2 == Message\n3 == Mute\n4 == Ban\n5 == Silent Kick\n6 == No Action</code>".format(tpnu_set)
         query.edit_message_text(text, parse_mode='HTML')

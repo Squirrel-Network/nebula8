@@ -195,14 +195,21 @@ def init(update, context):
             # Kicked user because username field is empty
             elif user is None:
                 if type_no_username == 1:
-                    message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b> You were kicked for safety!'.format(user_id,user_first))
+                    message(update,context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b> You were kicked for safety!'.format(user_id,user_first))
                     time.sleep(2)
                     kick_user(update, context)
                 elif type_no_username == 2:
-                    message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b>'.format(user_id,user_first))
-                else:
-                    message(update,context,'<a href="tg://user?id={}">{}</a> set a <b>username!</b> You were Muted for safety!'.format(user_id,user_first))
+                    message(update,context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b>'.format(user_id,user_first))
+                elif type_no_username == 3:
+                    message(update,context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b> You were Muted for safety!'.format(user_id,user_first))
                     mute_user_by_id(update, context, member.id, True)
+                elif type_no_username == 4:
+                    ban_user(update,context)
+                    message(update,context,'<a href="tg://user?id={}">{}</a> was banned because they did not have an username'.format(user_id,user_first))
+                elif type_no_username == 5:
+                    kick_user(update, context)
+                else:
+                    print("No action even if you don't have a username")
             # They ban the user because he is blacklisted
             elif is_in_blacklist(user_id):
                 ban_user(update, context)
