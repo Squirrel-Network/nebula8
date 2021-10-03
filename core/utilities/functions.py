@@ -161,6 +161,18 @@ def close_menu(update, context):
     if query.data == 'closeMenu':
         query.edit_message_text(languages.close_menu_general, parse_mode='HTML')
 
+def dynamic_perms(csm = True, csmm = True, csp = True, csom = True, cawpp = True, cci = False, ciu = False, cpm = False):
+    return ChatPermissions(
+        can_send_messages=csm,
+        can_send_media_messages=csmm,
+        can_send_polls=csp,
+        can_send_other_messages=csom,
+        can_add_web_page_previews=cawpp,
+        can_change_info=cci,
+        can_invite_users=ciu,
+        can_pin_messages=cpm
+        )
+
 ################################
 ### OBJECT ENTITY DEFINITION ###
 ################################
