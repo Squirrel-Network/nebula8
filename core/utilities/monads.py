@@ -36,7 +36,7 @@ class Just(Optional):
 		return Optional.of(f(self.maybeValue))
 
 	def flatMap(self, f):
-		flattened = f(value)
+		flattened = f(self.maybeValue)
 		assert isinstance(flattened, Optional)
 		return flattened
 
