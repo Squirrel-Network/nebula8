@@ -16,7 +16,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-DEVELOPER_CHAT_ID = 1065189838
+DEVELOPER_CHAT_ID = 204641236
 
 #ERROR HANDLER 3.0
 def error_handler(update: Update, context: CallbackContext) -> None:
