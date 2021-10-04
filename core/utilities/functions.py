@@ -52,6 +52,13 @@ def kick_user(update,context):
     kick_temp = bot.kick_chat_member(chat, update.message.from_user.id,until_date=int(time.time()+30))
     return kick_temp
 
+#Kicks a user, not a ban by Id
+def kick_user_by_id(update,context,user):
+    bot = context.bot
+    chat = update.effective_chat.id
+    kick_temp = bot.kick_chat_member(chat, user, until_date=int(time.time()+30))
+    return kick_temp
+
 #Mute/Unmute User
 def mute_user(update, context, value):
     bot = context.bot
@@ -153,6 +160,18 @@ def close_menu(update, context):
     languages(update,context)
     if query.data == 'closeMenu':
         query.edit_message_text(languages.close_menu_general, parse_mode='HTML')
+
+def dynamic_perms(csm = True, csmm = True, csp = True, csom = True, cawpp = True, cci = False, ciu = False, cpm = False):
+    return ChatPermissions(
+        can_send_messages=csm,
+        can_send_media_messages=csmm,
+        can_send_polls=csp,
+        can_send_other_messages=csom,
+        can_add_web_page_previews=cawpp,
+        can_change_info=cci,
+        can_invite_users=ciu,
+        can_pin_messages=cpm
+        )
 
 ################################
 ### OBJECT ENTITY DEFINITION ###

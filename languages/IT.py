@@ -1,7 +1,8 @@
 Italian =	{
+  "LANG_DEFAULT": "it",
   "START_COMMAND": "Ciao io mi chiamo {} e sono uno strumento per la gestione dei gruppi con tante funzioni speciali tutte da scoprire e sono Open Source! Se vuoi vedere il mio sorgente digita: /source Se hai bisogno di aiuto digita /help",
-  "HELP_COMMAND": "Coamndo Help Ita",
-  "GROUP_INFO": "<b>Titolo Gruppo:</b> <code>{}</code>\n\n<b>Id del gruppo:</b> <code>{}</code>\n\n<b>Welcome del gruppo:</b> <code>{}</code>\n\n<b>Regole del gruppo:</b> <code>{}</code>\n\n<b>Lingua del gruppo:</b> <code>{}</code>\n\nLimite Warn: <code>{}</code>",
+  "HELP_COMMAND": "Ciao mi chiamo {}\nHai bisogno di aiuto?",
+  "GROUP_INFO": "<b>Titolo Gruppo:</b> <code>{}</code>\n\n<b>Id del gruppo:</b> <code>{}</code>\n\n<b>Welcome del gruppo:</b> <code>{}</code>\n\n<b>Regole del gruppo:</b> <code>{}</code>\n\n<b>Lingua del gruppo:</b> <code>{}</code>\n\nLimite Warn: <code>{}</code>\n\nTotale Messaggi Gruppo: <code>{}</code>",
   "BOT_WELCOME": "Grazie di avermi aggiunta al gruppo {}\nPer funzionare correttamente ho bisogno dei privilegi di amministratore!",
   "BAN_MESSAGE": '<a href="tg://user?id={userid}">{user}</a> è stato <b>bannato</b> da {chat}',
   "RULES": "Ecco il regolamento del gruppo: {}",
@@ -22,5 +23,7 @@ Italian =	{
   "RULES_ERROR_MSG": "Il messaggio è vuoto! Il formato corretto è: <code>/setrules args</code>",
   "PERM_MSG_ERROR": "Il bot non ha i permessi corretti per funzionare correttamente!❌\nPromuovi il bot come amministratore",
   "PERM_MSG_OK": "Il bot ha i permessi corretti per funzionare correttamente ✅",
-  "CLOSE_MENU": "Hai chiuso il Menu"
+  "CLOSE_MENU": "Hai chiuso il Menu",
+  "GLOBAL_REPORT_MSG": "Hai segnalato un problema al personale del bot, un operatore disponibile verrà ad aiutarti",
+  "ERROR_RESPONSE_USER_MSG": "È necessario utilizzare questo comando in risposta a un utente"
 }

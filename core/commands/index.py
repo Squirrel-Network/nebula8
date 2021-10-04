@@ -18,6 +18,8 @@ def user_command(dsp):
     function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
     function(CMH('report', public.report.global_report))
+    function(CMH('lost', public.eggs.egg_lost))
+    function(CMH('kickme', public.kickme.init))
 
 def admin_command(dsp):
     function = dsp.add_handler
@@ -40,6 +42,7 @@ def admin_command(dsp):
     function(CMH('usearch', admin.user_search.init))
     function(CMH('delete', admin.delete_message.init))
     function(CMH('welcomebuttons', admin.set_welcome.set_welcome_buttons))
+    function(CMH('shield', admin.shield.init))
     #############################
     ### CallbackQuery Handler ###
     #############################

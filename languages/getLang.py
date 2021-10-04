@@ -26,6 +26,7 @@ def languages(update, context):
     elif LANGUAGE == "EN":
         setLang = EN.English
 
+    languages.lang_default = setLang["LANG_DEFAULT"]
     languages.start = setLang["START_COMMAND"]
     languages.helps = setLang["HELP_COMMAND"]
     languages.group_info = setLang["GROUP_INFO"]
@@ -50,4 +51,6 @@ def languages(update, context):
     languages.perm_error = setLang["PERM_MSG_ERROR"]
     languages.perm_ok = setLang["PERM_MSG_OK"]
     languages.close_menu_general = setLang["CLOSE_MENU"]
+    languages.global_report_msg = setLang["GLOBAL_REPORT_MSG"]
+    languages.error_response_user_msg = setLang["ERROR_RESPONSE_USER_MSG"]
     return LANGUAGE

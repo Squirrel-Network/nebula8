@@ -11,6 +11,7 @@ from core.utilities.message import message
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from languages.getLang import languages
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -20,6 +21,7 @@ def init(update,context):
     max_warn = get_group['max_warn']
     current_time = datetime.datetime.utcnow().isoformat()
     default_warn = 1
+    languages(update,context)
     if update.message.reply_to_message:
         user = user_reply_object(update)
         get_user = UserRepository().getUserByGroup([user.id,chat.id])
@@ -61,7 +63,7 @@ def init(update,context):
             msg = "User @{} has reached the maximum number\n of warns in the {} group and has been banned".format(user.username,chat.title)
             update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     else:
-        message(update,context,"You must use this command in response to a user")
+        message(update,context,languages.error_response_user_msg)
 
 
 

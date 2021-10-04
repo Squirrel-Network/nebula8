@@ -3,13 +3,14 @@ from core.utilities.menu import build_menu
 from core.utilities.functions import update_db_settings
 from core.utilities.constants import PERM_TRUE, PERM_FALSE
 from languages.getLang import languages
-from core.commands.admin import set_lang
+from core.commands.admin import set_lang, info_group
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
 
 def keyboard_settings(update,context,editkeyboard = False):
     bot = context.bot
     chat = update.message.chat_id
+    chat_title = update.message.chat.title
     group = GroupRepository().getById(chat)
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Welcome %s' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
@@ -19,13 +20,14 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('No Arabic Entry %s' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
     list_buttons.append(InlineKeyboardButton('No Russian Entry %s' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
     list_buttons.append(InlineKeyboardButton('No Chinese Entry %s' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
-    list_buttons.append(InlineKeyboardButton('CAS BAN %s' % ('✅' if group['set_cas_ban'] == 1 else '❌'), callback_data='casban'))
+    #list_buttons.append(InlineKeyboardButton('CAS BAN %s' % ('✅' if group['set_cas_ban'] == 1 else '❌'), callback_data='casban'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Chat Filters', callback_data='Filters'))
+    list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
-        keyboard_menu = bot.send_message(chat,"Group Settings",reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+        keyboard_menu = bot.send_message(chat,"⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     if editkeyboard == True:
         keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
     return keyboard_menu
@@ -183,6 +185,7 @@ def update_settings(update,context):
     if query.data == 'lang':
         set_lang.init(update, context)
         query.edit_message_text("You have closed the settings menu and open languages menu",parse_mode='HTML')
+
     # Close Menu
     if query.data == 'close':
         query.edit_message_text(languages.close_menu_msg, parse_mode='HTML')

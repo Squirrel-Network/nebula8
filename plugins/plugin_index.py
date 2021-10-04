@@ -14,3 +14,4 @@ def function_plugins(dsp):
     function(CMH('wiki',plugins.wikipedia.init))
     function(CMH('weather',plugins.weather.init))
     function(CMH('inspire',plugins.inspire.init))
+    function(CMH('meme',plugins.meme.init))

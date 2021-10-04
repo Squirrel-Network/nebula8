@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import asyncio
-from core import decorators
-from core.utilities.message import messageWithAsync
 
-loop = asyncio.get_event_loop()
+import datetime
+from core import decorators
+from core.utilities.functions import chat_object
+from core.database.repository.group import GroupRepository
 
 @decorators.owner.init
 def init(update,context):
-      loop.run_until_complete(messageWithAsync(update,context,1,"ASYNC TEST"))
+      chat = chat_object(update)
+      row = GroupRepository().getUpdatesByChat(chat.id)
+      print(row)
