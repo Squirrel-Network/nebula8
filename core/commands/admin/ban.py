@@ -25,6 +25,20 @@ def ban_success(update, context, chat, username = None, id = None):
 	logs_text = "<b>#Log User Banned!</b>\nGroup: {}\nUser: {}".format(chat.title,username or id)
 	telegram_loggers(update,context,logs_text)
 
+def ban_reply_error(update, context, username = None, id = None):
+	ban_error(update, context, username, id)
+
+def ban_reply_succes(update, context, chat, ban_text = None, logs_text = None):
+	delete_message_reply(update, context)
+	message(update,context,ban_text)
+	telegram_loggers(update,context,logs_text)
+
+	formatter = "Ban eseguito da: {} nella chat {}".format(
+		update.message.from_user.id,
+		chat.title)
+
+	sys_loggers("[BAN_LOGS]",formatter,False,True)
+
 @decorators.admin.user_admin
 @decorators.delete.init
 def init(update, context):
@@ -38,28 +52,26 @@ def init(update, context):
 		if reply.from_user.id == bot.id:
 			message(update,context,languages.bot_ban)
 		else:
+			username = reply.from_user.username or reply.from_user.first_name
+
 			ban_text = languages.ban_message.format(
-				user = reply.from_user.username or reply.from_user.first_name,
+				user = username,
 				userid = reply.from_user.id,
 				chat = chat.title
 			)
 
 			logs_text = Strings.BAN_LOG.format(
-				username = reply.from_user.username or reply.from_user.first_name,
+				username = username,
 				id = reply.from_user.id,
 				chat = chat.title
 			)
 
-			delete_message_reply(update,context)
-			ban_user_reply(update,context)
-			message(update,context,ban_text)
-			telegram_loggers(update,context,logs_text)
+			username = reply.from_user.username and ("@" + reply.from_user.username)
+			firstname = reply.from_user.first_name
 
-			formatter = "Ban eseguito da: {} nella chat {}".format(
-				update.message.from_user.id,
-				chat.title)
-
-			sys_loggers("[BAN_LOGS]",formatter,False,True)
+			Try.of(lambda: ban_user_reply(update,context)) \
+				.catch(lambda err: ban_reply_error(update, context, username or firstname)) \
+				.map(lambda x : ban_reply_succes(update, context, chat, username = username, ban_text=ban_text, logs_text=logs_text))
 	else:
 		ban_argument = update.message.text[5:]
 
