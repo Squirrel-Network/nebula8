@@ -107,5 +107,3 @@ def init(update, context):
 			/ban
 		"""
 		message(update,context, usage)
-
-			
