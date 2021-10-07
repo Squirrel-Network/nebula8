@@ -37,8 +37,6 @@ def check_status(update,context):
     warn_count = get_user['warn_count'] if get_user is not None else DEFAULT_COUNT_WARN
     #Get Max Warn in group
     max_warn = get_group['max_warn'] if get_group is not None else DEFAULT_MAX_WARN
-    #Get the Current Time
-    current_time = datetime.datetime.utcnow().isoformat()
 
     #CAS BAN Variables
     #api_cas =  requests.get(API_CAS.format(get_superban_user_id))
@@ -78,12 +76,16 @@ def check_status(update,context):
     else:
         #Check if the user exists on the database if it exists makes an update of his username and his latest update if not exist insert it
         if user_db:
+            #Get the Current Time
+            current_time = datetime.datetime.utcnow().isoformat()
             username = "@"+user.username
             data = [(username,current_time,user.id)]
             UserRepository().update(data)
             data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
             UserRepository().add_into_mtm(data_mtm)
         else:
+            #Get the Current Time
+            current_time = datetime.datetime.utcnow().isoformat()
             username = "@"+user.username
             data = [(user.id,username,current_time,current_time)]
             UserRepository().add(data)

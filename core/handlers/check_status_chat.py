@@ -10,6 +10,7 @@ from core.database.repository.group import GroupRepository
 from core.utilities.functions import chat_object
 
 def check_status(update, context):
+    bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
     record_title = GroupRepository.SET_GROUP_NAME
@@ -29,6 +30,15 @@ def check_status(update, context):
     if update.effective_message.new_chat_title:
         data = [(chat_title,chat_id)]
         GroupRepository().update_group_settings(record_title,data)
+
+    if update.effective_message.new_chat_photo:
+        file_id = update.message.new_chat_photo[2].file_id
+        newFile = bot.get_file(file_id)
+        newFile.download('/var/www/naos.hersel.it/group_photo/{}.jpg'.format(chat_id))
+        url = "https://naos.hersel.it/group_photo/{}.jpg".format(chat_id)
+        data = [(url,chat_id)]
+        record = GroupRepository.SET_GROUP_PHOTO
+        GroupRepository().update_group_settings(record,data)
 
 def check_updates(update):
       chat = chat_object(update)

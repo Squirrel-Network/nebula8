@@ -19,7 +19,7 @@ def ban_user(update,context):
     bot = context.bot
     chat = update.effective_chat.id
     user = update.message.from_user.id
-    kick = bot.kick_chat_member(chat,user)
+    kick = bot.ban_chat_member(chat,user)
     return kick
 
 #Ban a user in response
@@ -27,7 +27,7 @@ def ban_user_reply(update,context):
     bot = context.bot
     chat = update.effective_chat.id
     user = update.message.reply_to_message.from_user
-    ban = bot.kick_chat_member(chat,user.id)
+    ban = bot.ban_chat_member(chat,user.id)
     return ban
 
 #Ban a user by Username
@@ -35,28 +35,28 @@ def ban_user_by_username(update, context, username):
     bot = context.bot
     chat = update.effective_chat.id
     user = UserRepository().getByUsername(username)
-    ban = bot.kick_chat_member(chat, user['tg_id'])
+    ban = bot.ban_chat_member(chat, user['tg_id'])
     return ban
 
 #Ban a user by telegram_id
 def ban_user_by_id(update, context, id):
     bot = context.bot
     chat = update.effective_chat.id
-    ban = bot.kick_chat_member(chat, id)
+    ban = bot.ban_chat_member(chat, id)
     return ban
 
 #Kicks a user, not a ban
 def kick_user(update,context):
     bot = context.bot
     chat = update.effective_chat.id
-    kick_temp = bot.kick_chat_member(chat, update.message.from_user.id,until_date=int(time.time()+30))
+    kick_temp = bot.ban_chat_member(chat, update.message.from_user.id,until_date=int(time.time()+30))
     return kick_temp
 
 #Kicks a user, not a ban by Id
 def kick_user_by_id(update,context,user):
     bot = context.bot
     chat = update.effective_chat.id
-    kick_temp = bot.kick_chat_member(chat, user, until_date=int(time.time()+30))
+    kick_temp = bot.ban_chat_member(chat, user, until_date=int(time.time()+30))
     return kick_temp
 
 #Mute/Unmute User
