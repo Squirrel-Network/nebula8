@@ -19,6 +19,7 @@ class GroupRepository(Connection):
     SET_CHINESE = "set_chinese_filter"
     SET_CIRILLIC = "set_cirillic_filter"
     SET_RULES_TEXT = "rules_text"
+    SET_COMMUNITY = "community"
     SET_WELCOME_TEXT = "welcome_text"
     SET_LOG_CHANNEL = "log_channel"
     SET_MAX_WARN = "max_warn"
