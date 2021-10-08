@@ -5,7 +5,7 @@
 import datetime
 from core.utilities.message import message
 from core.handlers.welcome import welcome_bot
-from core.handlers.logs import telegram_loggers
+from core.handlers.logs import telegram_loggers, sys_loggers
 from core.database.repository.group import GroupRepository
 from core.utilities.functions import chat_object
 
@@ -39,6 +39,8 @@ def check_status(update, context):
         data = [(url,chat_id)]
         record = GroupRepository.SET_GROUP_PHOTO
         GroupRepository().update_group_settings(record,data)
+        formatter = "New Url: {}".format(url)
+        sys_loggers("[UPDATE_GROUP_PHOTO_LOGS]",formatter,False,True)
 
 def check_updates(update):
       chat = chat_object(update)
