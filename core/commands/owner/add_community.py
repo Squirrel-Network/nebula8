@@ -6,6 +6,7 @@ from core import decorators
 from core.utilities.message import message
 from core.utilities.functions import chat_object
 from core.database.repository.community import CommunityRepository
+from core.database.repository.group import GroupRepository
 from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -16,8 +17,12 @@ def init(update,context):
     if chat.type == 'supergroup':
         row = CommunityRepository().getById(chat.id)
         if row:
+            record = GroupRepository.SET_COMMUNITY
+            default_community = 1
             data = [(chat.title,chat.id)]
+            data_group = [(default_community, chat.id)]
             CommunityRepository().update(data)
+            GroupRepository().update_group_settings(record,data_group)
             message(update,context,"Update Community")
         else:
             buttons = []
@@ -39,6 +44,10 @@ def callback_community(update,context):
         chat_title = query.message.chat.title
         chat_username = query.message.chat.username
         link = "https://t.me/{}".format(chat_username)
+        record = GroupRepository.SET_COMMUNITY
+        default_community = 1
         data = [(chat_title,chat_id,link,lang_set,type_community)]
+        data_group = [(default_community, chat_id)]
         CommunityRepository().add(data)
+        GroupRepository().update_group_settings(record,data_group)
         query.edit_message_text("Insert Community", parse_mode='HTML')
