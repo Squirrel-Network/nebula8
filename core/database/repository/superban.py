@@ -7,6 +7,7 @@ from pypika import Query, Table
 
 superban = Table("superban_table")
 whitelist = Table("whitelist_table")
+group_blacklist = Table("groups_blacklist")
 
 class SuperbanRepository(Connection):
     def getById(self, args=None):
@@ -17,6 +18,12 @@ class SuperbanRepository(Connection):
 
     def getWhitelistById(self, args=None):
         query = Query.from_(whitelist).select("*").where(whitelist.tg_id == '%s')
+        q = query.get_sql(quote_char=None)
+
+        return self._select(q, args)
+
+    def getGroupBlacklistById(self, args=None):
+        query = Query.from_(group_blacklist).select("*").where(group_blacklist.tg_id_group == '%s')
         q = query.get_sql(quote_char=None)
 
         return self._select(q, args)

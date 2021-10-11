@@ -2,18 +2,30 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import time
 import datetime
 from core.utilities.message import message
 from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers
 from core.database.repository.group import GroupRepository
+from core.database.repository.superban import SuperbanRepository
 from core.utilities.functions import chat_object
+
+
+def check_group_blacklist(update):
+    chat_id = update.effective_chat.id
+    row = SuperbanRepository().getGroupBlacklistById(chat_id)
+    if row:
+        return True
+    else:
+        return False
 
 def check_status(update, context):
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
     record_title = GroupRepository.SET_GROUP_NAME
+    group_members_count = update.effective_chat.get_member_count()
 
     if update.effective_message.migrate_from_chat_id is not None:
         old_chat_id = update.message.migrate_from_chat_id
@@ -39,6 +51,18 @@ def check_status(update, context):
         data = [(url,chat_id)]
         record = GroupRepository.SET_GROUP_PHOTO
         GroupRepository().update_group_settings(record,data)
+
+    if group_members_count > 0:
+        record_count = GroupRepository.SET_GROUP_MEMBERS_COUNT
+        data = [(group_members_count,chat_id)]
+        GroupRepository().update_group_settings(record_count,data)
+
+    if check_group_blacklist(update) == True:
+        message(update,context,"<b>#Automatic handler:</b>\nThe group is blacklisted the bot will automatically exit the chat")
+        log_txt = "#Log <b>Bot removed from group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
+        telegram_loggers(update,context,log_txt)
+        time.sleep(2)
+        bot.leave_chat(chat_id)
 
 def check_updates(update):
       chat = chat_object(update)

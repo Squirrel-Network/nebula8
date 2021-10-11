@@ -87,6 +87,7 @@ def save_group(update):
         default_type_no_username = 1
         default_log_channel = Config.DEFAULT_LOG_CHANNEL
         default_group_photo = 'https://naos.hersel.it/group_photo/default.jpg'
+        default_count_group = 0
 
         data = [(
             chat,
@@ -109,7 +110,8 @@ def save_group(update):
             default_set_cas_ban,
             default_type_no_username,
             default_log_channel,
-            default_group_photo
+            default_group_photo,
+            default_count_group
             )]
         GroupRepository().add(data)
 

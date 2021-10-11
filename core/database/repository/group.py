@@ -25,6 +25,7 @@ class GroupRepository(Connection):
     SET_CAS_BAN = "set_cas_ban"
     SET_TPNU = "type_no_username"
     SET_GROUP_PHOTO = "group_photo"
+    SET_GROUP_MEMBERS_COUNT = "total_users"
     # Filters
     EXE_FILTER = "exe_filter"
     GIF_FILTER = "gif_filter"
@@ -49,7 +50,7 @@ class GroupRepository(Connection):
 
     # Save group by Welcome
     def add(self,args=None):
-        q = "INSERT INTO groups (id_group, group_name, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, set_cas_ban, type_no_username, log_channel, group_photo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        q = "INSERT INTO groups (id_group, group_name, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, set_cas_ban, type_no_username, log_channel, group_photo, total_users) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         return self._insert(q, args)
 
     #Update welcome buttons
