@@ -3,13 +3,9 @@
 
 # Copyright SquirrelNetwork
 
-import datetime
 from core import decorators
-from core.utilities.functions import chat_object
-from core.database.repository.group import GroupRepository
 
 @decorators.owner.init
 def init(update,context):
-      chat = chat_object(update)
-      row = GroupRepository().getUpdatesByChat(chat.id)
-      print(row)
+      bot = context.bot
+      bot.send_dice(chat_id=update.effective_chat.id, emoji="🎲")
