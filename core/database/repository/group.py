@@ -93,6 +93,11 @@ class GroupRepository(Connection):
 
         return self._select(q)
 
+    def insert_badword(self, args=None):
+        q = "INSERT IGNORE INTO groups_badwords (word, tg_group_id) VALUES (%s,%s)"
+
+        return self._insert(q, args)
+
     ##########################
     ##### GROUP SETTINGS #####
     ##########################

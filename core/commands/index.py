@@ -43,6 +43,7 @@ def admin_command(dsp):
     function(CMH('delete', admin.delete_message.init))
     function(CMH('welcomebuttons', admin.set_welcome.set_welcome_buttons))
     function(CMH('shield', admin.shield.init))
+    function(CMH('badword', admin.badword.init))
     #############################
     ### CallbackQuery Handler ###
     #############################
