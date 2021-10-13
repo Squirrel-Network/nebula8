@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object
+from core.utilities.functions import chat_object, user_object
 
 
 def check_group_blacklist(update):
@@ -23,13 +23,12 @@ def check_group_blacklist(update):
 def check_group_badwords(update):
     chat_id = update.effective_chat.id
     bad_word = update.effective_message.text
-    row = GroupRepository().get_group_badwords(bad_word,chat_id)
-    if row:
-        print("A")
-        return True
-    else:
-        print("B")
-        return False
+    if bad_word is not None:
+        row = GroupRepository().get_group_badwords(bad_word,chat_id)
+        if row:
+            return True
+        else:
+            return False
 
 def check_status(update, context):
     bot = context.bot
@@ -81,7 +80,9 @@ def check_status(update, context):
 
     
     if check_group_badwords(update) == True:
-        print("STO FUNZIONANDO")
+        user = user_object(update)
+        bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+        message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
 
 def check_updates(update):
       chat = chat_object(update)
