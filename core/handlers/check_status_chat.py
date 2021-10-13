@@ -20,10 +20,23 @@ def check_group_blacklist(update):
     else:
         return False
 
+def check_group_badwords(update, word):
+    chat_id = update.effective_chat.id
+    data = [(word, chat_id)]
+    row = GroupRepository().get_group_badwords(data)
+    print(row)
+    if row:
+        print("A")
+        return True
+    else:
+        print("B")
+        return False
+
 def check_status(update, context):
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
+    bad_word = update.effective_message.text
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()
 
@@ -44,15 +57,17 @@ def check_status(update, context):
         GroupRepository().update_group_settings(record_title,data)
 
     if update.effective_message.new_chat_photo:
-        file_id = update.message.new_chat_photo[2].file_id
-        newFile = bot.get_file(file_id)
-        newFile.download('/var/www/naos.hersel.it/group_photo/{}.jpg'.format(chat_id))
-        url = "https://naos.hersel.it/group_photo/{}.jpg".format(chat_id)
-        data = [(url,chat_id)]
-        record = GroupRepository.SET_GROUP_PHOTO
-        GroupRepository().update_group_settings(record,data)
-        formatter = "New Url: {}".format(url)
-        sys_loggers("[UPDATE_GROUP_PHOTO_LOGS]",formatter,False,True)
+        chat = chat_object(update)
+        if chat.type == "supergroup" or chat.type == "group":
+            file_id = update.message.new_chat_photo[2].file_id
+            newFile = bot.get_file(file_id)
+            newFile.download('/var/www/naos.hersel.it/group_photo/{}.jpg'.format(chat_id))
+            url = "https://naos.hersel.it/group_photo/{}.jpg".format(chat_id)
+            data = [(url,chat_id)]
+            record = GroupRepository.SET_GROUP_PHOTO
+            GroupRepository().update_group_settings(record,data)
+            formatter = "New Url: {}".format(url)
+            sys_loggers("[UPDATE_GROUP_PHOTO_LOGS]",formatter,False,True)
 
     if group_members_count > 0:
         record_count = GroupRepository.SET_GROUP_MEMBERS_COUNT
@@ -65,6 +80,10 @@ def check_status(update, context):
         telegram_loggers(update,context,log_txt)
         time.sleep(2)
         bot.leave_chat(chat_id)
+
+    #if bad_word is not None:
+        #if check_group_badwords(update, bad_word) == True:
+            #print("OKJFDHJODHFJOH")
 
 def check_updates(update):
       chat = chat_object(update)

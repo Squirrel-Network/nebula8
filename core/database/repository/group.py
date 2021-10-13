@@ -87,9 +87,9 @@ class GroupRepository(Connection):
         return self._insert(q, args)
 
     def get_group_badwords(self, args=None):
-        q = "SELECT * FROM groups_badwords gb WHERE InStr(%s, gb.word) <> 0 AND gb.tg_group_id = %s"
-        
-        return self._select(q)
+        q = "SELECT * FROM groups_badwords WHERE INSTR(%s, word) <> 0 AND tg_group_id = %s"
+
+        return self._select(q, args)
 
     ##########################
     ##### GROUP SETTINGS #####
