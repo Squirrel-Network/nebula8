@@ -24,7 +24,7 @@ def check_group_badwords(update):
     chat_id = update.effective_chat.id
     bad_word = update.effective_message.text
     if bad_word is not None:
-        row = GroupRepository().get_group_badwords(bad_word,chat_id)
+        row = GroupRepository().get_group_badwords([bad_word, chat_id])
         if row:
             return True
         else:
@@ -78,7 +78,6 @@ def check_status(update, context):
         time.sleep(2)
         bot.leave_chat(chat_id)
 
-    
     if check_group_badwords(update) == True:
         user = user_object(update)
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
