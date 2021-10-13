@@ -20,11 +20,10 @@ def check_group_blacklist(update):
     else:
         return False
 
-def check_group_badwords(update, word):
+def check_group_badwords(update):
     chat_id = update.effective_chat.id
-    data = [(word, chat_id)]
-    row = GroupRepository().get_group_badwords(data)
-    print(row)
+    bad_word = update.effective_message.text
+    row = GroupRepository().get_group_badwords(bad_word,chat_id)
     if row:
         print("A")
         return True
@@ -36,7 +35,6 @@ def check_status(update, context):
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
-    bad_word = update.effective_message.text
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()
 
@@ -81,9 +79,9 @@ def check_status(update, context):
         time.sleep(2)
         bot.leave_chat(chat_id)
 
-    #if bad_word is not None:
-        #if check_group_badwords(update, bad_word) == True:
-            #print("OKJFDHJODHFJOH")
+    
+    if check_group_badwords(update) == True:
+        print("STO FUNZIONANDO")
 
 def check_updates(update):
       chat = chat_object(update)

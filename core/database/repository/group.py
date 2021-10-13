@@ -67,10 +67,12 @@ class GroupRepository(Connection):
         q = "UPDATE groups SET id_group = %s WHERE id_group = %s"
         return self._update(q, args)
 
+    # I insert the updates for the message count by group
     def insert_updates(self, args=None):
         q = "INSERT INTO nebula_updates (update_id, tg_group_id, date) VALUES (%s,%s,%s)"
         return self._insert(q, args)
-
+    
+    # I collect the updates to know how many messages have been sent
     def getUpdatesByChat(self, args=None):
         q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE tg_group_id = %s'
 
@@ -86,10 +88,10 @@ class GroupRepository(Connection):
 
         return self._insert(q, args)
 
-    def get_group_badwords(self, args=None):
-        q = "SELECT * FROM groups_badwords WHERE INSTR(%s, word) <> 0 AND tg_group_id = %s"
+    def get_group_badwords(self, word, chat):
+        q = "SELECT * FROM groups_badwords WHERE INSTR('{}', word) <> 0 AND tg_group_id = {}".format(word,chat)
 
-        return self._select(q, args)
+        return self._select(q)
 
     ##########################
     ##### GROUP SETTINGS #####
