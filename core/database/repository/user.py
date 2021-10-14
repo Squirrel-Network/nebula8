@@ -6,6 +6,7 @@ from core.database.db_connect import Connection
 from pypika import Query, Table
 
 users = Table("users")
+owners = Table("owner_list")
 
 class UserRepository(Connection):
     def getById(self, args=None):
@@ -60,3 +61,15 @@ class UserRepository(Connection):
     def removeWarn(self, args=None):
         q = "UPDATE group_users SET warn_count = 0 WHERE tg_id = %s AND tg_group_id = %s"
         return self._update(q, args)
+
+    def getOwners(self):
+        query = Query.from_(owners).select("*")
+        q = query.get_sql(quote_char=None)
+
+        return self._selectAll(q)
+
+    def getOwnerById(self, args=None):
+        query = Query.from_(owners).select("*").where(owners.tg_id == "%s")
+        q = query.get_sql(quote_char=None)
+
+        return self._select(q,args)

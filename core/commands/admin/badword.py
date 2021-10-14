@@ -15,6 +15,6 @@ def init(update,context):
     if msg != "":
         data = [(msg,chat)]
         GroupRepository().insert_badword(data)
-        message(update,context,"You have entered the forbidden word {} in the database".format(msg))
+        message(update,context,"You have entered the forbidden word: [<b><i>{}</i></b>] in the database".format(msg))
     else:
         message(update, context, "You cannot enter an empty forbidden word!\nthe correct format of the command is: <code>/badword banana</code>")
