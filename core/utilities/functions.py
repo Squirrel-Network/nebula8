@@ -136,15 +136,6 @@ def mute_user_by_id(update, context, user, value):
             )
     return mute
 
-#GET OWNERS LIST
-def get_owner_list() -> list:
-    rows = UserRepository().getOwners()
-    arr_owners = []
-    for a in rows:
-        owners = int(a['tg_id'])
-        arr_owners.append(owners)
-    return arr_owners
-
 ##########################
 ### MESSAGE FUNCTIONS  ###
 ##########################

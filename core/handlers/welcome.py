@@ -19,7 +19,15 @@ from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 from core.utilities.strings import Strings
 
-OWNER_LIST = list(Config.OWNER.values())
+def get_owner_list() -> list:
+    rows = UserRepository().getOwners()
+    arr_owners = []
+    for a in rows:
+        owners = int(a['tg_id'])
+        arr_owners.append(owners)
+    return arr_owners
+
+OWNER_LIST = get_owner_list()
 API_CAS = 'https://api.cas.chat/check?user_id={}'
 
 #CAS BAN Variables

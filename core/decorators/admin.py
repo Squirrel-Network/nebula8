@@ -4,13 +4,21 @@
 # Copyright SquirrelNetwork
 from functools import wraps
 from telegram import Chat, ChatMember
-from core.utilities.functions import get_owner_list
+from core.database.repository.user import UserRepository
 
-OWNER_LIST = get_owner_list()
+def get_owner_list() -> list:
+    rows = UserRepository().getOwners()
+    arr_owners = []
+    for a in rows:
+        owners = int(a['tg_id'])
+        arr_owners.append(owners)
+    return arr_owners
+
+OWNERS = get_owner_list()
 
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if chat.type == 'private' \
-            or user_id in OWNER_LIST \
+            or user_id in OWNERS \
             or chat.all_members_are_administrators:
         return True
 

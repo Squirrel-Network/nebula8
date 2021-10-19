@@ -5,9 +5,6 @@
 import os
 from dotenv import load_dotenv
 
-params = load_dotenv()
-
-
 class Config(object):
      ###########################
      ##   DATABASE SETTINGS  ##
