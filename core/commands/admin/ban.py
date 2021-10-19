@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from pprint import pprint
 
 from core import decorators
 from core.handlers.logs import sys_loggers, telegram_loggers

@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from config import Config
 from functools import wraps
 from telegram import Chat, ChatMember
+from core.utilities.functions import get_owner_list
 
-OWNERS = list(Config.OWNER.values())
+OWNER_LIST = get_owner_list()
 
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if chat.type == 'private' \
-            or user_id in OWNERS \
+            or user_id in OWNER_LIST \
             or chat.all_members_are_administrators:
         return True
 

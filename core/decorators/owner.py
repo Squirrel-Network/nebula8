@@ -1,7 +1,7 @@
 from functools import wraps
-from config import Config
+from core.utilities.functions import get_owner_list
 
-OWNER_LIST = list(Config.OWNER.values())
+OWNER_LIST = get_owner_list()
 
 def init(func):
     @wraps(func)

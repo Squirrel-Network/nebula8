@@ -11,6 +11,21 @@ from telegram import ChatPermissions
 from languages.getLang import languages
 
 #######################
+# GENERAL FUNCTIONS ###
+#######################
+
+"""
+Example:
+flag('it')
+flag('en')
+"""
+OFFSET = 127462 - ord('A')
+
+def flag(code):
+    code = code.upper()
+    return chr(ord(code[0]) + OFFSET) + chr(ord(code[1]) + OFFSET)
+
+#######################
 ### USER FUNCTIONS ####
 #######################
 
@@ -120,6 +135,15 @@ def mute_user_by_id(update, context, user, value):
             can_add_web_page_previews=True)
             )
     return mute
+
+#GET OWNERS LIST
+def get_owner_list() -> list:
+    rows = UserRepository().getOwners()
+    arr_owners = []
+    for a in rows:
+        owners = int(a['tg_id'])
+        arr_owners.append(owners)
+    return arr_owners
 
 ##########################
 ### MESSAGE FUNCTIONS  ###
