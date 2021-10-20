@@ -3,40 +3,21 @@
 
 # Copyright SquirrelNetwork
 from functools import wraps
-from telegram import Chat, ChatMember
-from core.database.repository.user import UserRepository
 
-def get_owner_list() -> list:
-    rows = UserRepository().getOwners()
-    arr_owners = []
-    for a in rows:
-        owners = int(a['tg_id'])
-        arr_owners.append(owners)
-    return arr_owners
+from core.decorators.owner import OWNER_LIST
 
-OWNERS = get_owner_list()
-
-def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    if chat.type == 'private' \
-            or user_id in OWNERS \
-            or chat.all_members_are_administrators:
-        return True
-
-    if not member:
-        member = chat.get_member(user_id)
-    return member.status in ('administrator', 'creator')
+TITLES = ['creator', 'administrator']
 
 def user_admin(func):
     @wraps(func)
-    def is_admin(update, context, *args, **kwargs):
-        user = update.effective_user
-        if user and is_user_admin(update.effective_chat, user.id):
-            return func(update, context, *args, **kwargs)
-
-        elif not user:
-            pass
-
-        else:
-            print("Unauthorized access denied for {}.".format(user.id))
-
-    return is_admin
+    def wrapped(update, context):
+        user_id = update.effective_user
+        try:
+            stat = context.bot.get_chat_member(update.message.chat_id, update.effective_user['id'])['status']
+        except:
+            stat = context.bot.get_chat_member(update.callback_query.message.chat_id, update.callback_query.from_user['id'])['status']
+        if (user_id['id'] not in OWNER_LIST) and (stat not in TITLES):
+            print("Unauthorized access denied for {}.".format(user_id['id']))
+            return
+        return func(update, context)
+    return wrapped

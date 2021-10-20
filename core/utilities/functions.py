@@ -4,9 +4,9 @@
 # Copyright SquirrelNetwork
 
 import time
+from core import decorators
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
-from core import decorators
 from telegram import ChatPermissions
 from languages.getLang import languages
 
@@ -169,7 +169,15 @@ def update_db_settings(update,record, options):
         upd = GroupRepository().update_group_settings(record, data)
     return upd
 
-@decorators.admin.user_admin
+def get_owner_list() -> list:
+    rows = UserRepository().getOwners()
+    arr_owners = []
+    for a in rows:
+        owners = int(a['tg_id'])
+        arr_owners.append(owners)
+    return arr_owners
+
+#@decorators.admin.user_admin
 def close_menu(update, context):
     query = update.callback_query
     languages(update,context)

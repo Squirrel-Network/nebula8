@@ -1,14 +1,5 @@
-from functools import wraps 
-from core.database.repository.user import UserRepository
-
-
-def get_owner_list() -> list:
-    rows = UserRepository().getOwners()
-    arr_owners = []
-    for a in rows:
-        owners = int(a['tg_id'])
-        arr_owners.append(owners)
-    return arr_owners
+from functools import wraps
+from core.utilities.functions import get_owner_list
 
 OWNER_LIST = get_owner_list()
 

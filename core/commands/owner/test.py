@@ -5,7 +5,7 @@
 
 from core import decorators
 
-@decorators.owner.init
+
+@decorators.admin.user_admin
 def init(update,context):
     print(update)
-    print(context)
