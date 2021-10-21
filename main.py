@@ -14,6 +14,7 @@ from core.commands import index
 from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
+from core.handlers.check_status_chat import check_updates
 
 console = Console()
 table = Table(show_header=True, header_style="bold blue")
@@ -39,6 +40,8 @@ logger = logging.getLogger(__name__)
 def main():
     updater = Updater(Config.BOT_TOKEN, use_context=True)
     dsp = updater.dispatcher
+    job = updater.job_queue
+
     # I load all admin, user and owner commands
     index.user_command(dsp)
     index.admin_command(dsp)
@@ -59,6 +62,7 @@ def main():
         console.print(table)
     # I load all handlers, commands without '/'
     handlers_index.core_handlers(dsp)
+    handlers_index.jobs_handlers(job)
     handlers.logs.sys_loggers()
     # I load the error handler, when the bot receives an error it sends a private message to the developer
     dsp.add_error_handler(handlers.errors.error_handler)

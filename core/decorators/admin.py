@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 from functools import wraps
-
 from core.decorators.owner import OWNER_LIST
 
 TITLES = ['creator', 'administrator']

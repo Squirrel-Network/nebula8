@@ -80,7 +80,7 @@ def update_superban(update, context):
             data = [(user_id,motivation,save_date,operator_id)]
             SuperbanRepository().add(data)
             #Kick the User
-            bot.kick_chat_member(chat_id, user_id)
+            bot.ban_chat_member(chat_id, user_id)
             #Edit Message Text after push the button
             msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user_id,user_id,motivation,user_id)
             query.edit_message_text(msg, parse_mode='HTML')

@@ -3,6 +3,7 @@
 
 # Copyright SquirrelNetwork
 from core import handlers
+from core import jobs
 from core.commands import public
 from telegram.ext import (MessageHandler as MH,Filters)
 
@@ -19,3 +20,6 @@ def group_handlers(update,context):
     public.eggs.egg_gh(update,context)
     handlers.filters_chat.init(update, context)
     handlers.logs.set_log_channel(update,context)
+
+def jobs_handlers(job):
+    job.run_repeating(jobs.send_debug.send_message_job,interval=600.0,first=0.0)
