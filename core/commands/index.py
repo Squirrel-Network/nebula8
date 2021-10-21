@@ -74,4 +74,5 @@ def owner_command(dsp):
     function(CMH('server', owner.server_info.init))
     function(CMH('community', owner.add_community.init))
     function(CMH('test', owner.test.init))
+    function(CMH('owner', owner.add_owner.init))
     function(CMH('exit', owner.exit.init))

@@ -38,6 +38,10 @@ class UserRepository(Connection):
         q = "INSERT IGNORE INTO users (tg_id, tg_username, created_at, updated_at) VALUES (%s,%s,%s,%s)"
         return self._insert(q, args)
 
+    def add_owner(self, args=None):
+        q = "INSERT IGNORE INTO owner_list (tg_id, tg_username) VALUES (%s,%s)"
+        return self._insert(q, args)
+
     def add_into_mtm(self, args=None):
         q = "INSERT IGNORE INTO group_users (tg_id, tg_group_id, warn_count) VALUES (%s,%s,%s)"
         return self._insert(q, args)
