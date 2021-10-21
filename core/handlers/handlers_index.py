@@ -6,6 +6,7 @@ from core import handlers
 from core import jobs
 from core.commands import public
 from telegram.ext import (MessageHandler as MH,Filters)
+from core.utilities.constants import EIGHT_HOUR
 
 def core_handlers(dsp):
     function = dsp.add_handler
@@ -22,4 +23,4 @@ def group_handlers(update,context):
     handlers.logs.set_log_channel(update,context)
 
 def jobs_handlers(job):
-    job.run_repeating(jobs.send_debug.send_message_job,interval=600.0,first=0.0)
+    job.run_repeating(jobs.send_debug.send_message_job,interval=EIGHT_HOUR,first=0.0, name="[DEBUG_LOG_JOB]")

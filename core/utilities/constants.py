@@ -4,6 +4,12 @@
 # Copyright SquirrelNetwork
 
 from telegram import ChatPermissions
+# constants for time management
+# DAILY == 24h  ; TWELVE_HOUR == 12h ; EIGHT_HOURSE == 8h ; FOUR_HOUR == 4h
+DAILY = 86400.0
+TWELVE_HOUR = 43200.0
+EIGHT_HOUR = 28800.0
+FOUR_HOUR = 14400.0
 
 #these constants change and disrupt an entire group
 PERM_FALSE = ChatPermissions(
