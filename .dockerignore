@@ -1,3 +1,9 @@
 .git*
 .dockerignore
+.circleci
+.vscode
 Dockerfile
+env
+venv
+docker/
+docker-compose.yml
