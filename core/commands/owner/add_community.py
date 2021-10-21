@@ -23,7 +23,7 @@ def init(update,context):
             data_group = [(default_community, chat.id)]
             CommunityRepository().update(data)
             GroupRepository().update_group_settings(record,data_group)
-            message(update,context,"Update Community")
+            message(update,context,"I updated the community on the database")
         else:
             buttons = []
             buttons.append(InlineKeyboardButton('IT', callback_data='commIT'))
@@ -50,4 +50,4 @@ def callback_community(update,context):
         data_group = [(default_community, chat_id)]
         CommunityRepository().add(data)
         GroupRepository().update_group_settings(record,data_group)
-        query.edit_message_text("Insert Community", parse_mode='HTML')
+        query.edit_message_text("I have added the community [{}] to the database".format(chat_title), parse_mode='HTML')

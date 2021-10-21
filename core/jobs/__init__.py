@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["send_debug"]
+__all__ = ["night_mode","send_debug"]
 
 from core.jobs import *

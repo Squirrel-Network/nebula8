@@ -5,10 +5,11 @@
 from core import decorators
 from core.database.repository.group import GroupRepository
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from core.utilities.functions import flag
 
 LANGUAGE_KEYBOARD = [[
-    InlineKeyboardButton("EN", callback_data='language_en'),
-    InlineKeyboardButton("IT", callback_data='language_it')
+    InlineKeyboardButton(flag('gb'), callback_data='language_en'),
+    InlineKeyboardButton(flag('it'), callback_data='language_it')
     ]]
 
 record = GroupRepository.SET_LANGUAGE
