@@ -5,12 +5,14 @@
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 class Config(object):
      ###########################
      ##   DATABASE SETTINGS  ##
      ##########################
      HOST = os.environ.get('MYSQL_HOST')
-     PORT = int(os.environ.get('MYSQL_PORT'))
+     PORT = int(os.environ.get('MYSQL_PORT', '3306'))
      USER = os.environ.get('MYSQL_USER')
      PASSWORD = os.environ.get('MYSQL_PASSWORD')
      DBNAME = os.environ.get('MYSQL_DBNAME')
