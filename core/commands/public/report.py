@@ -11,6 +11,9 @@ from core.utilities.functions import chat_object
 
 @decorators.public.init
 def init(update,context):
+    if update.effective_message.forward_date is not None:
+        return
+
     chat = update.effective_chat
     languages(update,context)
     if str(update.effective_message.text).lower().startswith("@admin"):
