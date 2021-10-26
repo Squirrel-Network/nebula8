@@ -11,6 +11,8 @@ from typing import Callable, List, Dict, Any
 =============
 How to Use:
 =============
+test = Scheduler()
+
 @test.repeat(3600, False)
 async def handler():
   It will be repeated at 16:30

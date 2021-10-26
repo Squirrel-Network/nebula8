@@ -92,6 +92,11 @@ class GroupRepository(Connection):
         q = "SELECT * FROM groups_badwords WHERE INSTR(%s, word) <> 0 AND tg_group_id = %s"
 
         return self._select(q, args)
+    
+    def get_badwords_group(self, args=None):
+        q = "SELECT * FROM groups_badwords WHERE tg_group_id = %s"
+
+        return self._selectAll(q, args)
 
     def insert_badword(self, args=None):
         q = "INSERT IGNORE INTO groups_badwords (word, tg_group_id) VALUES (%s,%s)"

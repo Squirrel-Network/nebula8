@@ -44,6 +44,7 @@ def admin_command(dsp):
     function(CMH('welcomebuttons', admin.set_welcome.set_welcome_buttons))
     function(CMH('shield', admin.shield.init))
     function(CMH('badword', admin.badword.init))
+    function(CMH('badlist', admin.badword.badlist))
     #############################
     ### CallbackQuery Handler ###
     #############################
@@ -69,6 +70,7 @@ def owner_command(dsp):
     ### CommandHandler ###
     ######################
     function(CMH('b', owner.broadcast.init, run_async=True))
+    function(CMH('gb', owner.broadcast.global_broadcast, run_async=True))
     function(CMH('s', owner.superban.init, run_async=True))
     function(CMH('w', owner.whitelist.init))
     function(CMH('server', owner.server_info.init))
