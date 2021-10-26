@@ -31,7 +31,7 @@ def global_broadcast(update, context):
     msg = update.message.text[3:].strip()
     rows = GroupRepository().getAll()
     for a in rows:
-        id_groups = a['tg_group_id']
+        id_groups = a['id_group']
         try:
             if msg != "":
                 loop.run_until_complete(messageWithAsyncById(update,context,id_groups,2,msg))
