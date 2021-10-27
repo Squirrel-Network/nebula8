@@ -2,7 +2,7 @@ English =	{
   "LANG_DEFAULT": "en",
   "START_COMMAND": "Hi, my name is {} and I am a tool for managing groups with many special functions to be discovered and I am Open Source! If you want to see my source type: /source If you need help, type /help",
   "HELP_COMMAND": "Hi my name is {}\nDo You need Help?",
-  "GROUP_INFO": "<b>Group Title:</b> <code>{}</code>\n\n<b>Group Id:</b> <code>{}</code>\n\n<b>Group's Welcome:</b> <code>{}</code>\n\n<b>Group's Rules:</b> <code>{}</code>\n\n<b>Group's Language:</b> <code>{}</code>\n\nWarn Limit: <code>{}</code>\n\nTotal Group Messages: <code>{}</code>",
+  "GROUP_INFO": "<b>Group Title:</b> <code>{}</code>\n\n<b>Group Id:</b> <code>{}</code>\n\n<b>Group's Welcome:</b> <code>{}</code>\n\n<b>Group's Rules:</b> <code>{}</code>\n\n<b>Group's Language:</b> <code>{}</code>\n\nWarn Limit: <code>{}</code>\n\nTotal Group Users: <code>{}</code>\n\nTotal Group Messages: <code>{}</code>",
   "BOT_WELCOME": "Thank you for adding me to the {} group\nFor working properly i need admins privileges!",
   "BAN_MESSAGE": '<a href="tg://user?id={userid}">{user}</a> has been <b>banned</b> from: {chat}',
   "RULES": "Here are the group rules: {}",
@@ -25,5 +25,8 @@ English =	{
   "PERM_MSG_OK": "The bot has the correct permissions to function properly ✅",
   "CLOSE_MENU": "You have closed the Menu",
   "GLOBAL_REPORT_MSG": "You have reported a problem to the bot staff, an available operator will come to assist",
-  "ERROR_RESPONSE_USER_MSG": "You must use this command in response to a user"
+  "ERROR_RESPONSE_USER_MSG": "You must use this command in response to a user",
+  "WARN_USER": "‼️ {} was warned!\nin the group {} <code>[{}]</code>",
+  "WARN_USER_MAX": "User @{} has reached the maximum number\n of warns in the {} group and has been banned",
+  "BUTTON_REMOVE": '🗑 Remove'
 }

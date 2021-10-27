@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
-from core.utilities.message import message
+from core.utilities.message import messagePhoto
 from core.handlers.welcome import save_group
 from core import decorators
 
@@ -23,13 +23,16 @@ def init(update, context):
         data = [(chat_title, chat)]
         GroupRepository().update_group_settings(record, data)
         counter = GroupRepository().getUpdatesByChat(chat)
-        message(update,context,languages.group_info.format(
+        img = row['group_photo']
+        caption = languages.group_info.format(
             row['group_name'],
             row['id_group'],
             row['welcome_text'],
             row['rules_text'],
             row['languages'],
             row['max_warn'],
-            counter['counter']))
+            row['total_users'],
+            counter['counter'])
+        messagePhoto(update, context, img, caption)
     else:
         save_group(update)

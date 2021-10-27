@@ -53,4 +53,7 @@ def languages(update, context):
     languages.close_menu_general = setLang["CLOSE_MENU"]
     languages.global_report_msg = setLang["GLOBAL_REPORT_MSG"]
     languages.error_response_user_msg = setLang["ERROR_RESPONSE_USER_MSG"]
+    languages.warn_user = setLang["WARN_USER"]
+    languages.warn_user_max = setLang["WARN_USER_MAX"]
+    languages.button_remove = setLang["BUTTON_REMOVE"]
     return LANGUAGE
