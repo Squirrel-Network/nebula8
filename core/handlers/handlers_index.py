@@ -23,4 +23,4 @@ def group_handlers(update,context):
     handlers.logs.set_log_channel(update,context)
 
 def jobs_handlers(job):
-    job.run_repeating(jobs.send_debug.send_message_job,interval=FOUR_HOUR,first=0.0, name="[DEBUG_LOG_JOB]")
+    job.run_repeating(jobs.send_debug.send_log,interval=FOUR_HOUR,first=0.0, name="[DEBUG_LOG_JOB]")

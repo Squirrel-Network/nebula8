@@ -14,13 +14,10 @@ from core.commands import index
 from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
-from core.utilities.scheduler import Scheduler
+from core.database.db_connect import Connection
 
 console = Console()
 table = Table(show_header=True, header_style="bold blue")
-
-global scheduler_start
-scheduler_start = Scheduler()
 
 # if version < 3.7, stop bot.
 LOGGER = logging.getLogger(__name__)
@@ -41,7 +38,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def main():
-    updater = Updater(Config.BOT_TOKEN, use_context=True)
+    updater = Updater(Config.BOT_TOKEN)
     dsp = updater.dispatcher
     job = updater.job_queue
 
@@ -66,7 +63,6 @@ def main():
     # I load all handlers, commands without '/'
     handlers_index.core_handlers(dsp)
     handlers_index.jobs_handlers(job)
-    scheduler_start.start()
     handlers.logs.sys_loggers()
     # I load the error handler, when the bot receives an error it sends a private message to the developer
     dsp.add_error_handler(handlers.errors.error_handler)

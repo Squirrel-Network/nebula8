@@ -3,21 +3,28 @@
 
 # Copyright SquirrelNetwork
 import pymysql
+from pymysql import OperationalError
 from config import Config
-
+"""
+This class handles database connection and inbound queries
+"""
 class Connection:
     def __init__(self):
-        self.con = pymysql.connect(
-            host = Config.HOST,
-            port = Config.PORT,
-            user = Config.USER,
-            password = Config.PASSWORD,
-            db = Config.DBNAME,
-            autocommit=True,
-            charset = 'utf8mb4',
-            cursorclass = pymysql.cursors.DictCursor
-            )
-        self.cur = self.con.cursor()
+        try:
+            self.con = pymysql.connect(
+                host = Config.HOST,
+                port = Config.PORT,
+                user = Config.USER,
+                password = Config.PASSWORD,
+                db = Config.DBNAME,
+                autocommit=True,
+                charset = 'utf8mb4',
+                cursorclass = pymysql.cursors.DictCursor
+                )
+            self.cur = self.con.cursor()
+        except OperationalError:
+            print("I was unable to connect to the database!\nCheck that you have entered all the parameters correctly\nand that your database is online!")
+            quit(1)
 
     def _select(self,sql,args=None):
         self.cur.execute(sql,args)
