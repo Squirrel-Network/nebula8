@@ -39,17 +39,17 @@ def check_status(update,context):
     max_warn = get_group['max_warn'] if get_group is not None else DEFAULT_MAX_WARN
 
     #CAS BAN Variables
-    #api_cas =  requests.get(API_CAS.format(get_superban_user_id))
-    #response = api_cas.json()
-    #cas_ban = response["ok"]
+    api_cas =  requests.get(API_CAS.format(get_superban_user_id))
+    response = api_cas.json()
+    cas_ban = response["ok"]
 
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']
-        #cas_ban_row = get_group['set_cas_ban']
+        cas_ban_row = get_group['set_cas_ban']
         type_no_username = get_group['type_no_username']
     else:
         user_set_photo = 0
-        #cas_ban_row = 1
+        cas_ban_row = 1
     #Check if the user has a username if he does not have a username I perform a temporary kick and check that the user is not a service account
     if update.effective_user.id == SERVICE_ACCOUNT:
         print("Service Account")
@@ -109,8 +109,8 @@ def check_status(update,context):
         msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
         message(update,context,msg.format(user.id))
     #If the user exists in the CAS ban => https://cas.chat
-    #if cas_ban == True and cas_ban_row == 1:
-        #result = response["result"]
-        #messages = result["messages"]
-        #date = result["time_added"]
-        #message(update,context,"#Automatic Handler\n<b>{}</b> is present into CAS's blacklist\nfor the following reason: <code>{}</code>\nin data: <b>{}</b>\n\nhttps://cas.chat/query?u={}".format(get_superban_user_id,messages,date,get_superban_user_id))
+    if cas_ban == True and cas_ban_row == 1:
+        result = response["result"]
+        messages = result["messages"]
+        date = result["time_added"]
+        message(update,context,"#Automatic Handler\n<b>{}</b> is present into CAS's blacklist\nfor the following reason: <code>{}</code>\nin data: <b>{}</b>\n\nhttps://cas.chat/query?u={}".format(get_superban_user_id,messages,date,get_superban_user_id))

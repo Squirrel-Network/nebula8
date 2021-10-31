@@ -58,4 +58,4 @@ def init(update,context):
             default_count_group
             )
 
-        GroupRepository().add_2(str(data))
+        GroupRepository().add_2(data)

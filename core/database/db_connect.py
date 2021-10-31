@@ -44,6 +44,10 @@ class Connection:
         self.ins = self.cur.executemany(sql,args)
         return self.ins
 
+    def _single_insert(self,sql,args=None):
+        self.sins = self.cur.execute(sql,args)
+        return self.sins
+
     def _update(self,sql, args=None):
         self.upd = self.cur.executemany(sql,args)
         return self.upd

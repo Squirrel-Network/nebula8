@@ -10,26 +10,28 @@ groups = Table("groups")
 
 class GroupRepository(Connection):
     ###### Column constants of the table ######
+    SET_ID_GROUP = "id_group"
     SET_GROUP_NAME = "group_name"
-    SET_WELCOME = "set_welcome"
-    SET_SILENCE = "set_silence"
-    SET_LANGUAGE = "languages"
-    SET_USER_PROFILE_PICT = "set_user_profile_picture"
-    SET_ARABIC = "set_arabic_filter"
-    SET_CHINESE = "set_chinese_filter"
-    SET_CIRILLIC = "set_cirillic_filter"
+    SET_WELCOME  = "welcome_text"
+    SET_WELCOME_BUTTONS = "welcome_buttons"
     SET_RULES_TEXT = "rules_text"
     SET_COMMUNITY = "community"
-    SET_WELCOME_TEXT = "welcome_text"
-    SET_LOG_CHANNEL = "log_channel"
+    SET_LANGUAGE = "languages"
+    SET_WELCOME = "set_welcome"
     SET_MAX_WARN = "max_warn"
+    SET_SILENCE = "set_silence"
+    EXE_FILTER = "exe_filter"
+    SET_BLOCK_N_M = "block_new_member"
+    SET_ARABIC = "set_arabic_filter"
+    SET_CIRILLIC = "set_cirillic_filter"
+    SET_CHINESE = "set_chinese_filter"
+    SET_USER_PROFILE_PICT = "set_user_profile_picture"
+    GIF_FILTER = "gif_filter"
     SET_CAS_BAN = "set_cas_ban"
     SET_TPNU = "type_no_username"
+    SET_LOG_CHANNEL = "log_channel"
     SET_GROUP_PHOTO = "group_photo"
     SET_GROUP_MEMBERS_COUNT = "total_users"
-    # Filters
-    EXE_FILTER = "exe_filter"
-    GIF_FILTER = "gif_filter"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')
@@ -56,9 +58,12 @@ class GroupRepository(Connection):
 
     def add_2(self,args=None):
         print(args)
-        #q = groups.insert('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s')
-        q = Query.into(groups).insert('%s')
-        return self._insert(q, args)
+        col = ('id_group', 'group_name', 'welcome_text', 'welcome_buttons', 'rules_text', 'community', 'languages', 'set_welcome', 'max_warn', 'set_silence', 'exe_filter', 'block_new_member', 'set_arabic_filter', 'set_cirillic_filter', 'set_chinese_filter', 'set_user_profile_picture', 'gif_filter', 'set_cas_ban', 'type_no_username', 'log_channel', 'group_photo', 'total_users')
+        q = Query.into(groups).columns(col).insert('%s')
+        q = q.get_sql(quote_char='`')
+        q = q.replace("'", "")
+        print(str(q))
+        return self._insert(str(q), str(args))
 
     #Update welcome buttons
     def updateWelcomeButtonsByGroupId(self, group_id, button):
@@ -98,7 +103,7 @@ class GroupRepository(Connection):
         q = "SELECT * FROM groups_badwords WHERE INSTR(%s, word) <> 0 AND tg_group_id = %s"
 
         return self._select(q, args)
-    
+
     def get_badwords_group(self, args=None):
         q = "SELECT * FROM groups_badwords WHERE tg_group_id = %s"
 
