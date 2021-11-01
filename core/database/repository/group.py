@@ -32,6 +32,8 @@ class GroupRepository(Connection):
     SET_LOG_CHANNEL = "log_channel"
     SET_GROUP_PHOTO = "group_photo"
     SET_GROUP_MEMBERS_COUNT = "total_users"
+    ZIP_FILTER = "zip_filter"
+    TARGZ_FILTER =  "targz_filter"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')

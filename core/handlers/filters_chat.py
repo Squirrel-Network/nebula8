@@ -53,6 +53,6 @@ def init(update, context):
             print("NO WAV ALLOWED")
         if msg.document.mime_type == xml:
             print("NO XML ALLOWED")
-        if msg.document.mime_type == filezip:
+        if msg.document.mime_type == filezip and group['zip_filter'] == 1:
             delete_message(update,context)
             message(update, context, "#Automatic Filter Handler: <b>No ZIP Allowed!</b>")

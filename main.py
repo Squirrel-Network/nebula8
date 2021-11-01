@@ -14,7 +14,6 @@ from core.commands import index
 from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
-from core.database.db_connect import Connection
 
 console = Console()
 table = Table(show_header=True, header_style="bold blue")

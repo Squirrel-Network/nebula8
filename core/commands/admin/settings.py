@@ -39,8 +39,8 @@ def keyboard_filters(update,context,editkeyboard = False):
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Exe Filters %s' % ('✅' if group['exe_filter'] == 1 else '❌'), callback_data='exe_filters'))
     list_buttons.append(InlineKeyboardButton('GIF Filters %s' % ('✅' if group['gif_filter'] == 1 else '❌'), callback_data='gif_filters'))
-    list_buttons.append(InlineKeyboardButton('Zip Filters', callback_data='zip_filters'))
-    list_buttons.append(InlineKeyboardButton('TarGZ Filters', callback_data='targz_filters'))
+    list_buttons.append(InlineKeyboardButton('Zip Filters %s' % ('✅' if group['zip_filter'] == 1 else '❌'), callback_data='zip_filters'))
+    list_buttons.append(InlineKeyboardButton('TarGZ Filters %s' % ('✅' if group['targz_filter'] == 1 else '❌'), callback_data='targz_filters'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
@@ -165,10 +165,24 @@ def update_settings(update,context):
             update_db_settings(update, record, True)
             query.edit_message_text("<b>EXE FILTERS DEACTIVATED!</b>",parse_mode='HTML')
     if query.data == 'zip_filters':
-        query.edit_message_text("ZIP FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+        record = GroupRepository.ZIP_FILTER
+        row = group["zip_filter"]
+        if row == 0:
+            update_db_settings(update, record, False)
+            query.edit_message_text("ZIP FILTERS ACTIVATED",parse_mode='HTML')
+        else:
+            update_db_settings(update, record, True)
+            query.edit_message_text("ZIP FILTERS DEACTIVATED",parse_mode='HTML')
 
     if query.data == 'targz_filters':
-        query.edit_message_text("TARGZ FILTERS ACTIVATED\nUnder Construction",parse_mode='HTML')
+        record = GroupRepository.TARGZ_FILTER
+        row = group["targz_filter"]
+        if row == 0:
+            update_db_settings(update, record, False)
+            query.edit_message_text("TARGZ FILTERS ACTIVATED",parse_mode='HTML')
+        else:
+            update_db_settings(update, record, True)
+            query.edit_message_text("TARGZ FILTERS DEACTIVATED",parse_mode='HTML')
 
     if query.data == 'gif_filters':
         record = GroupRepository.GIF_FILTER

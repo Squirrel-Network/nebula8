@@ -98,7 +98,9 @@ def save_group(update):
             "type_no_username": 1,
             "log_channel": Config.DEFAULT_LOG_CHANNEL,
             "group_photo": 'https://naos.hersel.it/group_photo/default.jpg',
-            "total_users": 0
+            "total_users": 0,
+            "zip_filter": 0,
+            "targz_filter": 0
         }
         GroupRepository().add_with_dict(dictionary)
 
