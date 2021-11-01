@@ -52,18 +52,11 @@ class GroupRepository(Connection):
         return self._selectAll(q)
 
     # Save group by Welcome
-    def add(self,args=None):
-        q = "INSERT INTO groups (id_group, group_name, welcome_text, welcome_buttons, rules_text, community, languages, set_welcome, max_warn, set_silence, exe_filter, block_new_member, set_arabic_filter, set_cirillic_filter, set_chinese_filter, set_user_profile_picture, gif_filter, set_cas_ban, type_no_username, log_channel, group_photo, total_users) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        return self._insert(q, args)
-
-    def add_2(self,args=None):
-        print(args)
-        col = ('id_group', 'group_name', 'welcome_text', 'welcome_buttons', 'rules_text', 'community', 'languages', 'set_welcome', 'max_warn', 'set_silence', 'exe_filter', 'block_new_member', 'set_arabic_filter', 'set_cirillic_filter', 'set_chinese_filter', 'set_user_profile_picture', 'gif_filter', 'set_cas_ban', 'type_no_username', 'log_channel', 'group_photo', 'total_users')
-        q = Query.into(groups).columns(col).insert('%s')
-        q = q.get_sql(quote_char='`')
-        q = q.replace("'", "")
-        print(str(q))
-        return self._insert(str(q), str(args))
+    def add_with_dict(self,dictionary):
+        placeholders = ', '.join(['%s'] * len(dictionary))
+        columns = ', '.join(dictionary.keys())
+        sql = "INSERT INTO groups ( %s ) VALUES ( %s )" % (columns, placeholders)
+        return self._dict_insert(sql, dictionary)
 
     #Update welcome buttons
     def updateWelcomeButtonsByGroupId(self, group_id, button):

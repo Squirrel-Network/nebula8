@@ -48,6 +48,10 @@ class Connection:
         self.sins = self.cur.execute(sql,args)
         return self.sins
 
+    def _dict_insert(self, sql, dictionary):
+        self.dins = self.cur.execute(sql, list(dictionary.values()))
+        return self.dins
+
     def _update(self,sql, args=None):
         self.upd = self.cur.executemany(sql,args)
         return self.upd
