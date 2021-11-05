@@ -54,7 +54,7 @@ def init(update, context):
                 formatter = "Superban eseguito da: {}".format(operator_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
         else:
-            message(update,context,"Attention you can not superbanned without entering an ID!")
+            message(update,context,"Attention you can not superbanned without entering an TELEGRAM ID!")
 
 @decorators.owner.init
 def update_superban(update, context):
@@ -79,7 +79,7 @@ def update_superban(update, context):
         else:
             data = [(user_id,motivation,save_date,operator_id)]
             SuperbanRepository().add(data)
-            #Kick the User
+            #Ban the User
             bot.ban_chat_member(chat_id, user_id)
             #Edit Message Text after push the button
             msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user_id,user_id,motivation,user_id)
@@ -90,6 +90,7 @@ def update_superban(update, context):
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+
     if query.data == "removeSuperban":
         user_id = query.message.reply_to_message.from_user.id
         row = SuperbanRepository().getById(user_id)

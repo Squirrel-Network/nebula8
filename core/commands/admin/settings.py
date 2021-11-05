@@ -1,9 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright SquirrelNetwork
 from core import decorators
 from core.utilities.menu import build_menu
 from core.utilities.functions import update_db_settings
-from core.utilities.constants import PERM_TRUE, PERM_FALSE
+from core.utilities.constants import PERM_TRUE, PERM_FALSE, PERM_MEDIA_FALSE, PERM_MEDIA_TRUE
 from languages.getLang import languages
-from core.commands.admin import set_lang, info_group
+from core.commands.admin import set_lang
+from core.commands.admin.warn import set_warn
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
 
@@ -22,29 +27,11 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('No Chinese Entry %s' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
     list_buttons.append(InlineKeyboardButton('CAS BAN %s' % ('✅' if group['set_cas_ban'] == 1 else '❌'), callback_data='casban'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
-    list_buttons.append(InlineKeyboardButton('Chat Filters', callback_data='Filters'))
     list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
         keyboard_menu = bot.send_message(chat,"⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
-    if editkeyboard == True:
-        keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
-    return keyboard_menu
-
-def keyboard_filters(update,context,editkeyboard = False):
-    bot = context.bot
-    chat = update.message.chat_id
-    group = GroupRepository().getById(chat)
-    list_buttons = []
-    list_buttons.append(InlineKeyboardButton('Exe Filters %s' % ('✅' if group['exe_filter'] == 1 else '❌'), callback_data='exe_filters'))
-    list_buttons.append(InlineKeyboardButton('GIF Filters %s' % ('✅' if group['gif_filter'] == 1 else '❌'), callback_data='gif_filters'))
-    list_buttons.append(InlineKeyboardButton('Zip Filters %s' % ('✅' if group['zip_filter'] == 1 else '❌'), callback_data='zip_filters'))
-    list_buttons.append(InlineKeyboardButton('TarGZ Filters %s' % ('✅' if group['targz_filter'] == 1 else '❌'), callback_data='targz_filters'))
-    list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
-    menu = build_menu(list_buttons,2)
-    if editkeyboard == False:
-        keyboard_menu = bot.send_message(chat,"Filters Settings",reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     if editkeyboard == True:
         keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
     return keyboard_menu
@@ -149,50 +136,6 @@ def update_settings(update,context):
         else:
             update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
-
-    ###################################
-    ####     SET CHAT FILTERS      ####
-    ###################################
-    if query.data == 'Filters':
-        return keyboard_filters(query, context, True)
-    if query.data == 'exe_filters':
-        record = GroupRepository.EXE_FILTER
-        row = group['exe_filter']
-        if row == 0:
-            update_db_settings(update, record, False)
-            query.edit_message_text("<b>EXE FILTERS ACTIVATED!</b>",parse_mode='HTML')
-        else:
-            update_db_settings(update, record, True)
-            query.edit_message_text("<b>EXE FILTERS DEACTIVATED!</b>",parse_mode='HTML')
-    if query.data == 'zip_filters':
-        record = GroupRepository.ZIP_FILTER
-        row = group["zip_filter"]
-        if row == 0:
-            update_db_settings(update, record, False)
-            query.edit_message_text("ZIP FILTERS ACTIVATED",parse_mode='HTML')
-        else:
-            update_db_settings(update, record, True)
-            query.edit_message_text("ZIP FILTERS DEACTIVATED",parse_mode='HTML')
-
-    if query.data == 'targz_filters':
-        record = GroupRepository.TARGZ_FILTER
-        row = group["targz_filter"]
-        if row == 0:
-            update_db_settings(update, record, False)
-            query.edit_message_text("TARGZ FILTERS ACTIVATED",parse_mode='HTML')
-        else:
-            update_db_settings(update, record, True)
-            query.edit_message_text("TARGZ FILTERS DEACTIVATED",parse_mode='HTML')
-
-    if query.data == 'gif_filters':
-        record = GroupRepository.GIF_FILTER
-        row = group['gif_filter']
-        if row == 0:
-            update_db_settings(update, record, False)
-            query.edit_message_text("<b>GIF FILTERS ACTIVATED!</b>",parse_mode='HTML')
-        else:
-            update_db_settings(update, record, True)
-            query.edit_message_text("<b>GIF FILTERS DEACTIVATED!</b>",parse_mode='HTML')
     ###################################
     ####     SET CHAT LANGUAGE     ####
     ###################################

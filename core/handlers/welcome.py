@@ -100,7 +100,10 @@ def save_group(update):
             "group_photo": 'https://naos.hersel.it/group_photo/default.jpg',
             "total_users": 0,
             "zip_filter": 0,
-            "targz_filter": 0
+            "targz_filter": 0,
+            "jpg_filter": 0,
+            "docx_filter": 0,
+            "apk_filter": 0
         }
         GroupRepository().add_with_dict(dictionary)
 

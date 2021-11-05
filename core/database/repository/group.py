@@ -34,6 +34,9 @@ class GroupRepository(Connection):
     SET_GROUP_MEMBERS_COUNT = "total_users"
     ZIP_FILTER = "zip_filter"
     TARGZ_FILTER =  "targz_filter"
+    JPG_FILTER =  "jpg_filter"
+    DOCX_FILTER =  "docx_filter"
+    APK_FILTER =  "apk_filter"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')

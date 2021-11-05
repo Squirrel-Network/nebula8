@@ -36,6 +36,7 @@ def admin_command(dsp):
     function(CMH('say', admin.say.init))
     function(CMH('welcome', admin.set_welcome.init))
     function(CMH('settings', admin.settings.init))
+    function(CMH('filters', admin.filters.init))
     function(CMH('setwarn', admin.warn.set_warn))
     function(CMH('setrules', admin.set_rules.init))
     function(CMH('setnousername', admin.set_welcome.set_type_no_username))
@@ -62,6 +63,7 @@ def admin_command(dsp):
     function(CQH(admin.mute.update_mute, pattern='unmute'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
+    function(CQH(admin.filters.update_filters, pattern='ff'))
     function(CQH(admin.settings.update_settings))
 
 def owner_command(dsp):
