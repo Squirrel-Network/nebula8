@@ -44,7 +44,7 @@ def remove_blacklist(update,context):
         row = SuperbanRepository().getById(user_id)
         if row:
             data = [(user_id)]
-            SuperbanRepository().delete(data)
+            SuperbanRepository().remove(data)
             msg = "I removed the superban to user <code>{}</code>".format(user_id)
             query.edit_message_text(msg,parse_mode='HTML')
         else:

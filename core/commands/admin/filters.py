@@ -11,6 +11,7 @@ from core.database.repository.group import GroupRepository
 def keyboard_filters(update,context,editkeyboard = False):
     bot = context.bot
     chat = update.message.chat_id
+    chat_title = update.message.chat.title
     group = GroupRepository().getById(chat)
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('Exe Filters %s' % ('✅' if group['exe_filter'] == 1 else '❌'), callback_data='ffexe_filters'))
@@ -25,7 +26,7 @@ def keyboard_filters(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,3)
     if editkeyboard == False:
-        keyboard_menu = bot.send_message(chat,"Filters Settings",reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+        keyboard_menu = bot.send_message(chat,"⚙️ Group Filters Settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     if editkeyboard == True:
         keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
     return keyboard_menu

@@ -6,7 +6,9 @@
 from core.commands import public ,admin, owner
 from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 from core.utilities.functions import close_menu
-
+"""
+Here are inserted all the commands with user permissions
+"""
 def user_command(dsp):
     function = dsp.add_handler
     ######################
@@ -21,6 +23,9 @@ def user_command(dsp):
     function(CMH('lost', public.eggs.egg_lost))
     function(CMH('kickme', public.kickme.init))
 
+"""
+Here are inserted all the commands with admin permissions
+"""
 def admin_command(dsp):
     function = dsp.add_handler
     ######################
@@ -65,7 +70,9 @@ def admin_command(dsp):
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
     function(CQH(admin.filters.update_filters, pattern='ff'))
     function(CQH(admin.settings.update_settings))
-
+"""
+Here are inserted all the commands with owner permissions
+"""
 def owner_command(dsp):
     function = dsp.add_handler
     ######################

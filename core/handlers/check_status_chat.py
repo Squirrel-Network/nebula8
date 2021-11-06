@@ -22,7 +22,7 @@ def check_group_blacklist(update):
 
 def check_group_badwords(update):
     chat_id = update.effective_chat.id
-    bad_word = update.effective_message.text
+    bad_word = update.effective_message.text or update.effective_message.caption
     if bad_word is not None:
         row = GroupRepository().get_group_badwords([bad_word, chat_id])
         if row:
@@ -36,6 +36,9 @@ def check_status(update, context):
     chat_id = update.effective_chat.id
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()
+    entities = list(update.effective_message.entities)
+    msg = update.effective_message
+    #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
     if update.effective_message.migrate_from_chat_id is not None:
         old_chat_id = update.message.migrate_from_chat_id
@@ -53,6 +56,10 @@ def check_status(update, context):
         data = [(chat_title,chat_id)]
         GroupRepository().update_group_settings(record_title,data)
 
+    """
+    When a chat room changes group image it is saved to the webserver
+    like this: example.com/group_photo/-100123456789.jpg (url variable)
+    """
     if update.effective_message.new_chat_photo:
         chat = chat_object(update)
         if chat.type == "supergroup" or chat.type == "group":
@@ -82,6 +89,30 @@ def check_status(update, context):
         user = user_object(update)
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
+
+    if entities is not None:
+        for x in entities:
+            if x['url'] is not None:
+                bad_word = x['url']
+                row = GroupRepository().get_group_badwords([bad_word, chat_id])
+                if row:
+                    user = user_object(update)
+                    bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+                    message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
+    #TODO NONETYPE PROBLEM
+    """if buttons is not None:
+        for url in buttons:
+            if url[0]['url'] is not None:
+                bad_word = url[0]['url'] or url[0]['text']
+                row = GroupRepository().get_group_badwords([bad_word, chat_id])
+                if row:
+                    user = user_object(update)
+                    bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+                    message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
+    else:
+        print("no button")"""
+
+
 
 def check_updates(update):
       chat = chat_object(update)

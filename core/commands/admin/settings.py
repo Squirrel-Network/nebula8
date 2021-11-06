@@ -8,7 +8,6 @@ from core.utilities.functions import update_db_settings
 from core.utilities.constants import PERM_TRUE, PERM_FALSE, PERM_MEDIA_FALSE, PERM_MEDIA_TRUE
 from languages.getLang import languages
 from core.commands.admin import set_lang
-from core.commands.admin.warn import set_warn
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
 

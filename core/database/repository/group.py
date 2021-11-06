@@ -112,6 +112,11 @@ class GroupRepository(Connection):
 
         return self._insert(q, args)
 
+
+    def remove(self, args=None):
+        q = "DELETE FROM groups WHERE id_group = %s"
+        return self._delete(q, args)
+
     ##########################
     ##### GROUP SETTINGS #####
     ##########################
