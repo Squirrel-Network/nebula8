@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object
+from core.utilities.functions import chat_object, user_object, bot_object
 
 
 def check_group_blacklist(update):
@@ -34,10 +34,11 @@ def check_status(update, context):
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
+    bot_obj = bot_object(update,context)
+    get_bot = bot.getChatMember(chat_id,bot.id)
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()
     entities = list(update.effective_message.entities)
-    msg = update.effective_message
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
     if update.effective_message.migrate_from_chat_id is not None:
@@ -99,6 +100,9 @@ def check_status(update, context):
                     user = user_object(update)
                     bot.delete_message(update.effective_message.chat_id, update.message.message_id)
                     message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
+
+    if get_bot.status == 'member':
+        message(update,context,"I am not an administrator of this group, you have to make me an administrator to function properly!")
     #TODO NONETYPE PROBLEM
     """if buttons is not None:
         for url in buttons:
