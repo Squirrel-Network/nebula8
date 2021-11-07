@@ -65,7 +65,7 @@ def admin_command(dsp):
     function(CQH(admin.warn.update_warn, pattern='removeWarn'))
     function(CQH(admin.set_welcome.update_set_tpnu, pattern='tpnu'))
     function(CQH(owner.add_community.callback_community, pattern='comm'))
-    function(CQH(admin.mute.update_mute, pattern='unmute'))
+    function(CQH(admin.mute.update_mute, pattern='CM'))
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
     function(CQH(admin.filters.update_filters, pattern='ff'))

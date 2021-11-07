@@ -116,6 +116,27 @@ def mute_user_reply(update, context, value):
             )
     return mute
 
+
+#Mute/Unmute User by telegram_id with Time
+def mute_user_by_id_time(update, context, user, value, mute_time = 30):
+    bot = context.bot
+    chat = update.effective_chat.id
+    if value == True:
+        mute = bot.restrict_chat_member(chat,user,ChatPermissions(
+            can_send_messages=False,
+            can_send_media_messages=False,
+            can_send_other_messages=False,
+            can_add_web_page_previews=False),until_date=int(time.time()+mute_time)
+            )
+    else:
+        mute = bot.restrict_chat_member(chat,user,ChatPermissions(
+            can_send_messages=True,
+            can_send_media_messages=True,
+            can_send_other_messages=True,
+            can_add_web_page_previews=True),until_date=int(time.time()+mute_time)
+            )
+    return mute
+
 #Mute/Unmute User by telegram_id
 def mute_user_by_id(update, context, user, value):
     bot = context.bot
