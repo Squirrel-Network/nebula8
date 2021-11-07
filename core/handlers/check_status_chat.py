@@ -34,7 +34,6 @@ def check_status(update, context):
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
-    bot_obj = bot_object(update,context)
     get_bot = bot.getChatMember(chat_id,bot.id)
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()

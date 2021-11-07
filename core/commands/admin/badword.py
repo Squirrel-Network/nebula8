@@ -28,7 +28,7 @@ def badlist(update,context):
     if rows:
         string = ""
         for row in rows:
-            string += "{}\n".format(row['word'])         
+            string += "{}\n".format(row['word'])
         message(update,context,"Badwords List:\n{}".format(string))
     else:
         message(update,context,"There is no badword for this group.\nYou can add a badword with the command <code>/badword word</code>")
