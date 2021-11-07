@@ -56,4 +56,7 @@ def languages(update, context):
     languages.warn_user = setLang["WARN_USER"]
     languages.warn_user_max = setLang["WARN_USER_MAX"]
     languages.button_remove = setLang["BUTTON_REMOVE"]
+    languages.mute_msg = setLang["MUTE_MSG"]
+    languages.mute_msg_r = setLang["MUTE_MSG_R"]
+    languages.mute_button = setLang["MUTE_BUTTON"]
     return LANGUAGE

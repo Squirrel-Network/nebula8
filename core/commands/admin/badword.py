@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 
-from pymysql import ROWID
 from core import decorators
 from core.utilities.message import message
 from core.database.repository.group import GroupRepository

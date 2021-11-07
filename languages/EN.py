@@ -28,5 +28,8 @@ English =	{
   "ERROR_RESPONSE_USER_MSG": "You must use this command in response to a user",
   "WARN_USER": "‼️ {} was warned!\nin the group {} <code>[{}]</code>",
   "WARN_USER_MAX": "User @{} has reached the maximum number\n of warns in the {} group and has been banned",
-  "BUTTON_REMOVE": '🗑 Remove'
+  "BUTTON_REMOVE": '🗑 Remove',
+  "MUTE_MSG": 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
+  "MUTE_MSG_R": 'You have removed the mute from user <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
+  "MUTE_BUTTON": "✅ Unmute"
 }

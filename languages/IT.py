@@ -28,5 +28,8 @@ Italian =	{
   "ERROR_RESPONSE_USER_MSG": "È necessario utilizzare questo comando in risposta a un utente",
   "WARN_USER": "‼️ {} è stato warnato!\nnel gruppo {} <code>[{}]</code>",
   "WARN_USER_MAX": "L'utente @{} ha raggiunto il numero massimo\n di avvertimenti nel gruppo {} ed è stato bannato",
-  "BUTTON_REMOVE": '🗑 Rimuovi'
+  "BUTTON_REMOVE": '🗑 Rimuovi',
+  "MUTE_MSG": 'Hai mutato <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
+  "MUTE_MSG_R": 'Hai rimosso il muta di <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
+  "MUTE_BUTTON": "✅ Smuta"
 }

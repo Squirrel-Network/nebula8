@@ -13,13 +13,13 @@ from languages.getLang import languages
 @decorators.admin.user_admin
 @decorators.delete.init
 def init(update,context):
-    user = update.message.reply_to_message.from_user
     languages(update,context)
     if update.message.reply_to_message:
+        user = update.message.reply_to_message.from_user
         buttons = []
-        buttons.append(InlineKeyboardButton('Unmute', callback_data='unmute'))
+        buttons.append(InlineKeyboardButton(languages.mute_button, callback_data='unmute'))
         menu = build_menu(buttons,2)
-        msg = 'You muted the user <a href="tg://user?id={}">{}</a>'.format(user.id,user.id)
+        msg = languages.mute_msg.format(user.id,user.first_name,user.id)
         update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         mute_user_reply(update,context,True)
     else:
@@ -28,8 +28,9 @@ def init(update,context):
 @decorators.admin.user_admin
 def update_mute(update,context):
     query = update.callback_query
-    user_id = query.message.reply_to_message.from_user.id
+    user = query.message.reply_to_message.from_user
     if query.data == 'unmute':
-        mute_user_by_id(update,context,user_id,False)
-        msg = 'You have removed the mute from user <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
+        languages(update,context)
+        mute_user_by_id(update,context,user.id,False)
+        msg = languages.mute_msg_r.format(user.id,user.first_name,user.id)
         query.edit_message_text(msg, parse_mode='HTML')

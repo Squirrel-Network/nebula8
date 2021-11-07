@@ -83,7 +83,7 @@ def set_warn(update, context):
     buttons.append(InlineKeyboardButton('9', callback_data='w9'))
     buttons.append(InlineKeyboardButton('10', callback_data='w10'))
     menu = build_menu(buttons,3)
-    bot.send_message(chat,"Warn Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML' )
+    bot.send_message(chat,"⚙️ Warn Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML' )
 
 @decorators.admin.user_admin
 def update_set_warn(update, context):
