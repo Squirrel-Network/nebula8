@@ -14,6 +14,8 @@ def keyboard_filters(update,context,editkeyboard = False):
     chat_title = update.message.chat.title
     group = GroupRepository().getById(chat)
     list_buttons = []
+    list_buttons.append(InlineKeyboardButton('❇️ Activate All', callback_data='ffseall'))
+    list_buttons.append(InlineKeyboardButton('⛔️ Deactivate All', callback_data='ffdeall'))
     list_buttons.append(InlineKeyboardButton('Exe Filters %s' % ('✅' if group['exe_filter'] == 1 else '❌'), callback_data='ffexe_filters'))
     list_buttons.append(InlineKeyboardButton('GIF Filters %s' % ('✅' if group['gif_filter'] == 1 else '❌'), callback_data='ffgif_filters'))
     list_buttons.append(InlineKeyboardButton('Zip Filters %s' % ('✅' if group['zip_filter'] == 1 else '❌'), callback_data='ffzip_filters'))
@@ -21,10 +23,8 @@ def keyboard_filters(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('JPG Filters %s' % ('✅' if group['jpg_filter'] == 1 else '❌'), callback_data='ffjpg_filters'))
     list_buttons.append(InlineKeyboardButton('Doc/x Filters %s' % ('✅' if group['docx_filter'] == 1 else '❌'), callback_data='ffdocx_filters'))
     list_buttons.append(InlineKeyboardButton('Apk Filters %s' % ('✅' if group['apk_filter'] == 1 else '❌'), callback_data='ffapk_filters'))
-    list_buttons.append(InlineKeyboardButton('❇️ Select All', callback_data='ffseall'))
-    list_buttons.append(InlineKeyboardButton('⛔️ Deactivate All', callback_data='ffdeall'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
-    menu = build_menu(list_buttons,3)
+    menu = build_menu(list_buttons,2)
     if editkeyboard == False:
         keyboard_menu = bot.send_message(chat,"⚙️ Group Filters Settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     if editkeyboard == True:

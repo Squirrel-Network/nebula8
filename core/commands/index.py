@@ -51,6 +51,7 @@ def admin_command(dsp):
     function(CMH('shield', admin.shield.init))
     function(CMH('badword', admin.badword.init))
     function(CMH('badlist', admin.badword.badlist))
+    function(CMH('promote', admin.promote.init))
     #############################
     ### CallbackQuery Handler ###
     #############################

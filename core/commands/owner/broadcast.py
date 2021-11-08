@@ -8,7 +8,7 @@ from core.utilities.message import message,messageWithAsyncById
 from core.utilities.strings import Strings
 from core.database.repository.community import CommunityRepository
 from core.database.repository.group import GroupRepository
-from telegram.error import BadRequest
+from telegram.error import BadRequest, Unauthorized
 
 loop = asyncio.get_event_loop()
 
@@ -23,7 +23,7 @@ def init(update, context):
                 loop.run_until_complete(messageWithAsyncById(update,context,id_groups,2,msg))
             else:
                 message(update,context,"You cannot send an empty message!")
-        except BadRequest:
+        except (BadRequest,Unauthorized):
             message(update,context,Strings.ERROR_HANDLING)
 
 @decorators.owner.init
@@ -37,5 +37,5 @@ def global_broadcast(update, context):
                 loop.run_until_complete(messageWithAsyncById(update,context,id_groups,2,msg))
             else:
                 message(update,context,"You cannot send an empty message!")
-        except BadRequest:
+        except (BadRequest,Unauthorized):
             message(update,context,Strings.ERROR_HANDLING)
