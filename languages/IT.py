@@ -31,5 +31,7 @@ Italian =	{
   "BUTTON_REMOVE": '🗑 Rimuovi',
   "MUTE_MSG": 'Hai mutato <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
   "MUTE_MSG_R": 'Hai rimosso il muta di <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
-  "MUTE_BUTTON": "✅ Smuta"
+  "MUTE_BUTTON": "✅ Smuta",
+  "RULES_MAIN_TEXT": "📜 Regole di: {} <code>[{}]</code>",
+  "RULES_BUTTON": "▶️ Regole ◀️"
 }

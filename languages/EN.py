@@ -31,5 +31,7 @@ English =	{
   "BUTTON_REMOVE": '🗑 Remove',
   "MUTE_MSG": 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
   "MUTE_MSG_R": 'You have removed the mute from user <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
-  "MUTE_BUTTON": "✅ Unmute"
+  "MUTE_BUTTON": "✅ Unmute",
+  "RULES_MAIN_TEXT": "📜 Rules of: {} <code>[{}]</code>",
+  "RULES_BUTTON": "▶️ Rules ◀️"
 }

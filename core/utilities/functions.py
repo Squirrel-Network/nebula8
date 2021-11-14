@@ -137,6 +137,29 @@ def mute_user_by_id_time(update, context, user, value, mute_time = 30):
             )
     return mute
 
+#Mute/Unmute User by Username with Time
+def mute_user_by_username_time(update, context, username, value, mute_time = 3600):
+    bot = context.bot
+    chat = update.effective_chat.id
+    user = UserRepository().getByUsername(username)
+    if user is None:
+        print('User not found')
+    if value == True:
+        mute = bot.restrict_chat_member(chat,user['tg_id'],ChatPermissions(
+            can_send_messages=False,
+            can_send_media_messages=False,
+            can_send_other_messages=False,
+            can_add_web_page_previews=False),until_date=int(time.time()+mute_time)
+            )
+    else:
+        mute = bot.restrict_chat_member(chat,user['tg_id'],ChatPermissions(
+            can_send_messages=True,
+            can_send_media_messages=True,
+            can_send_other_messages=True,
+            can_add_web_page_previews=True),until_date=int(time.time()+mute_time)
+            )
+    return mute
+
 #Mute/Unmute User by telegram_id
 def mute_user_by_id(update, context, user, value):
     bot = context.bot

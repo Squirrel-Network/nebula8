@@ -59,4 +59,6 @@ def languages(update, context):
     languages.mute_msg = setLang["MUTE_MSG"]
     languages.mute_msg_r = setLang["MUTE_MSG_R"]
     languages.mute_button = setLang["MUTE_BUTTON"]
+    languages.rules_main = setLang["RULES_MAIN_TEXT"]
+    languages.rules_button = setLang["RULES_BUTTON"]
     return LANGUAGE

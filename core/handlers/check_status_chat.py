@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object, bot_object
+from core.utilities.functions import chat_object, user_object
 
 
 def check_group_blacklist(update):
@@ -116,7 +116,11 @@ def check_status(update, context):
         print("no button")"""
 
 
-
+"""
+this function has the task of saving
+in the database the updates
+for the calculation of messages
+"""
 def check_updates(update):
       chat = chat_object(update)
       date = datetime.datetime.utcnow().isoformat()

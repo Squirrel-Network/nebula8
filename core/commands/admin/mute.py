@@ -3,14 +3,32 @@
 
 # Copyright SquirrelNetwork
 
+from os import error
 import re
 from core import decorators
 from core.utilities.message import message
 from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from core.utilities.functions import mute_user_reply, mute_user_by_id, mute_user_by_id_time
+from core.utilities.functions import mute_user_reply, mute_user_by_id, mute_user_by_id_time, mute_user_by_username_time
 from languages.getLang import languages
 from core.utilities.regex import Regex
+
+
+def convert_time(update,context,time_args):
+    if time_args == "1d":
+        time_args = int(86400)
+    elif time_args == "3d":
+        time_args = int(259200)
+    elif time_args == "7d":
+        time_args = int(604800)
+    elif time_args == "1h":
+        time_args = int(3600)
+    elif time_args == "30s":
+        time_args = int(30)
+    else:
+        error_msg = "You must enter a valid time value for the bot among the following: <code>1d, 3d, 7d, 1h, 30s</code>"
+        message(update,context,error_msg)
+    return int(time_args)
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -36,13 +54,21 @@ def init(update,context):
         user_id = input_user_id[0]
         time_args = input_user_id[1]
         if user_id != "" and time_args != "":
-            number = re.search(Regex.HAS_NUMBER, user_id)
-            if number is None:
-                message(update,context,"Attention you must enter a number not letters!")
-            else:
-                mute_user_by_id_time(update,context,user_id,True,int(time_args))
-                msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> seconds'.format(user_id,user_id,user_id,time_args)
+            if user_id.startswith('@'):
+                time_args = input_user_id[1]
+                arg_time = convert_time(update,context,time_args)
+                mute_user_by_username_time(update,context,user_id,arg_time)
+                msg = 'You muted the user {} for <code>{}</code> seconds'.format(user_id,time_args)
                 message(update,context,msg)
+            else:
+                time_args = input_user_id[1]
+                number = re.search(Regex.HAS_NUMBER, user_id)
+                if number is None:
+                    message(update,context,"Type a correct telegram id or type in the username!")
+                else:
+                    mute_user_by_id_time(update,context,user_id,True,int(time_args))
+                    msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> seconds'.format(user_id,user_id,user_id,time_args)
+                    message(update,context,msg)
         else:
             message(update,context,"Attention you have not entered the user id and mute time correctly")
 

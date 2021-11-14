@@ -70,6 +70,7 @@ def admin_command(dsp):
     function(CQH(admin.set_lang.language_en, pattern='language_en'))
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
     function(CQH(admin.filters.update_filters, pattern='ff'))
+    function(CQH(public.rules.update_rules, pattern='openRules'))
     function(CQH(admin.settings.update_settings))
 """
 Here are inserted all the commands with owner permissions
