@@ -22,6 +22,7 @@ def user_command(dsp):
     function(CMH('report', public.report.global_report))
     function(CMH('lost', public.eggs.egg_lost))
     function(CMH('kickme', public.kickme.init))
+    function(CMH('staff', public.staff.init))
 
 """
 Here are inserted all the commands with admin permissions

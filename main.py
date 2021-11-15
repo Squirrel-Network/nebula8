@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import pytz
 import logging
 import sys
 from rich.logging import RichHandler
 from rich.console import Console
 from rich.table import Table
+from telegram import ParseMode
 from datetime import datetime
 from config import Config
-from telegram.ext import Updater
+from telegram.ext import Updater, Defaults
 from core.commands import index
 from plugins import plugin_index
 from core import handlers
@@ -37,7 +39,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def main():
-    updater = Updater(Config.BOT_TOKEN)
+    """Instantiate a Defaults object"""
+    defaults = Defaults(parse_mode=ParseMode.HTML, tzinfo=pytz.timezone('Europe/Rome'))
+    updater = Updater(Config.BOT_TOKEN, defaults=defaults)
     dsp = updater.dispatcher
     job = updater.job_queue
 
