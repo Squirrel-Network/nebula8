@@ -43,7 +43,7 @@ def main():
     defaults = Defaults(parse_mode=ParseMode.HTML, tzinfo=pytz.timezone('Europe/Rome'))
     updater = Updater(Config.BOT_TOKEN, defaults=defaults)
     dsp = updater.dispatcher
-    job = updater.job_queue
+    job_updater = updater.job_queue
 
     # I load all admin, user and owner commands
     index.user_command(dsp)
@@ -65,8 +65,8 @@ def main():
         console.print(table)
     # I load all handlers, commands without '/'
     handlers_index.core_handlers(dsp)
-    handlers_index.jobs_handlers(job)
     handlers.logs.sys_loggers()
+    handlers.handlers_index.jobs_handlers(job_updater)
     # I load the error handler, when the bot receives an error it sends a private message to the developer
     dsp.add_error_handler(handlers.errors.error_handler)
 

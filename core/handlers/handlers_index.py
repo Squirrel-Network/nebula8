@@ -3,10 +3,10 @@
 
 # Copyright SquirrelNetwork
 from core import handlers
-from core import jobs
 from core.commands import public
 from telegram.ext import (MessageHandler as MH,Filters)
-from core.utilities.constants import EIGHT_HOUR
+from core.utilities import constants
+from core import jobs
 
 def core_handlers(dsp):
     function = dsp.add_handler
@@ -22,5 +22,6 @@ def group_handlers(update,context):
     handlers.filters_chat.init(update, context)
     handlers.logs.set_log_channel(update,context)
 
-def jobs_handlers(job):
-    job.run_repeating(jobs.send_debug.send_log,interval=EIGHT_HOUR,first=0.0, name="[DEBUG_LOG_JOB]")
+# Jobs Handlers Without Update Object
+def jobs_handlers(job_updater):
+    job_updater.run_repeating(jobs.send_debug.send_log,interval=constants.EIGHT_HOUR,first=0.0, name="[DEBUG_LOG_JOB]")

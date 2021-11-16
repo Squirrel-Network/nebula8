@@ -2,10 +2,15 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-
 from core.commands import public ,admin, owner
 from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 from core.utilities.functions import close_menu
+
+"""
+MANUAL JOBS WITH /startjobs
+"""
+def core_jobs(update,context):
+    pass
 """
 Here are inserted all the commands with user permissions
 """
@@ -90,3 +95,4 @@ def owner_command(dsp):
     function(CMH('test', owner.test.init))
     function(CMH('owner', owner.add_owner.init))
     function(CMH('exit', owner.exit.init))
+    function(CMH('startjobs', core_jobs))
