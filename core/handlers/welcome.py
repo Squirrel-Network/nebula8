@@ -205,6 +205,11 @@ def init(update, context):
                 elif type_no_username == 5:
                     kick_user(update, context)
                 else:
+                    arr_buttons = []
+                    arr_buttons.append(InlineKeyboardButton(text="Bot_logs", url="https://t.me/nebulalogs"))
+                    menu = build_menu(arr_buttons, 2)
+                    main_msg = "Welcome {user} in {chat}".format(chat=update.message.chat.title, user=mention_html(member.id, member.first_name))
+                    update.message.reply_text(main_msg,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
                     print("No action even if you don't have a username")
             # They ban the user because he is blacklisted
             elif is_in_blacklist(user_id):
