@@ -15,7 +15,7 @@ English =	{
   "CLOSE_SETTINGS": "You have closed the bot settings menu!",
   "MAIN_TEXT_SETTINGS": "Bot Settings menu",
   "WELCOME_SETTINGS": "Welcome %s",
-  "SET_MAIN_WELCOME": "<b>Group Welcome Instructions:</b>\nYou have to use the command like this <code>/welcome args</code>\nwhere args is the text you need to insert\nit is possible to use special tags that are interpreted by the bot:\n<code>{username} = user's username\n{chat} = group name\n{first_name} = user's first name\n{userid} = user id</code>\nHTML tags can also be used\n<code>b , i, code</code>\nand emojis can also be used\n\n<b>EXAMPLE:</b>\n<code>Welcome {username} in {chat}</code>",
+  "SET_MAIN_WELCOME": "<b>Group Welcome Instructions:</b>\nYou have to use the command like this <code>/welcome args</code>\nwhere args is the text you need to insert\nit is possible to use special tags that are interpreted by the bot:\n<code>{username} = user's username\n{chat} = group name\n{first_name} = user's first name\n{userid} = user id\n{mention} = user mention</code>\nHTML tags can also be used\n<code>b , i, code</code>\nand emojis can also be used\n\n<b>EXAMPLE:</b>\n<code>Welcome {username} in {chat}</code>",
   "WELCOME_MAIN_HELP_SET": "I changed the welcome of the group!\nif you want help type <code>/welcome</code> without any message",
   "WEATHER_MSG": "Current weather in <b>{}</b>\nMin: <code>{} C°</code>\nMax: <code>{} C°</code>\nHumidity: <code>{}%</code>\nIl The sky is: {}",
   "REPORT_ADMIN_MSG": "<b>Reporting done! an admin will take care of your request!</b>",
