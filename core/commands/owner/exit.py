@@ -13,7 +13,7 @@ from core.database.repository.group import GroupRepository
 def init(update, context):
     bot = context.bot
     chat = chat_object(update)
-    GroupRepository.remove(chat.id)
+    GroupRepository.remove(str(chat.id))
     bot.leaveChat(update.message.chat_id)
     messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,"#Log the bot has left the chat <code>{}</code>\nby operator <code>{}</code>".format(chat.id,update.message.from_user.id))
     formatter = "Il bot è uscito dalla chat {} e il comando è stato eseguito da: {}".format(chat.id,update.message.from_user.id)

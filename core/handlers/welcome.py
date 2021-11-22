@@ -15,6 +15,7 @@ from core.utilities.message import message, reply_message
 from core.utilities.regex import Regex
 from core.utilities.functions import kick_user, ban_user, bot_object, mute_user_by_id
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.utils.helpers import mention_html
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 from core.utilities.strings import Strings
@@ -120,7 +121,7 @@ def welcome_user(update, context, member):
         member.first_name).replace('{chat}',
         update.message.chat.title).replace('{username}',
         "@"+member.username).replace('{userid}'
-        ,str(member.id))
+        ,str(member.id).replace('{mention}',mention_html(member.id, member.first_name)))
         format_message = "{}".format(parsed_message)
         buttons = GroupRepository().getById(chat)
         try:

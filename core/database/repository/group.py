@@ -12,7 +12,7 @@ class GroupRepository(Connection):
     ###### Column constants of the table ######
     SET_ID_GROUP = "id_group"
     SET_GROUP_NAME = "group_name"
-    SET_WELCOME  = "welcome_text"
+    SET_WELCOME_TEXT  = "welcome_text"
     SET_WELCOME_BUTTONS = "welcome_buttons"
     SET_RULES_TEXT = "rules_text"
     SET_COMMUNITY = "community"
