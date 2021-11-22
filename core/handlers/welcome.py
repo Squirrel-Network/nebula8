@@ -120,8 +120,7 @@ def welcome_user(update, context, member):
         parsed_message = group['welcome_text'].replace('{first_name}',
         member.first_name).replace('{chat}',
         update.message.chat.title).replace('{username}',
-        "@"+member.username).replace('{userid}'
-        ,str(member.id).replace('{mention}',mention_html(member.id, member.first_name)))
+        "@"+member.username).replace('{mention}',mention_html(member.id, member.first_name)).replace('{userid}',str(member.id))
         format_message = "{}".format(parsed_message)
         buttons = GroupRepository().getById(chat)
         try:
