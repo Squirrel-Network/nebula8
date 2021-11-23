@@ -69,6 +69,7 @@ def main():
     handlers.handlers_index.jobs_handlers(job_updater)
     # I load the error handler, when the bot receives an error it sends a private message to the developer
     dsp.add_error_handler(handlers.errors.error_handler)
+    dsp.add_error_handler(handlers.handler_errors.init)
 
     # Start the Bot Polling
     updater.start_polling()

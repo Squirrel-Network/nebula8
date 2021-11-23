@@ -73,15 +73,15 @@ def set_warn(update, context):
     bot = context.bot
     chat = update.effective_message.chat_id
     buttons = []
-    buttons.append(InlineKeyboardButton('2', callback_data='w2'))
-    buttons.append(InlineKeyboardButton('3', callback_data='w3'))
-    buttons.append(InlineKeyboardButton('4', callback_data='w4'))
-    buttons.append(InlineKeyboardButton('5', callback_data='w5'))
-    buttons.append(InlineKeyboardButton('6', callback_data='w6'))
-    buttons.append(InlineKeyboardButton('7', callback_data='w7'))
-    buttons.append(InlineKeyboardButton('8', callback_data='w8'))
-    buttons.append(InlineKeyboardButton('9', callback_data='w9'))
-    buttons.append(InlineKeyboardButton('10', callback_data='w10'))
+    buttons.append(InlineKeyboardButton('2️⃣', callback_data='w2'))
+    buttons.append(InlineKeyboardButton('3️⃣', callback_data='w3'))
+    buttons.append(InlineKeyboardButton('4️⃣', callback_data='w4'))
+    buttons.append(InlineKeyboardButton('5️⃣', callback_data='w5'))
+    buttons.append(InlineKeyboardButton('6️⃣', callback_data='w6'))
+    buttons.append(InlineKeyboardButton('7️⃣', callback_data='w7'))
+    buttons.append(InlineKeyboardButton('8️⃣', callback_data='w8'))
+    buttons.append(InlineKeyboardButton('9️⃣', callback_data='w9'))
+    buttons.append(InlineKeyboardButton('🔟', callback_data='w10'))
     menu = build_menu(buttons,3)
     bot.send_message(chat,"⚙️ Warn Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML' )
 

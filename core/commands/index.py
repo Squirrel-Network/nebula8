@@ -96,3 +96,4 @@ def owner_command(dsp):
     function(CMH('owner', owner.add_owner.init))
     function(CMH('exit', owner.exit.init))
     function(CMH('startjobs', core_jobs))
+    function(CMH('exportlink', owner.export_invite_link.init))
