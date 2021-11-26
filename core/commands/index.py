@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+from typing import Pattern
 from core.commands import public ,admin, owner
 from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 from core.utilities.functions import close_menu
@@ -77,6 +78,7 @@ def admin_command(dsp):
     function(CQH(admin.set_lang.language_it, pattern='language_it'))
     function(CQH(admin.filters.update_filters, pattern='ff'))
     function(CQH(public.rules.update_rules, pattern='openRules'))
+    function(CQH(public.report.update_resolve, pattern='resolved'))
     function(CQH(admin.settings.update_settings))
 """
 Here are inserted all the commands with owner permissions

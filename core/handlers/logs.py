@@ -29,6 +29,10 @@ def sys_loggers(name="",message="",debugs = False,info = False,warning = False,e
     elif critical == True:
         logger.critical(message)
 
+"""
+This function makes a logger on the telegram channel
+set if it is not set it is sent to the default channel
+"""
 def telegram_loggers(update,context,msg = ""):
     chat = update.effective_message.chat_id
     row = GroupRepository().getById([chat])
@@ -44,7 +48,6 @@ def staff_loggers(update,context,msg = ""):
     id_staff_group = Config.DEFAULT_STAFF_GROUP
     send = messageWithId(update,context,id_staff_group,msg)
     return send
-
 
 def set_log_channel(update,context):
         msg = update.effective_message
