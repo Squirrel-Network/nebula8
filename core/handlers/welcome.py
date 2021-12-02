@@ -108,7 +108,8 @@ def save_group(update):
             "targz_filter": 0,
             "jpg_filter": 0,
             "docx_filter": 0,
-            "apk_filter": 0
+            "apk_filter": 0,
+            "zoophile_filter": 1
         }
         GroupRepository().add_with_dict(dictionary)
 
@@ -164,6 +165,7 @@ def init(update, context):
         user_profile_photo = group['set_user_profile_picture']
         cas_ban_row = group['set_cas_ban']
         type_no_username = group['type_no_username']
+        zoophile_filter = group["zoophile_filter"]
     else:
         row = 1
         block_user = 0
@@ -172,6 +174,7 @@ def init(update, context):
         chinese_filter = 1
         user_profile_photo = 0
         cas_ban_row = 1
+        zoophile_filter = 1
 
     if row == 0 and block_user == 1:
         for member in update.message.new_chat_members:
@@ -208,7 +211,7 @@ def init(update, context):
                     message(update,context,'<a href="tg://user?id={}">{}</a> was banned because they did not have an username'.format(user_id,user_first))
                 elif type_no_username == 5:
                     kick_user(update, context)
-                elif has_zoophile(user_first):
+                elif has_zoophile(user_first) and zoophile_filter == 1:
                     ban_user(update, context)
                     message(update, context, "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user {}".format(mention_html(user_id, user_first)))
                 else:
@@ -243,7 +246,7 @@ def init(update, context):
                 ban_user(update, context)
                 message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(mention_html(user_id, user_first)))
             # Banned user with Zoophile characters
-            elif has_zoophile(user_first):
+            elif has_zoophile(user_first) and zoophile_filter == 1:
                 ban_user(update, context)
                 message(update, context, "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user {}".format(mention_html(user_id, user_first)))
             # Welcome for bot owner
