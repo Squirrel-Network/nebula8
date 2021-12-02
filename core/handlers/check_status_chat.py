@@ -123,7 +123,8 @@ for the calculation of messages
 """
 def check_updates(update):
       chat = chat_object(update)
+      user = user_object(update)
       date = datetime.datetime.utcnow().isoformat()
       if chat.type == "supergroup" or chat.type == "group":
-          data = [(update.update_id, chat.id, date)]
+          data = [(update.update_id, chat.id, user.id, date)]
           GroupRepository().insert_updates(data)

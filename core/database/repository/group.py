@@ -79,12 +79,12 @@ class GroupRepository(Connection):
 
     # I insert the updates for the message count by group
     def insert_updates(self, args=None):
-        q = "INSERT INTO nebula_updates (update_id, tg_group_id, date) VALUES (%s,%s,%s)"
+        q = "INSERT INTO nebula_updates (update_id, tg_group_id, tg_user_id, date) VALUES (%s,%s,%s,%s)"
         return self._insert(q, args)
 
     # I collect the updates to know how many messages have been sent
-    def getUpdatesByChat(self, args=None):
-        q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE tg_group_id = %s'
+    def getUpdatesByChatMonth(self, args=None):
+        q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE date BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND tg_group_id = %s ORDER BY date DESC'
 
         return self._select(q, args)
 

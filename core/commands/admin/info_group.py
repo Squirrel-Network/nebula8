@@ -22,7 +22,7 @@ def init(update, context):
     if row:
         data = [(chat_title, chat)]
         GroupRepository().update_group_settings(record, data)
-        counter = GroupRepository().getUpdatesByChat(chat)
+        counter = GroupRepository().getUpdatesByChatMonth(chat)
         img = row['group_photo']
         caption = languages.group_info.format(
             row['group_name'],
