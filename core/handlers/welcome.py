@@ -46,12 +46,16 @@ def has_arabic_character(string):
     return not not arabic
 
 def has_cirillic_character(string):
-    arabic = re.search(Regex.HAS_CIRILLIC, string)
-    return not not arabic
+    cirillic = re.search(Regex.HAS_CIRILLIC, string)
+    return not not cirillic
 
 def has_chinese_character(string):
-    arabic = re.search(Regex.HAS_CHINESE, string)
-    return not not arabic
+    chinese = re.search(Regex.HAS_CHINESE, string)
+    return not not chinese
+
+def has_zoophile(string):
+    zoophile = re.search(Regex.HAS_ZOOPHILE, string)
+    return not not zoophile
 
 def save_user(member, chat):
     # Save the user in the database and check that it exists if it exists and has changed nickname overwrite
@@ -204,6 +208,9 @@ def init(update, context):
                     message(update,context,'<a href="tg://user?id={}">{}</a> was banned because they did not have an username'.format(user_id,user_first))
                 elif type_no_username == 5:
                     kick_user(update, context)
+                elif has_zoophile(user_first):
+                    ban_user(update, context)
+                    message(update, context, "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user {}".format(mention_html(user_id, user_first)))
                 else:
                     arr_buttons = []
                     arr_buttons.append(InlineKeyboardButton(text="Bot_logs", url="https://t.me/nebulalogs"))
@@ -226,15 +233,19 @@ def init(update, context):
             # Banned user with arabic characters
             elif has_arabic_character(user_first) and arabic_filter == 1:
                 ban_user(update, context)
-                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(mention_html(user_id, user_first)))
             # Banned user with cirillic characters
             elif has_cirillic_character(user_first) and cirillic_filter == 1:
                 ban_user(update, context)
-                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(mention_html(user_id, user_first)))
             # Banned user with chinese characters
             elif has_chinese_character(user_first) and chinese_filter == 1:
                 ban_user(update, context)
-                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(user_id))
+                message(update,context,"Non-Latin filter activated for the user <code>{}</code>".format(mention_html(user_id, user_first)))
+            # Banned user with Zoophile characters
+            elif has_zoophile(user_first):
+                ban_user(update, context)
+                message(update, context, "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user {}".format(mention_html(user_id, user_first)))
             # Welcome for bot owner
             elif user_id in OWNER_LIST:
                 message(update, context, 'The bot operator <a href="tg://user?id={}">{}</a> has just joined the group'.format(user_id,user_first))

@@ -11,6 +11,7 @@ class Regex(object):
     HAS_CHINESE = "[\u4e00-\u9fff]+"
     HAS_NUMBER = "^[0-9]+$"
     HAS_LETTER = "^[a-zA-Z]+$"
+    HAS_ZOOPHILE = "[ζ]"
     HAS_URL = "((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
 
     def check_string(regex_type,string):
