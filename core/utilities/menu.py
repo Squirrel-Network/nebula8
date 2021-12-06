@@ -5,15 +5,6 @@
 from typing import Union, List
 from telegram import InlineKeyboardButton
 
-def build_menu(buttons, n_cols, header_buttons=False, footer_buttons=False):
-  menu=[buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
-  if header_buttons:
-    menu.insert(0, header_buttons)
-  if footer_buttons:
-    menu.append(footer_buttons)
-  return menu
-
-
 # Build Menu 2.0
 """
 Example to use(https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#build-a-menu-with-buttons):
@@ -36,7 +27,7 @@ some_strings = ["col1", "col2", "row2"]
 button_list = [[KeyboardButton(s)] for s in some_strings]
 
 """
-def build_menu_b(
+def build_menu(
     buttons: List[InlineKeyboardButton],
     n_cols: int,
     header_buttons: Union[InlineKeyboardButton, List[InlineKeyboardButton]]=None,

@@ -33,5 +33,9 @@ English =	{
   "MUTE_MSG_R": 'You have removed the mute from user <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
   "MUTE_BUTTON": "✅ Unmute",
   "RULES_MAIN_TEXT": "📜 Rules of: {} <code>[{}]</code>",
-  "RULES_BUTTON": "▶️ Rules ◀️"
+  "RULES_BUTTON": "▶️ Rules ◀️",
+  "BADWORD_LIST_TEXT": "🗒 <b>Badword list of the group {}:</b>\n{}",
+  "BADWORD_LIST_EMPTY": "There is no badword for this group.\nYou can add a badword with the command <code>/badword word</code>",
+  "BADWORD_ADD_TEXT": "You have entered the forbidden word: [<b><i>{}</i></b>] in the database",
+  "BADWORD_ADD_EMPTY": "You cannot enter an empty forbidden word!\nthe correct format of the command is: <code>/badword banana</code>"
 }

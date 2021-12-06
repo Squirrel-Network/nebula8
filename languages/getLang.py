@@ -61,4 +61,8 @@ def languages(update, context):
     languages.mute_button = setLang["MUTE_BUTTON"]
     languages.rules_main = setLang["RULES_MAIN_TEXT"]
     languages.rules_button = setLang["RULES_BUTTON"]
+    languages.badlist_text = setLang["BADWORD_LIST_TEXT"]
+    languages.badlist_empty = setLang["BADWORD_LIST_EMPTY"]
+    languages.badlist_add = setLang["BADWORD_ADD_TEXT"]
+    languages.badlist_add_empty = setLang["BADWORD_ADD_EMPTY"]
     return LANGUAGE

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-from typing import Pattern
 from core.commands import public ,admin, owner
 from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 from core.utilities.functions import close_menu

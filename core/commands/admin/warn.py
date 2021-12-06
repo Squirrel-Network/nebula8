@@ -31,7 +31,6 @@ def init(update,context):
             buttons.append(InlineKeyboardButton('➖ 1', callback_data='downWarn'))
             buttons.append(InlineKeyboardButton('➕ 1', callback_data='upWarn'))
             buttons.append(InlineKeyboardButton(languages.button_remove, callback_data='removeWarn'))
-            buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
             menu = build_menu(buttons,3)
             if get_user:
                 default_warn_count = 0

@@ -25,10 +25,7 @@ def ban_error(update, context, username = None, id = None):
 		"Si è verificato un problema per il ban dell'utente %s" % (username if username is not None else id))
 
 def ban_success(update, context, username = None, id = None):
-	message(
-		update,
-		context,
-		"Ho bannato %s" % (username if username is not None else id))
+	message(update,context,"Ho bannato %s" % (username if username is not None else id))
 
 @decorators.admin.user_admin
 @decorators.delete.init

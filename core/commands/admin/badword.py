@@ -4,30 +4,33 @@
 # Copyright SquirrelNetwork
 
 from core import decorators
+from languages.getLang import languages
 from core.utilities.message import message
+from core.utilities.functions import chat_object
 from core.database.repository.group import GroupRepository
 
 @decorators.admin.user_admin
 @decorators.delete.init
 def init(update,context):
-    chat = update.effective_chat.id
+    chat = chat_object(update)
     msg = update.message.text[8:].strip()
     if msg != "":
-        data = [(msg,chat)]
+        data = [(msg,chat.id)]
         GroupRepository().insert_badword(data)
-        message(update,context,"You have entered the forbidden word: [<b><i>{}</i></b>] in the database".format(msg))
+        message(update,context,languages.badlist_add.format(msg))
     else:
-        message(update, context, "You cannot enter an empty forbidden word!\nthe correct format of the command is: <code>/badword banana</code>")
+        message(update, context,languages.badlist_add_empty)
 
 @decorators.admin.user_admin
 @decorators.delete.init
 def badlist(update,context):
-    chat = update.effective_chat.id
-    rows = GroupRepository().get_badwords_group(chat)
+    chat = chat_object(update)
+    languages(update,context)
+    rows = GroupRepository().get_badwords_group(chat.id)
     if rows:
         string = ""
         for row in rows:
-            string += "{}\n".format(row['word'])
-        message(update,context,"Badwords List:\n{}".format(string))
+            string += "▪️ {}\n".format(row['word'])
+        message(update,context,languages.badlist_text.format(chat.title,string))
     else:
-        message(update,context,"There is no badword for this group.\nYou can add a badword with the command <code>/badword word</code>")
+        message(update,context,languages.badlist_empty)

@@ -33,5 +33,9 @@ Italian =	{
   "MUTE_MSG_R": 'Hai rimosso il muta di <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
   "MUTE_BUTTON": "✅ Smuta",
   "RULES_MAIN_TEXT": "📜 Regole di: {} <code>[{}]</code>",
-  "RULES_BUTTON": "▶️ Regole ◀️"
+  "RULES_BUTTON": "▶️ Regole ◀️",
+  "BADWORD_LIST_TEXT": "🗒 <b>Lista Badword del gruppo {}:</b>\n{}",
+  "BADWORD_LIST_EMPTY": "Non c'è nessuna badword per questo gruppo.\nPuoi aggiungere una badword con il comando <code>/badword word</code>",
+  "BADWORD_ADD_TEXT": "Hai inserito la parola proibita: [<b><i>{}</i></b>] nel database",
+  "BADWORD_ADD_EMPTY": "Non puoi inserire una badword vuota!\nIl formato corretto del comando è: <code>/badword banana</code>"
 }

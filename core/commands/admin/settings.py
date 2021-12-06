@@ -5,7 +5,7 @@
 from core import decorators
 from core.utilities.menu import build_menu
 from core.utilities.functions import update_db_settings
-from core.utilities.constants import PERM_TRUE, PERM_FALSE, PERM_MEDIA_FALSE, PERM_MEDIA_TRUE
+from core.utilities.constants import PERM_TRUE, PERM_FALSE
 from languages.getLang import languages
 from core.commands.admin import set_lang
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -17,19 +17,19 @@ def keyboard_settings(update,context,editkeyboard = False):
     chat_title = update.message.chat.title
     group = GroupRepository().getById(chat)
     list_buttons = []
-    list_buttons.append(InlineKeyboardButton('Welcome %s' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
-    list_buttons.append(InlineKeyboardButton('Silence %s' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
-    list_buttons.append(InlineKeyboardButton('Deny All Entry %s' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
-    list_buttons.append(InlineKeyboardButton('No User Photo Entry %s' % ('✅' if group['set_user_profile_picture'] == 1 else '❌'), callback_data='userPhoto'))
-    list_buttons.append(InlineKeyboardButton('No Arabic Entry %s' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
-    list_buttons.append(InlineKeyboardButton('No Russian Entry %s' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
-    list_buttons.append(InlineKeyboardButton('No Chinese Entry %s' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
-    list_buttons.append(InlineKeyboardButton('No ZooPhile Entry %s' % ('✅' if group['zoophile_filter'] == 1 else '❌'), callback_data='zoophile'))
-    list_buttons.append(InlineKeyboardButton('CAS BAN %s' % ('✅' if group['set_cas_ban'] == 1 else '❌'), callback_data='casban'))
+    list_buttons.append(InlineKeyboardButton('%s Welcome' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
+    list_buttons.append(InlineKeyboardButton('%s Silence' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
+    list_buttons.append(InlineKeyboardButton('%s Deny All Entry' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
+    list_buttons.append(InlineKeyboardButton('%s No User Photo Entry' % ('✅' if group['set_user_profile_picture'] == 1 else '❌'), callback_data='userPhoto'))
+    list_buttons.append(InlineKeyboardButton('%s No Arabic Entry' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
+    list_buttons.append(InlineKeyboardButton('%s No Russian Entry' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
+    list_buttons.append(InlineKeyboardButton('%s No Chinese Entry' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
+    list_buttons.append(InlineKeyboardButton('%s No ZooPhile Entry' % ('✅' if group['zoophile_filter'] == 1 else '❌'), callback_data='zoophile'))
+    list_buttons.append(InlineKeyboardButton('%s Cas Ban' % ('✅' if group['set_cas_ban'] == 1 else '❌'), callback_data='casban'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
-    menu = build_menu(list_buttons,2)
+    menu = build_menu(list_buttons,1)
     if editkeyboard == False:
         keyboard_menu = bot.send_message(chat,"⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
     if editkeyboard == True:

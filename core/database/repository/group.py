@@ -88,6 +88,11 @@ class GroupRepository(Connection):
 
         return self._select(q, args)
 
+    def getUpdatesByUserMonth(self, args=None):
+        q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE DATE BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND tg_group_id = %s AND tg_user_id = %s ORDER BY DATE DESC'
+
+        return self._select(q, args)
+
     def getAllUpdates(self):
         q = 'SELECT COUNT(*) AS counter FROM nebula_updates'
 
