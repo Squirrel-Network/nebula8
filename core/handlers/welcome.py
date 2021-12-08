@@ -109,7 +109,8 @@ def save_group(update):
             "jpg_filter": 0,
             "docx_filter": 0,
             "apk_filter": 0,
-            "zoophile_filter": 1
+            "zoophile_filter": 1,
+            "sender_chat_block": 1
         }
         GroupRepository().add_with_dict(dictionary)
 

@@ -4,14 +4,15 @@
 # Copyright SquirrelNetwork
 import datetime
 from core import decorators
+from languages.getLang import languages
+from core.utilities.message import message
+from core.utilities.menu import build_menu
+from telegram.utils.helpers import mention_html
+from core.handlers.logs import telegram_loggers
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
-from core.utilities.functions import user_reply_object, chat_object, ban_user_reply, ban_user_by_id
-from core.utilities.message import message
-from core.handlers.logs import telegram_loggers
-from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from languages.getLang import languages
+from core.utilities.functions import user_reply_object, chat_object, ban_user_reply, ban_user_by_id
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -41,9 +42,9 @@ def init(update,context):
                 UserRepository().add_into_mtm(data_mtm)
                 data_warn = [(user.id,chat.id)]
                 UserRepository().updateWarn(data_warn)
-                msg = languages.warn_user.format(username,chat.title,chat.id)
+                msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id)
                 update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
-                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(username,chat.title,chat.id)
+                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
                 telegram_loggers(update,context,log_txt)
             else:
                 username = "@"+user.username
@@ -52,7 +53,7 @@ def init(update,context):
                 data_mtm = [(user.id, chat.id, default_warn)]
                 UserRepository().add_into_mtm(data_mtm)
                 message(update,context,languages.warn_user.format(username,chat.title,chat.id))
-                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(username,chat.title,chat.id)
+                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
                 telegram_loggers(update,context,log_txt)
         else:
             ban_user_reply(update,context)

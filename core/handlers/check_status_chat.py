@@ -35,23 +35,34 @@ def check_status(update, context):
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
     get_bot = bot.getChatMember(chat_id,bot.id)
+    get_group = GroupRepository().getById(chat_id)
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()
     entities = list(update.effective_message.entities)
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
+    """
+    This function updates the group id on the database
+    when a group changes from group to supergroup
+    """
     if update.effective_message.migrate_from_chat_id is not None:
         old_chat_id = update.message.migrate_from_chat_id
         new_chat_id = update.message.chat.id
         data = [(new_chat_id, old_chat_id)]
         GroupRepository().update(data)
         message(update,context,"<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
-
+    """
+    This function saves the group to the database
+    when the bot is added as soon as a group or supergroup is created
+    """
     if update.effective_message.group_chat_created == True or update.effective_message.supergroup_chat_created == True:
         welcome_bot(update,context)
         l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
         telegram_loggers(update,context,l_txt)
-
+    """
+    This feature changes the chat title
+    on the database when it is changed
+    """
     if update.effective_message.new_chat_title:
         data = [(chat_title,chat_id)]
         GroupRepository().update_group_settings(record_title,data)
@@ -72,24 +83,35 @@ def check_status(update, context):
             GroupRepository().update_group_settings(record,data)
             formatter = "New Url: {}".format(url)
             sys_loggers("[UPDATE_GROUP_PHOTO_LOGS]",formatter,False,True)
-
+    """
+    This function saves the number
+    of users in the group in the database
+    """
     if group_members_count > 0:
         record_count = GroupRepository.SET_GROUP_MEMBERS_COUNT
         data = [(group_members_count,chat_id)]
         GroupRepository().update_group_settings(record_count,data)
-
+    """
+    This function checks if the group is present in the blacklist
+    if it is present the bot leaves the group
+    """
     if check_group_blacklist(update) == True:
         message(update,context,"<b>#Automatic handler:</b>\nThe group is blacklisted the bot will automatically exit the chat")
         log_txt = "#Log <b>Bot removed from group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
         telegram_loggers(update,context,log_txt)
         time.sleep(2)
         bot.leave_chat(chat_id)
-
+    """
+    This function checks the
+    badwords of the group
+    """
     if check_group_badwords(update) == True:
         user = user_object(update)
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
-
+    """
+    This function checks if there is a badword in a link
+    """
     if entities is not None:
         for x in entities:
             if x['url'] is not None:
@@ -99,7 +121,18 @@ def check_status(update, context):
                     user = user_object(update)
                     bot.delete_message(update.effective_message.chat_id, update.message.message_id)
                     message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
-
+    """
+    This function checks if messages
+    are arriving from a channel and deletes them
+    """
+    if update.effective_message.sender_chat and get_group['sender_chat_block'] == 1:
+        sender_chat_obj = update.effective_message.sender_chat
+        message(update,context,"<b>#Automatic handler:</b>\nIn this group it is not allowed to write with the\n{} <code>[{}]</code> channel".format(sender_chat_obj.title,sender_chat_obj.id))
+        bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+    """
+    This function checks that the bot is an administrator
+    and sends an alert
+    """
     if get_bot.status == 'member':
         message(update,context,"I am not an administrator of this group, you have to make me an administrator to function properly!")
     #TODO NONETYPE PROBLEM
