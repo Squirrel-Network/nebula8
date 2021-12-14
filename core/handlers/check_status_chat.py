@@ -5,7 +5,7 @@
 import time
 import datetime
 from core.utilities.message import message
-from core.handlers.welcome import welcome_bot
+from core.handlers.welcome import save_group, welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
@@ -39,7 +39,14 @@ def check_status(update, context):
     record_title = GroupRepository.SET_GROUP_NAME
     group_members_count = update.effective_chat.get_member_count()
     entities = list(update.effective_message.entities)
+    get_chat_tg = bot.getChat(chat_id=chat_id)
+    linked_chat =get_chat_tg.linked_chat_id
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
+
+    if get_group:
+        return True
+    else:
+        save_group(update)
 
     """
     This function updates the group id on the database
@@ -127,8 +134,11 @@ def check_status(update, context):
     """
     if update.effective_message.sender_chat and get_group['sender_chat_block'] == 1:
         sender_chat_obj = update.effective_message.sender_chat
-        message(update,context,"<b>#Automatic handler:</b>\nIn this group it is not allowed to write with the\n{} <code>[{}]</code> channel".format(sender_chat_obj.title,sender_chat_obj.id))
-        bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+        if sender_chat_obj.id == linked_chat:
+            return
+        else:
+            message(update,context,"<b>#Automatic Handler:</b>\nIn this group <code>[{}]</code> it is not allowed to write with the\n{} <code>[{}]</code> channel".format(chat_id,sender_chat_obj.title,sender_chat_obj.id))
+            bot.delete_message(update.effective_message.chat_id, update.message.message_id)
     """
     This function checks that the bot is an administrator
     and sends an alert

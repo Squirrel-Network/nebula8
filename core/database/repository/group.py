@@ -4,9 +4,9 @@
 # Copyright SquirrelNetwork
 from core.database.db_connect import Connection
 from pypika import Query, Table
-from config import Config
 
 groups = Table("groups")
+whitelist_channels = Table("whitelist_channel")
 
 class GroupRepository(Connection):
     ###### Column constants of the table ######

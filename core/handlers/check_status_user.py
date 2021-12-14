@@ -12,7 +12,6 @@ from core.utilities.functions import user_object, chat_object, ban_user, kick_us
 from core.utilities.message import message
 
 #Constants
-API_CAS = 'https://api.cas.chat/check?user_id={}'
 DEFAULT_COUNT_WARN = 0
 DEFAULT_MAX_WARN = 3
 SERVICE_ACCOUNT = 777000
@@ -37,11 +36,6 @@ def check_status(update,context):
     warn_count = get_user['warn_count'] if get_user is not None else DEFAULT_COUNT_WARN
     #Get Max Warn in group
     max_warn = get_group['max_warn'] if get_group is not None else DEFAULT_MAX_WARN
-
-    #CAS BAN Variables
-    api_cas =  requests.get(API_CAS.format(get_superban_user_id))
-    response = api_cas.json()
-    cas_ban = response["ok"]
 
     if get_group:
         user_set_photo = get_group['set_user_profile_picture']
@@ -108,9 +102,3 @@ def check_status(update,context):
         ban_user(update,context)
         msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
         message(update,context,msg.format(user.id))
-    #If the user exists in the CAS ban => https://cas.chat
-    if cas_ban == True and cas_ban_row == 1:
-        result = response["result"]
-        messages = result["messages"]
-        date = result["time_added"]
-        message(update,context,"#Automatic Handler\n<b>{}</b> is present into CAS's blacklist\nfor the following reason: <code>{}</code>\nin data: <b>{}</b>\n\nhttps://cas.chat/query?u={}".format(get_superban_user_id,messages,date,get_superban_user_id))
