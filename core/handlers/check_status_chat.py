@@ -40,7 +40,8 @@ def check_status(update, context):
     group_members_count = update.effective_chat.get_member_count()
     entities = list(update.effective_message.entities)
     get_chat_tg = bot.getChat(chat_id=chat_id)
-    linked_chat =get_chat_tg.linked_chat_id
+    #debug print(get_chat_tg)
+    linked_chat = get_chat_tg.linked_chat_id
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
     if get_group:

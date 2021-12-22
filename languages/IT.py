@@ -37,5 +37,6 @@ Italian =	{
   "BADWORD_LIST_TEXT": "🗒 <b>Lista Badword del gruppo {}:</b>\n{}",
   "BADWORD_LIST_EMPTY": "Non c'è nessuna badword per questo gruppo.\nPuoi aggiungere una badword con il comando <code>/badword word</code>",
   "BADWORD_ADD_TEXT": "Hai inserito la parola proibita: [<b><i>{}</i></b>] nel database",
-  "BADWORD_ADD_EMPTY": "Non puoi inserire una badword vuota!\nIl formato corretto del comando è: <code>/badword banana</code>"
+  "BADWORD_ADD_EMPTY": "Non puoi inserire una badword vuota!\nIl formato corretto del comando è: <code>/badword banana</code>",
+  "SHIELD_ON": "🛡Scudo attivato!\n<b>Attenzione! Attivando questo comando hai completamente bloccato il gruppo!!!\nper modificare nuovamente le impostazioni è necessario digitare /settings</b>"
 }

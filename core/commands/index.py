@@ -78,6 +78,7 @@ def admin_command(dsp):
     function(CQH(admin.filters.update_filters, pattern='ff'))
     function(CQH(public.rules.update_rules, pattern='openRules'))
     function(CQH(public.report.update_resolve, pattern='resolved'))
+    function(CQH(admin.shield.update_shield, pattern='removeShield'))
     function(CQH(admin.settings.update_settings))
 """
 Here are inserted all the commands with owner permissions
