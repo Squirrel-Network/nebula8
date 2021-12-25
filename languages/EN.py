@@ -38,5 +38,6 @@ English =	{
   "BADWORD_LIST_EMPTY": "There is no badword for this group.\nYou can add a badword with the command <code>/badword word</code>",
   "BADWORD_ADD_TEXT": "You have entered the forbidden word: [<b><i>{}</i></b>] in the database",
   "BADWORD_ADD_EMPTY": "You cannot enter an empty forbidden word!\nthe correct format of the command is: <code>/badword banana</code>",
-  "SHIELD_ON": "🛡Shield Activated!\n<b>Attention! By activating this command you have completely blocked the group!!!\nto change the settings again you have to type /settings</b>"
+  "SHIELD_ON": "🛡Shield Activated!\n<b>Attention! By activating this command you have completely blocked the group!!!\nto change the settings again you have to type /settings</b>",
+  "WARN_USER_REASON": "‼️ {} was warned!\nin the group {} <code>[{}]</code>\nReason: {}"
 }

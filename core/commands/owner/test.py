@@ -13,9 +13,15 @@ from core.utilities.menu import build_menu
 @decorators.owner.init
 def init(update, context):
     bot = context.bot
-    button_list = [InlineKeyboardButton("col1", url="https://google.it"),InlineKeyboardButton("col2", url="https://google.it"),InlineKeyboardButton("row 2", url="https://google.it")]
-    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-    bot.send_message(update.effective_chat.id, "A two-column menu", reply_markup=reply_markup)
+    try:
+        a = context.args[0]
+        print(a)
+    except IndexError:
+        print("Error")
+
+
+
+
 
 #def init(update,context):
     #context.job_queue.run_repeating(callback_night,interval=60.0,first=0.0, name="[NIGHT_SCHEDULE_JOB]",context=update.effective_chat.id)

@@ -66,4 +66,5 @@ def languages(update, context):
     languages.badlist_add = setLang["BADWORD_ADD_TEXT"]
     languages.badlist_add_empty = setLang["BADWORD_ADD_EMPTY"]
     languages.shield_on = setLang["SHIELD_ON"]
+    languages.warn_with_reason = setLang["WARN_USER_REASON"]
     return LANGUAGE

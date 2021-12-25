@@ -24,6 +24,7 @@ def init(update,context):
     default_warn = 1
     languages(update,context)
     if update.message.reply_to_message:
+        reason = update.message.text[5:]
         user = user_reply_object(update)
         get_user = UserRepository().getUserByGroup([user.id,chat.id])
         warn_count = get_user['warn_count'] if get_user is not None else 0
@@ -42,9 +43,15 @@ def init(update,context):
                 UserRepository().add_into_mtm(data_mtm)
                 data_warn = [(user.id,chat.id)]
                 UserRepository().updateWarn(data_warn)
-                msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id)
-                update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+                if reason:
+                    msg = languages.warn_with_reason.format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
+                    update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+                else:
+                    msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id)
+                    update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
                 log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
+                if reason:
+                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
                 telegram_loggers(update,context,log_txt)
             else:
                 username = "@"+user.username
@@ -52,8 +59,13 @@ def init(update,context):
                 UserRepository().add(data)
                 data_mtm = [(user.id, chat.id, default_warn)]
                 UserRepository().add_into_mtm(data_mtm)
-                message(update,context,languages.warn_user.format(username,chat.title,chat.id))
+                if reason:
+                    message(update,context,languages.warn_with_reason.format(username,chat.title,chat.id,reason))
+                else:
+                    message(update,context,languages.warn_user.format(username,chat.title,chat.id))
                 log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
+                if reason:
+                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
                 telegram_loggers(update,context,log_txt)
         else:
             ban_user_reply(update,context)
