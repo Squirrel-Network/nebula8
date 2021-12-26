@@ -37,17 +37,11 @@ def check_status(update, context):
     get_bot = bot.getChatMember(chat_id,bot.id)
     get_group = GroupRepository().getById(chat_id)
     record_title = GroupRepository.SET_GROUP_NAME
-    group_members_count = update.effective_chat.get_member_count()
     entities = list(update.effective_message.entities)
     get_chat_tg = bot.getChat(chat_id=chat_id)
-    #debug print(get_chat_tg)
     linked_chat = get_chat_tg.linked_chat_id
+    group_members_count = update.effective_chat.get_member_count()
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
-
-    if get_group:
-        return True
-    else:
-        save_group(update)
 
     """
     This function updates the group id on the database
