@@ -5,8 +5,8 @@
 import time
 import datetime
 from core.utilities.message import message
-from core.handlers.welcome import save_group, welcome_bot
-from core.handlers.logs import telegram_loggers, sys_loggers
+from core.handlers.welcome import welcome_bot
+from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
 from core.utilities.functions import chat_object, user_object
@@ -53,6 +53,7 @@ def check_status(update, context):
         data = [(new_chat_id, old_chat_id)]
         GroupRepository().update(data)
         message(update,context,"<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
+        debug_channel(update,context,"[DEBUG_LOGGER] La chat {} è stata modifica da Gruppo a Supergruppo il suo nuovo id è: {}".format(old_chat_id,new_chat_id))
     """
     This function saves the group to the database
     when the bot is added as soon as a group or supergroup is created
@@ -68,6 +69,7 @@ def check_status(update, context):
     if update.effective_message.new_chat_title:
         data = [(chat_title,chat_id)]
         GroupRepository().update_group_settings(record_title,data)
+        debug_channel(update,context,"[DEBUG_LOGGER] La chat <code>[{}]</code> ha cambiato titolo".format(chat_id))
 
     """
     When a chat room changes group image it is saved to the webserver
@@ -85,6 +87,7 @@ def check_status(update, context):
             GroupRepository().update_group_settings(record,data)
             formatter = "New Url: {}".format(url)
             sys_loggers("[UPDATE_GROUP_PHOTO_LOGS]",formatter,False,True)
+            debug_channel(update,context,"[DEBUG_LOGGER] La chat <code>[{}]</code> ha cambiato foto\nIl suo nuovo URL è: {}".format(chat_id,url))
     """
     This function saves the number
     of users in the group in the database
@@ -93,6 +96,7 @@ def check_status(update, context):
         record_count = GroupRepository.SET_GROUP_MEMBERS_COUNT
         data = [(group_members_count,chat_id)]
         GroupRepository().update_group_settings(record_count,data)
+        debug_channel(update,context,"[DEBUG_LOGGER] Il numero di utenti della chat <code>[{}]</code> è: {}".format(chat_id,group_members_count))
     """
     This function checks if the group is present in the blacklist
     if it is present the bot leaves the group
@@ -103,6 +107,7 @@ def check_status(update, context):
         telegram_loggers(update,context,log_txt)
         time.sleep(2)
         bot.leave_chat(chat_id)
+        debug_channel(update,context,"[DEBUG_LOGGER] Il bot è stato rimosso dalla chat {} perchè il gruppo è in Blacklist".format(chat_id))
     """
     This function checks the
     badwords of the group
@@ -111,6 +116,7 @@ def check_status(update, context):
         user = user_object(update)
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
+        debug_channel(update,context,"[DEBUG_LOGGER] L'utente <code>{}</code> ha usato una parola proibita".format(user.id))
     """
     This function checks if there is a badword in a link
     """
@@ -128,18 +134,22 @@ def check_status(update, context):
     are arriving from a channel and deletes them
     """
     if update.effective_message.sender_chat and get_group['sender_chat_block'] == 1:
+        if get_chat_tg.type == "channel":
+            return
         sender_chat_obj = update.effective_message.sender_chat
         if sender_chat_obj.id == linked_chat:
             return
         else:
             message(update,context,"<b>#Automatic Handler:</b>\nIn this group <code>[{}]</code> it is not allowed to write with the\n{} <code>[{}]</code> channel".format(chat_id,sender_chat_obj.title,sender_chat_obj.id))
             bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+            debug_channel(update,context,"[DEBUG_LOGGER] L'utente <code>{}</code> ha inviato un messaggio dal canale [{}] non consentito".format(sender_chat_obj.title,user.id))
     """
     This function checks that the bot is an administrator
     and sends an alert
     """
     if get_bot.status == 'member':
         message(update,context,"I am not an administrator of this group, you have to make me an administrator to function properly!")
+        debug_channel(update,context,"[DEBUG_LOGGER] Il bot non è un amministratore della chat {}".format(chat_id))
     #TODO NONETYPE PROBLEM
     """if buttons is not None:
         for url in buttons:

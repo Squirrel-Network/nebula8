@@ -9,6 +9,8 @@ from telegram.error import BadRequest, Unauthorized
 from core.utilities.message import messageWithId, message
 from core.database.repository.group import GroupRepository
 
+SET_CHANNEL_DEBUG = True
+
 def sys_loggers(name="",message="",debugs = False,info = False,warning = False,errors = False, critical = False):
     logger = logging.getLogger(name)
     logger.setLevel((logging.INFO, logging.DEBUG)[Config.DEBUG])
@@ -47,6 +49,14 @@ def telegram_loggers(update,context,msg = ""):
 def staff_loggers(update,context,msg = ""):
     id_staff_group = Config.DEFAULT_STAFF_GROUP
     send = messageWithId(update,context,id_staff_group,msg)
+    return send
+
+def debug_channel(update,context,msg = ""):
+    id_debug_channel = -1001540824311
+    if SET_CHANNEL_DEBUG == True:
+        send = messageWithId(update,context,id_debug_channel,msg)
+    else:
+        return
     return send
 
 def set_log_channel(update,context):
