@@ -96,7 +96,6 @@ def check_status(update, context):
         record_count = GroupRepository.SET_GROUP_MEMBERS_COUNT
         data = [(group_members_count,chat_id)]
         GroupRepository().update_group_settings(record_count,data)
-        debug_channel(update,context,"[DEBUG_LOGGER] Il numero di utenti della chat <code>[{}]</code> è: {}".format(chat_id,group_members_count))
     """
     This function checks if the group is present in the blacklist
     if it is present the bot leaves the group
@@ -107,7 +106,7 @@ def check_status(update, context):
         telegram_loggers(update,context,log_txt)
         time.sleep(2)
         bot.leave_chat(chat_id)
-        debug_channel(update,context,"[DEBUG_LOGGER] Il bot è stato rimosso dalla chat {} perchè il gruppo è in Blacklist".format(chat_id))
+        debug_channel(update,context,"[DEBUG_LOGGER] Il bot è stato rimosso dalla chat <code>[{}]</code> perchè il gruppo è in Blacklist".format(chat_id))
     """
     This function checks the
     badwords of the group

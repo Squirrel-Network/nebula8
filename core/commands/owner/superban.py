@@ -10,7 +10,7 @@ from core.utilities.menu import build_menu
 from core.utilities.message import message, messageWithId
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
-from core.handlers.logs import sys_loggers
+from core.handlers.logs import sys_loggers, debug_channel
 from core.utilities.strings import Strings
 from core.utilities.regex import Regex
 
@@ -53,6 +53,7 @@ def init(update, context):
                 messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
                 formatter = "Superban eseguito da: {}".format(operator_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+                debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
         else:
             message(update,context,"Attention you can not superbanned without entering an TELEGRAM ID!")
 
@@ -90,6 +91,7 @@ def update_superban(update, context):
             #System Logs
             formatter = "Superban eseguito da: {}".format(operator_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+            debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
 
     if query.data == "removeSuperban":
         user_id = query.message.reply_to_message.from_user.id
