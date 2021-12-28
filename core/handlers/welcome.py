@@ -153,7 +153,6 @@ def init(update, context):
         cirillic_filter = group['set_cirillic_filter']
         chinese_filter = group['set_chinese_filter']
         user_profile_photo = group['set_user_profile_picture']
-        cas_ban_row = group['set_cas_ban']
         type_no_username = group['type_no_username']
         zoophile_filter = group["zoophile_filter"]
     else:
@@ -163,7 +162,6 @@ def init(update, context):
         cirillic_filter = 1
         chinese_filter = 1
         user_profile_photo = 0
-        cas_ban_row = 1
         zoophile_filter = 1
 
     if row == 0 and block_user == 1:
