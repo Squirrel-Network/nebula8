@@ -5,8 +5,6 @@
 
 from core import decorators
 from telegram.utils.helpers import mention_markdown
-from telegram.utils.helpers import escape_markdown
-
 
 @decorators.public.init
 @decorators.delete.init
