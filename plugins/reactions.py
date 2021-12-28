@@ -138,7 +138,7 @@ reactions = [
 
 def init(update,context):
     message = update.effective_message
-    react = random.choice(reactions)
+    react = random.choice(reactions) # pylint: disable-this-line-in-some-way
     if message.reply_to_message:
       message.reply_to_message.reply_text(react)
     else:

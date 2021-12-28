@@ -62,7 +62,7 @@ class GroupRepository(Connection):
     def add_with_dict(self,dictionary):
         placeholders = ', '.join(['%s'] * len(dictionary))
         columns = ', '.join(dictionary.keys())
-        sql = "INSERT INTO groups ( %s ) VALUES ( %s )" % (columns, placeholders)
+        sql = "INSERT INTO groups ( %s ) VALUES ( %s )" % (columns, placeholders) # pylint: disable-this-line-in-some-way
         return self._dict_insert(sql, dictionary)
 
     #Update welcome buttons
