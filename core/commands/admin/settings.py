@@ -26,6 +26,7 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('%s No Chinese Entry' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
     list_buttons.append(InlineKeyboardButton('%s No ZooPhile Entry' % ('✅' if group['zoophile_filter'] == 1 else '❌'), callback_data='zoophile'))
     list_buttons.append(InlineKeyboardButton('%s Block Channel' % ('✅' if group['sender_chat_block'] == 1 else '❌'), callback_data='channelblock'))
+    list_buttons.append(InlineKeyboardButton('%s Block Spoiler' % ('✅' if group['spoiler_block'] == 1 else '❌'), callback_data='spoilerblock'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
@@ -88,6 +89,15 @@ def update_settings(update,context):
     if query.data == 'channelblock':
         record = GroupRepository.SENDER_CHAT_BLOCK
         row = group['sender_chat_block']
+        if row == 1:
+            update_db_settings(update, record, True)
+            return keyboard_settings(query,context,True)
+        else:
+            update_db_settings(update, record, False)
+            return keyboard_settings(query,context,True)
+    if query.data == 'spoilerblock':
+        record = GroupRepository.SPOILER_BLOCK
+        row = group['spoiler_block']
         if row == 1:
             update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)

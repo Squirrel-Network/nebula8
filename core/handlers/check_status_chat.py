@@ -133,15 +133,14 @@ def check_status(update, context):
     are arriving from a channel and deletes them
     """
     if update.effective_message.sender_chat and get_group['sender_chat_block'] == 1:
+        sender_chat_obj = update.effective_message.sender_chat
         if get_chat_tg.type == "channel":
             return
-        sender_chat_obj = update.effective_message.sender_chat
         if sender_chat_obj.id == linked_chat:
             return
         else:
             message(update,context,"<b>#Automatic Handler:</b>\nIn this group <code>[{}]</code> it is not allowed to write with the\n{} <code>[{}]</code> channel".format(chat_id,sender_chat_obj.title,sender_chat_obj.id))
             bot.delete_message(update.effective_message.chat_id, update.message.message_id)
-            debug_channel(update,context,"[DEBUG_LOGGER] L'utente <code>{}</code> ha inviato un messaggio dal canale [{}] non consentito".format(sender_chat_obj.title,user.id))
     """
     This function checks that the bot is an administrator
     and sends an alert
@@ -149,6 +148,17 @@ def check_status(update, context):
     if get_bot.status == 'member':
         message(update,context,"I am not an administrator of this group, you have to make me an administrator to function properly!")
         debug_channel(update,context,"[DEBUG_LOGGER] Il bot non è un amministratore della chat {}".format(chat_id))
+
+    """
+    This function is used to filter messages with spoiler type
+    and delete them if the group owner puts the block at 1
+    """
+    for a in entities:
+        type_entities = a['type']
+        if type_entities is not None:
+            if type_entities == "spoiler" and get_group['spoiler_block'] == 1:
+                message(update,context,"<b>#Automatic Handler:</b>\nIn this chat the use of spoilers is not allowed!")
+                bot.delete_message(update.effective_message.chat_id, update.message.message_id)
     #TODO NONETYPE PROBLEM
     """if buttons is not None:
         for url in buttons:
