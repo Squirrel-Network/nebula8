@@ -7,17 +7,24 @@ from core import decorators
 #from core.utilities.message import message
 #from core.utilities.functions import user_object
 #from telegram.utils.helpers import mention_html
+from core.utilities.functions import member_status_object, chat_status_object
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.menu import build_menu
 
 @decorators.owner.init
-def init(update, context):
+def old_init(update, context):
     bot = context.bot
     try:
         a = context.args[0]
         print(a)
     except IndexError:
         print("Error")
+
+def init(update,context):
+    a = member_status_object(update,context)
+    b = chat_status_object(update,context)
+    print(a.status)
+    print(b)
 
 
 

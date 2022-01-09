@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
-from core.utilities.message import messagePhoto
+from core.utilities.message import message, messagePhoto
 from core.handlers.welcome import save_group
 from core import decorators
 
@@ -36,3 +36,9 @@ def init(update, context):
         messagePhoto(update, context, img, caption)
     else:
         save_group(update)
+
+@decorators.admin.user_admin
+@decorators.delete.init
+def id_chat(update,context):
+    chat = update.effective_message.chat_id
+    message(update,context,"⚙️ Chat Id:\n<code>🏷 [{}]</code>\n\nFor more information on the group type /status".format(chat))

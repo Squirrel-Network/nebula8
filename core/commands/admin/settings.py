@@ -3,11 +3,11 @@
 
 # Copyright SquirrelNetwork
 from core import decorators
+from languages.getLang import languages
+from core.commands.admin import set_lang
 from core.utilities.menu import build_menu
 from core.utilities.functions import update_db_settings
 from core.utilities.constants import PERM_TRUE, PERM_FALSE
-from languages.getLang import languages
-from core.commands.admin import set_lang
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
 

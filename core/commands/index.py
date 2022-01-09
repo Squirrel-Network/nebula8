@@ -58,6 +58,7 @@ def admin_command(dsp):
     function(CMH('badword', admin.badword.init))
     function(CMH('badlist', admin.badword.badlist))
     function(CMH('promote', admin.promote.init))
+    function(CMH('chatid', admin.info_group.id_chat))
     #############################
     ### CallbackQuery Handler ###
     #############################

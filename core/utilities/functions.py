@@ -264,3 +264,23 @@ def new_user_object(update):
     for member in update.message.new_chat_members:
         new_user = member
         return new_user
+
+def chat_status_object(update,context):
+    chat = chat_object(update)
+    bot = context.bot
+    get_chat = bot.getChat(chat_id=chat.id)
+    return get_chat
+
+def member_status_object(update,context):
+    bot = context.bot
+    chat = chat_object(update)
+    user = user_object(update)
+    get_member = bot.getChatMember(chat.id,user.id)
+    return get_member
+
+def reply_member_status_object(update,context):
+    bot = context.bot
+    chat = chat_object(update)
+    user = user_reply_object(update)
+    get_member = bot.getChatMember(chat.id,user.id)
+    return get_member

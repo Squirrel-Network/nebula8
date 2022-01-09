@@ -10,7 +10,8 @@ from core.utilities.functions import (
 	ban_user_by_username,
 	ban_user_by_id,
 	bot_object,
-	delete_message_reply)
+	delete_message_reply,
+	reply_member_status_object)
 from core.utilities.message import message
 from core.utilities.strings import Strings
 from core.utilities.monads import (
@@ -34,13 +35,17 @@ def init(update, context):
 
 	bot = bot_object(update,context)
 	chat = update.effective_chat
+	user_status = reply_member_status_object(update,context)
 	reply = update.message.reply_to_message
 
 	if reply is not None:
+		print(user_status.status)
 		if reply.from_user.id == bot.id:
 			text = "Non posso bannarmi da sola!"
 
 			message(update,context,text)
+		elif user_status.status == 'administrator' or user_status.status == 'creator':
+			message(update,context,"I can't <i>ban</i> an administrator or creator!")
 		else:
 			ban_text = languages.ban_message.format(
 				user = reply.from_user.username or reply.from_user.first_name,
