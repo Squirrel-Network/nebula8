@@ -13,22 +13,21 @@ class Config(object):
      ##########################
      HOST = os.environ.get('MYSQL_HOST', 'localhost')
      PORT = int(os.environ.get('MYSQL_PORT', '3306'))
-     USER = os.environ.get('MYSQL_USER')
+     USER = os.environ.get('MYSQL_USER', 'root')
      PASSWORD = os.environ.get('MYSQL_PASSWORD')
      DBNAME = os.environ.get('MYSQL_DBNAME')
      ###########################
      ##   TELEGRAM SETTINGS  ##
      ##########################
      BOT_TOKEN = os.environ.get('TOKEN')
-     DEFAULT_WELCOME = os.environ.get('TG_DEFAULT_WELCOME')
+     DEFAULT_WELCOME = os.environ.get('TG_DEFAULT_WELCOME', 'Welcome {} to the {} group')
      DEFAULT_RULES = os.environ.get('TG_DEFAULT_RULES', 'https://github.com/Squirrel-Network/GroupRules')
-     DEFAULT_LOG_CHANNEL = os.environ.get('TG_DEFAULT_LOG_CHANNEL')
-     DEFAULT_STAFF_GROUP = os.environ.get('TG_DEFAULT_STAFF_GROUP')
+     DEFAULT_LOG_CHANNEL = os.environ.get('TG_DEFAULT_LOG_CHANNEL', '-1001359708474')
+     DEFAULT_STAFF_GROUP = os.environ.get('TG_DEFAULT_STAFF_GROUP', '-1001267698171')
      ##########################
      ##   PROJECT SETTINGS   ##
      ##########################
      OPENWEATHER_API = os.environ.get('OPENWEATHER_TOKEN')
-     ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
      VERSION = '8.4.2'
      VERSION_NAME = 'Hatterene'

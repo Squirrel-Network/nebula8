@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import re
 import pytz
 import logging
 import sys
@@ -16,14 +17,24 @@ from core.commands import index
 from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
-
-console = Console()
-table = Table(show_header=True, header_style="bold blue")
+from core.utilities.regex import Regex
 
 # if version < 3.7, stop bot.
 LOGGER = logging.getLogger(__name__)
 if sys.version_info[0] < 3 or sys.version_info[1] < 7:
     LOGGER.error("You MUST have a python version of at least 3.7! Multiple features depend on this. Bot quitting.")
+    quit(1)
+
+console = Console()
+table = Table(show_header=True, header_style="bold blue")
+
+plugin_input = input("Activate Plugin? [Yes/No]: ").lower()
+letters = re.search(Regex.HAS_LETTER, plugin_input)
+if letters is None:
+    print("Error: You have to enter only letters and not numbers!")
+    quit(1)
+if plugin_input != "yes" and plugin_input != "no":
+    print("Please enter No or Yes")
     quit(1)
 
 # Print start with datetime
@@ -50,7 +61,7 @@ def main():
     index.admin_command(dsp)
     index.owner_command(dsp)
     #Plugins Section (if in the config.py ENABLE_PLUGINS is True it loads the plugins if ENABLE_PLUGINS is False it does not load them)
-    if Config.ENABLE_PLUGINS == True:
+    if plugin_input == 'yes':
         plugin_index.function_plugins(dsp)
         table.add_row(
             "[yellow]{}[/yellow]".format(timestamp),
