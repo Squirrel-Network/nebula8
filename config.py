@@ -28,6 +28,7 @@ class Config(object):
      ##   PROJECT SETTINGS   ##
      ##########################
      OPENWEATHER_API = os.environ.get('OPENWEATHER_TOKEN')
+     ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
      VERSION = '8.4.2'
      VERSION_NAME = 'Hatterene'
