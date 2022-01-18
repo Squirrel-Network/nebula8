@@ -28,15 +28,6 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 7:
 console = Console()
 table = Table(show_header=True, header_style="bold blue")
 
-plugin_input = input("Activate Plugin? [Yes/No]: ").lower()
-letters = re.search(Regex.HAS_LETTER, plugin_input)
-if letters is None:
-    print("Error: You have to enter only letters and not numbers!")
-    quit(1)
-if plugin_input != "yes" and plugin_input != "no":
-    print("Please enter No or Yes")
-    quit(1)
-
 # Print start with datetime
 timestamp = datetime.strftime(datetime.today(), '%H:%M at %Y/%m/%d')
 console.print("[bold blue][[[Welcome to Nebula Bot]]][/bold blue]")
@@ -61,7 +52,7 @@ def main():
     index.admin_command(dsp)
     index.owner_command(dsp)
     #Plugins Section (if in the config.py ENABLE_PLUGINS is True it loads the plugins if ENABLE_PLUGINS is False it does not load them)
-    if plugin_input == 'yes':
+    if Config.ENABLE_PLUGINS == True :
         plugin_index.function_plugins(dsp)
         table.add_row(
             "[yellow]{}[/yellow]".format(timestamp),
