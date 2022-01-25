@@ -35,13 +35,12 @@ def init(update, context):
 
 	bot = bot_object(update,context)
 	chat = update.effective_chat
-	user_status = reply_member_status_object(update,context)
 	reply = update.message.reply_to_message
 
 	if reply is not None:
-		print(user_status.status)
+		user_status = reply_member_status_object(update,context)
 		if reply.from_user.id == bot.id:
-			text = "Non posso bannarmi da sola!"
+			text = "I can't ban myself!"
 
 			message(update,context,text)
 		elif user_status.status == 'administrator' or user_status.status == 'creator':
@@ -74,7 +73,7 @@ def init(update, context):
 
 		is_user_id = Try.of(lambda: int(ban_argument)).valueOf() is not None
 
-		if ban_argument[0] is '@':
+		if ban_argument[0] == '@':
 			username = ban_argument
 
 			Try.of(lambda: ban_user_by_username(update, context, username)) \

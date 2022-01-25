@@ -8,8 +8,8 @@ from core import decorators
 #from core.utilities.functions import user_object
 #from telegram.utils.helpers import mention_html
 from core.utilities.functions import member_status_object, chat_status_object
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from core.utilities.menu import build_menu
+#from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+#from core.utilities.menu import build_menu
 
 @decorators.owner.init
 def old_init(update, context):
