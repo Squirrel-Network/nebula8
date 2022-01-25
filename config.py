@@ -22,17 +22,18 @@ class Config(object):
      BOT_TOKEN = os.environ.get('TOKEN')
      DEFAULT_WELCOME = os.environ.get('TG_DEFAULT_WELCOME', 'Welcome {} to the {} group')
      DEFAULT_RULES = os.environ.get('TG_DEFAULT_RULES', 'https://github.com/Squirrel-Network/GroupRules')
-     DEFAULT_LOG_CHANNEL = os.environ.get('TG_DEFAULT_LOG_CHANNEL', '-1001359708474')
-     DEFAULT_STAFF_GROUP = os.environ.get('TG_DEFAULT_STAFF_GROUP', '-1001267698171')
+     DEFAULT_LOG_CHANNEL = os.environ.get('TG_DEFAULT_LOG_CHANNEL')
+     DEFAULT_STAFF_GROUP = os.environ.get('TG_DEFAULT_STAFF_GROUP')
      ##########################
      ##   PROJECT SETTINGS   ##
      ##########################
      OPENWEATHER_API = os.environ.get('OPENWEATHER_TOKEN')
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
-     VERSION = '8.4.2'
+     VERSION = '8.4.5'
      VERSION_NAME = 'Hatterene'
      REPO = 'https://github.com/Squirrel-Network/nebula8'
+     DEVELOPER_CHAT_ID = os.environ.get('DEV_CHAT_ID')
      DEBUG = False
      if BOT_TOKEN is None:
           print("The environment variable TOKEN was not set correctly!")
