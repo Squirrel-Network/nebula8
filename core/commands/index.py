@@ -7,11 +7,6 @@ from telegram.ext import (CommandHandler as CMH,CallbackQueryHandler as CQH)
 from core.utilities.functions import close_menu
 
 """
-MANUAL JOBS WITH /startjobs
-"""
-def core_jobs(update,context):
-    pass
-"""
 Here are inserted all the commands with user permissions
 """
 def user_command(dsp):
@@ -42,7 +37,7 @@ def admin_command(dsp):
     function(CMH('status', admin.info_group.init))
     function(CMH('lang', admin.set_lang.init))
     function(CMH('mute', admin.mute.init))
-    function(CMH('check', admin.check_permission.init))
+    #function(CMH('check', admin.check_permission.init)) Need to Fix
     function(CMH('warn', admin.warn.init))
     function(CMH('info', admin.user_info.init))
     function(CMH('say', admin.say.init))
@@ -59,6 +54,7 @@ def admin_command(dsp):
     function(CMH('badword', admin.badword.init))
     function(CMH('badlist', admin.badword.badlist))
     function(CMH('promote', admin.promote.init))
+    function(CMH('dashboard', admin.dashboard.init))
     function(CMH('chatid', admin.info_group.id_chat))
     #############################
     ### CallbackQuery Handler ###
@@ -99,5 +95,4 @@ def owner_command(dsp):
     function(CMH('test', owner.test.init))
     function(CMH('owner', owner.add_owner.init))
     function(CMH('exit', owner.exit.init))
-    function(CMH('startjobs', core_jobs))
     function(CMH('exportlink', owner.export_invite_link.init))
