@@ -11,7 +11,7 @@ WORKDIR /app
 
 # copy only the dependencies installation from the 1st stage image
 COPY --from=builder /root/.local /root/.local
-COPY . /app 
+COPY . /app
 
 # update PATH environment variable
 ENV PATH=/root/.local:$PATH

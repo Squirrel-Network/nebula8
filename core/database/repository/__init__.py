@@ -1,5 +1,6 @@
 __all__ = [
     "community",
+    "dashboard",
     "group",
     "user",
     "group_language",

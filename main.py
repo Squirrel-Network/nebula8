@@ -2,22 +2,20 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
-import re
 import pytz
 import logging
 import sys
+from telegram.ext import Updater, Defaults
 from rich.logging import RichHandler
 from rich.console import Console
 from rich.table import Table
 from telegram import ParseMode
 from datetime import datetime
 from config import Config
-from telegram.ext import Updater, Defaults
 from core.commands import index
 from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
-from core.utilities.regex import Regex
 
 # if version < 3.7, stop bot.
 LOGGER = logging.getLogger(__name__)
