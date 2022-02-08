@@ -24,3 +24,7 @@ class DashboardRepository(Connection):
     def add(self, args=None):
         q = "INSERT INTO nebula_dashboard (tg_id, tg_username, tg_group_id, enable, created_at, updated_at) VALUES (%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
+
+    def update(self, args=None):
+        q = "UPDATE nebula_dashboard SET tg_username = %s, updated_at = %s WHERE tg_id = %s AND tg_group_id = %s"
+        return self._update(q, args)

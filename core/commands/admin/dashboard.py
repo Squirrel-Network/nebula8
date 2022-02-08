@@ -20,11 +20,15 @@ def init(update,context):
             user = user_status.user
             username = "@"+user.username
             save_date = datetime.datetime.utcnow().isoformat()
-            dataprint = [user.id,user.first_name,username,chat_status.id]
-            print(dataprint)
-            data = [(user.id,username,chat_status.id,1,save_date,save_date)]
-            DashboardRepository().add(data)
-            message(update,context,"<i>UNDER CONSTRUCTION {}</i>\n\nSeguici su: https://github.com/Squirrel-Network/nebula8".format(data))
+            row = DashboardRepository().getById(user.id)
+            if row:
+                print("UPDATE")
+                data = [(username, save_date, user.id, chat_status.id)]
+                DashboardRepository().update(data)
+            else:
+                data = [(user.id,username,chat_status.id,1,save_date,save_date)]
+                DashboardRepository().add(data)
+                message(update,context,"<i>UNDER CONSTRUCTION {}</i>\n\nSeguici su: https://github.com/Squirrel-Network/nebula8".format(data))
         else:
             msg = "Non sei il proprietario del gruppo non puoi usare questo comando"
             message(update,context,msg)
