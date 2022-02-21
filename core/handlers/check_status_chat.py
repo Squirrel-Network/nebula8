@@ -134,9 +134,14 @@ def check_status(update, context):
     """
     if update.effective_message.sender_chat and get_group['sender_chat_block'] == 1:
         sender_chat_obj = update.effective_message.sender_chat
-        if get_chat_tg.type == "channel":
+
+        if update.effective_message.voice_chat_started:
             return
-        if sender_chat_obj.id == linked_chat:
+        elif update.effective_message.voice_chat_ended:
+            return
+        elif get_chat_tg.type == "channel":
+            return
+        elif sender_chat_obj.id == linked_chat:
             return
         else:
             message(update,context,"<b>#Automatic Handler:</b>\nIn this group <code>[{}]</code> it is not allowed to write with the\n{} <code>[{}]</code> channel".format(chat_id,sender_chat_obj.title,sender_chat_obj.id))

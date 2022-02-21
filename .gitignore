@@ -127,3 +127,4 @@ dmypy.json
 # app
 .vsls.json
 .vscode
+.vs
