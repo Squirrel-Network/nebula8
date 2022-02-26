@@ -23,10 +23,12 @@ def init(update,context):
             if row:
                 if row['enable'] == 0:
                     message(update,context,"Mi dispiace sei stato disabilitato a questa funzionalità, Contatta un amministratore su: https://t.me/nebulabot_support")
-                else: 
+                else:
                     data = [(username, save_date, user.id, chat_status.id)]
+                    data_add = [(user.id,username,chat_status.id,1,save_date,save_date)]
                     DashboardRepository().update(data)
-                    message(update,context,"Ho aggiornato i dati sul database!")
+                    DashboardRepository().add(data_add)
+                    message(update,context,"Ho aggiornato i tuoi dati sul database! e ho inserito il gruppo nella Dashboard")
             else:
                 data = [(user.id,username,chat_status.id,1,save_date,save_date)]
                 DashboardRepository().add(data)
