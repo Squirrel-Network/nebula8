@@ -16,6 +16,12 @@ class DashboardRepository(Connection):
 
         return self._select(q, args)
 
+    def getByGroupId(self, args=None):
+        query = Query.from_(dashboard).select("*").where(dashboard.tg_group_id == "%s")
+        q = query.get_sql(quote_char=None)
+
+        return self._select(q, args)
+
     def getByUsername(self, args=None):
         q = "SELECT * FROM nebula_dashboard WHERE tg_username = %s"
 

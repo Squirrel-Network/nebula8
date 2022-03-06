@@ -15,6 +15,7 @@ def init(update,context):
     else:
         user_status = member_status_object(update,context)
         chat_status = chat_status_object(update, context)
+        print(chat_status)
         if user_status.status == 'creator':
             user = user_status.user
             username = "@"+user.username
@@ -24,15 +25,19 @@ def init(update,context):
                 if row['enable'] == 0:
                     message(update,context,"Mi dispiace sei stato disabilitato a questa funzionalità, Contatta un amministratore su: https://t.me/nebulabot_support")
                 else:
-                    data = [(username, save_date, user.id, chat_status.id)]
-                    data_add = [(user.id,username,chat_status.id,1,save_date,save_date)]
-                    DashboardRepository().update(data)
-                    DashboardRepository().add(data_add)
-                    message(update,context,"Ho aggiornato i tuoi dati sul database! e ho inserito il gruppo nella Dashboard")
+                    get_group_dashboard = DashboardRepository().getByGroupId(chat_status.id)
+                    if get_group_dashboard:
+                        data = [(username, save_date, user.id, chat_status.id)]
+                        DashboardRepository().update(data)
+                        message(update,context,"Ho aggiornato i tuoi dati sul database!")
+                    else:
+                        data_add = [(user.id,username,chat_status.id,1,save_date,save_date)]
+                        DashboardRepository().add(data_add)
+                        message(update,context,"Ho aggiornato i tuoi dati sul database! e ho inserito {} nella Dashboard\n\nEsegui il login su: https://nebula.squirrel-network.online".format(chat_status.title))
             else:
                 data = [(user.id,username,chat_status.id,1,save_date,save_date)]
                 DashboardRepository().add(data)
-                message(update,context,"<i>UNDER CONSTRUCTION {}</i>\n\nSeguici su: https://github.com/Squirrel-Network/nebula8".format(data))
+                message(update,context,"<i>{} hai eseguito la prima abilitazione alla dashboard di Nebula </i>\n\nEsegui il login su: https://nebula.squirrel-network.online".format(username))
         else:
             msg = "Non sei il proprietario del gruppo non puoi usare questo comando"
             message(update,context,msg)

@@ -29,6 +29,7 @@ def keyboard_settings(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('%s Block Spoiler' % ('✅' if group['spoiler_block'] == 1 else '❌'), callback_data='spoilerblock'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
+    list_buttons.append(InlineKeyboardButton('Dashboard', url='https://nebula.squirrel-network.online'))
     list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
