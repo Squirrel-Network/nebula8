@@ -17,16 +17,17 @@ def keyboard_settings(update,context,editkeyboard = False):
     chat_title = update.message.chat.title
     group = GroupRepository().getById(chat)
     list_buttons = []
-    list_buttons.append(InlineKeyboardButton('%s Welcome' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
-    list_buttons.append(InlineKeyboardButton('%s Silence' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
-    list_buttons.append(InlineKeyboardButton('%s Deny All Entry' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
-    list_buttons.append(InlineKeyboardButton('%s No User Photo Entry' % ('✅' if group['set_user_profile_picture'] == 1 else '❌'), callback_data='userPhoto'))
-    list_buttons.append(InlineKeyboardButton('%s No Arabic Entry' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
-    list_buttons.append(InlineKeyboardButton('%s No Russian Entry' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
-    list_buttons.append(InlineKeyboardButton('%s No Chinese Entry' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
-    list_buttons.append(InlineKeyboardButton('%s No ZooPhile Entry' % ('✅' if group['zoophile_filter'] == 1 else '❌'), callback_data='zoophile'))
-    list_buttons.append(InlineKeyboardButton('%s Block Channel' % ('✅' if group['sender_chat_block'] == 1 else '❌'), callback_data='channelblock'))
-    list_buttons.append(InlineKeyboardButton('%s Block Spoiler' % ('✅' if group['spoiler_block'] == 1 else '❌'), callback_data='spoilerblock'))
+    list_buttons.append(InlineKeyboardButton('%s Welcome 👋🏻' % ('✅' if group['set_welcome'] == 1 else '❌'), callback_data='setWelcome'))
+    list_buttons.append(InlineKeyboardButton('%s Silence 🤫' % ('✅' if group['set_silence'] == 1 else '❌'), callback_data='setSilence'))
+    list_buttons.append(InlineKeyboardButton('%s Deny All Entry 🚷' % ('✅' if group['block_new_member'] == 1 else '❌'), callback_data='setBlockEntry'))
+    list_buttons.append(InlineKeyboardButton('%s No User Photo Entry ⛔️' % ('✅' if group['set_user_profile_picture'] == 1 else '❌'), callback_data='userPhoto'))
+    list_buttons.append(InlineKeyboardButton('%s No Arabic Entry ⛔️' % ('✅' if group['set_arabic_filter'] == 1 else '❌'), callback_data='arabic'))
+    list_buttons.append(InlineKeyboardButton('%s No Russian Entry ⛔️' % ('✅' if group['set_cirillic_filter'] == 1 else '❌'), callback_data='cirillic'))
+    list_buttons.append(InlineKeyboardButton('%s No Chinese Entry ⛔️' % ('✅' if group['set_chinese_filter'] == 1 else '❌'), callback_data='chinese'))
+    list_buttons.append(InlineKeyboardButton('%s No ZooPhile Entry ⛔️' % ('✅' if group['zoophile_filter'] == 1 else '❌'), callback_data='zoophile'))
+    list_buttons.append(InlineKeyboardButton('%s Block Vocal ⛔️' % ('✅' if group['set_no_vocal'] == 1 else '❌'), callback_data='novocal'))
+    list_buttons.append(InlineKeyboardButton('%s Block Channel 📢' % ('✅' if group['sender_chat_block'] == 1 else '❌'), callback_data='channelblock'))
+    list_buttons.append(InlineKeyboardButton('%s Block Spoiler 🚫' % ('✅' if group['spoiler_block'] == 1 else '❌'), callback_data='spoilerblock'))
     list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
     list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
     list_buttons.append(InlineKeyboardButton('Dashboard', url='https://nebula.squirrel-network.online'))
@@ -99,6 +100,16 @@ def update_settings(update,context):
     if query.data == 'spoilerblock':
         record = GroupRepository.SPOILER_BLOCK
         row = group['spoiler_block']
+        if row == 1:
+            update_db_settings(update, record, True)
+            return keyboard_settings(query,context,True)
+        else:
+            update_db_settings(update, record, False)
+            return keyboard_settings(query,context,True)
+
+    if query.data == 'novocal':
+        record = GroupRepository.SET_NO_VOCAL
+        row = group['set_no_vocal']
         if row == 1:
             update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)

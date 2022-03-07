@@ -40,6 +40,7 @@ class GroupRepository(Connection):
     ZOOPHILE_FILTER = "zoophile_filter"
     SENDER_CHAT_BLOCK = "sender_chat_block"
     SPOILER_BLOCK = "spoiler_block"
+    SET_NO_VOCAL = "set_no_vocal"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')

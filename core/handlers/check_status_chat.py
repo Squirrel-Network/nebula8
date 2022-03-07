@@ -177,6 +177,12 @@ def check_status(update, context):
     else:
         print("no button")"""
 
+    """
+    Voice audio blocking
+    """
+    if update.effective_message.voice is not None and get_group['set_no_vocal'] == 1:
+        message(update,context,"<b>#Automatic Handler:</b>\nIs not allowed to use vocals in this chat!")
+        bot.delete_message(update.effective_message.chat_id, update.message.message_id)
 
 """
 this function has the task of saving

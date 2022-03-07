@@ -100,7 +100,8 @@ def save_group(update):
             "apk_filter": 0,
             "zoophile_filter": 1,
             "sender_chat_block": 1,
-            "spoiler_block": 0
+            "spoiler_block": 0,
+            "set_no_vocal": 0
         }
         GroupRepository().add_with_dict(dictionary)
 
