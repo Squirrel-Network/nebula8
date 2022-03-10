@@ -7,7 +7,7 @@ from core import decorators
 from languages.getLang import languages
 from core.utilities.functions import chat_object,update_db_settings
 from core.database.repository.group import GroupRepository
-from core.utilities.constants import PERM_FALSE
+from core.utilities.constants import PERM_FALSE, PERM_TRUE
 from core.utilities.menu import build_menu
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.handlers.logs import telegram_loggers
@@ -47,6 +47,7 @@ def init(update, context):
 
 @decorators.admin.user_admin
 def update_shield(update,context):
+    bot = context.bot
     query = update.callback_query
     if query.data == 'removeShield':
         chat = update.effective_message.chat_id
@@ -69,6 +70,7 @@ def update_shield(update,context):
         update_db_settings(update, record_silence, True)
         update_db_settings(update, record_block_channel, True)
         update_db_settings(update, record_zoophile, True)
+        bot.set_chat_permissions(update.effective_chat.id, PERM_TRUE)
         msg = '✅ Shield removed!'
         query.edit_message_text(msg, parse_mode='HTML')
         logs_text = '🛡Shield Deactivated in {} <code>[{}]</code>'.format(chat_title,chat)
