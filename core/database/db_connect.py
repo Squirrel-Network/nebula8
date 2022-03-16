@@ -6,6 +6,7 @@ import pymysql
 from pymysql import OperationalError
 from config import Config
 from loguru import logger
+from core.database.migrations import Migrations
 
 """
 This class handles database connection and inbound queries
@@ -36,13 +37,18 @@ class Connection:
                 charset = 'utf8mb4',
                 cursorclass = pymysql.cursors.DictCursor
                 )
-            #PSEUDO MIGRATIONS
+            #Pseudo Migrations
             if args[0] == 1049:
-                self.cur = self.con.cursor()
-                exec_query = self.cur
-                exec_query.execute('CREATE DATABASE IF NOT EXISTS nebula')
-                exec_query.execute('CREATE TABLE nebula.owner_list (id int(11) NOT NULL,tg_id varchar(255) NOT NULL,tg_username varchar(255) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4')
-                exec_query.execute('CREATE TABLE nebula.users (id int(11) NOT NULL,tg_id varchar(50) NOT NULL,tg_username varchar(50) NOT NULL,created_at datetime NOT NULL,updated_at datetime NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4')
+                def _execute(self,sql):
+                    self.cur = self.con.cursor()
+                    query = self.cur
+                    q = query.execute(sql)
+                    return q
+                _execute(self,'CREATE DATABASE IF NOT EXISTS nebula')
+                _execute(self,Migrations.OWNERS)
+                _execute(self,Migrations.USERS)
+                _execute(self,Migrations.GROUPS)
+                _execute(self,Migrations.COMMUNITY)
                 logger.info('I created the nebula database')
                 quit(1)
 

@@ -1,3 +1,3 @@
-__all__ = ["repository","db_connect"]
+__all__ = ["repository","db_connect","migrations"]
 
 from core.database import *
