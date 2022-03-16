@@ -16,6 +16,13 @@ class Config(object):
      USER = os.environ.get('MYSQL_USER', 'root')
      PASSWORD = os.environ.get('MYSQL_PASSWORD')
      DBNAME = os.environ.get('MYSQL_DBNAME')
+     ##########################
+     ##   REDIS SETTINGS   ##
+     ##########################
+     RD_HOST = os.environ.get('REDIS_HOST', 'localhost')
+     RD_PORT = os.environ.get('REDIS_PORT', '6379')
+     RD_PASSWORD = os.environ.get('REDIS_PASSWORD')
+     RD_DB = os.environ.get('REDIS_DB', 0)
      ###########################
      ##   TELEGRAM SETTINGS  ##
      ##########################
@@ -37,6 +44,9 @@ class Config(object):
      DEBUG = False
      if BOT_TOKEN is None:
           print("The environment variable TOKEN was not set correctly!")
+          quit(1)
+     if RD_PASSWORD is None:
+          print("The environment variable REDIS_PASSWORD was not set correctly!")
           quit(1)
      if DEFAULT_LOG_CHANNEL is None:
           print("The environment variable TG_DEFAULT_LOG_CHANNEL was not set correctly!")

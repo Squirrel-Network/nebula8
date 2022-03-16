@@ -9,6 +9,9 @@ from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
 from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message, mute_user_by_id
 from core.utilities.message import message
+from core.handlers.flood_wait import Flood_Manager_Python
+
+flood_manager = Flood_Manager_Python()
 
 #Constants
 DEFAULT_COUNT_WARN = 0
@@ -18,6 +21,7 @@ SERVICE_ACCOUNT = 777000
 @decorators.public.init
 def check_status(update,context):
     # Telegram Variables
+    bot = context.bot
     chat = chat_object(update)
     user = user_object(update)
     get_superban_user_id = update.effective_user.id
@@ -98,4 +102,10 @@ def check_status(update,context):
     if warn_count == max_warn:
         ban_user(update,context)
         msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
+        message(update,context,msg.format(user.id))
+
+    if flood_manager.check_flood_wait(update) == 1:
+        bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+        kick_user(update, context)
+        msg = "#Automatic Handler\n<code>{}</code> has been kicked for flood".format(user.id)
         message(update,context,msg.format(user.id))
