@@ -18,7 +18,6 @@ class RedisConnect():
                 )
         except Exception as e:
             logger.error(e)
-            quit(1)
 
     def hdel(self,key,field):
         self.con.hdel(key,field)

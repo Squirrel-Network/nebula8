@@ -44,7 +44,7 @@ class Flood_Manager_Python(RedisConnect):
                     get_data['messages'] = 0 if limit_exceeded else get_data['messages'] + 1
                     get_data['last_message'] = now_time if limit_exceeded else get_data['last_message']
             self.hset('flood_wait', id_data, json.dumps(get_data))
-            return 0 if get_data['messages'] >= chat_data['max_message'] else 1
+            return 1 if get_data['messages'] >= chat_data['max_message'] else 0
 
     def update_group_data(self, chat_id, mute_time, max_message, max_time):
         self.hset('groups', chat_id, json.dumps({'max_time': max_time, 'max_message': max_message,'mute_time': mute_time}))
