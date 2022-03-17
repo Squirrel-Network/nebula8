@@ -49,7 +49,9 @@ class Connection:
                 _execute(self,Migrations.USERS)
                 _execute(self,Migrations.GROUPS)
                 _execute(self,Migrations.COMMUNITY)
-                logger.info('I created the nebula database')
+                _execute(self,Migrations.GROUPS_BADWORDS)
+                _execute(self,Migrations.GROUP_USERS)
+                logger.info('I created the nebula database and Tables')
                 quit(1)
 
     def _select(self,sql,args=None):
