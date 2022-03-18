@@ -104,7 +104,7 @@ def check_status(update,context):
         msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
         message(update,context,msg.format(user.id))
 
-    if flood_manager.check_flood_wait(update) == 1:
+    if flood_manager.check_flood_wait(update) == 1 and get_group['set_antiflood'] == 1:
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         kick_user(update, context)
         msg = "#Automatic Handler\n<code>{}</code> has been kicked for flood".format(user.id)

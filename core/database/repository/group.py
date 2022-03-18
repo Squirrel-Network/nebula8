@@ -41,6 +41,7 @@ class GroupRepository(Connection):
     SENDER_CHAT_BLOCK = "sender_chat_block"
     SPOILER_BLOCK = "spoiler_block"
     SET_NO_VOCAL = "set_no_vocal"
+    SET_ANTIFLOOD = "set_antiflood"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')

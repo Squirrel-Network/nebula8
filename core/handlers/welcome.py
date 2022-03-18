@@ -101,7 +101,8 @@ def save_group(update):
             "zoophile_filter": 1,
             "sender_chat_block": 1,
             "spoiler_block": 0,
-            "set_no_vocal": 0
+            "set_no_vocal": 0,
+            "set_antiflood": 1
         }
         GroupRepository().add_with_dict(dictionary)
 
