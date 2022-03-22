@@ -117,7 +117,7 @@ def update_settings(update,context):
         else:
             update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
-    
+
     if query.data == 'setAntiflood':
         record = GroupRepository.SET_ANTIFLOOD
         row = group['set_antiflood']

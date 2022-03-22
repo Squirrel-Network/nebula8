@@ -51,6 +51,7 @@ class Connection:
                 _execute(self,Migrations.COMMUNITY)
                 _execute(self,Migrations.GROUPS_BADWORDS)
                 _execute(self,Migrations.GROUP_USERS)
+                _execute(self,Migrations.NEBULA_UPDATES)
                 logger.info('I created the nebula database and Tables')
                 quit(1)
 

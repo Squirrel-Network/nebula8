@@ -7,9 +7,10 @@ from core import decorators
 #from core.utilities.message import message
 #from core.utilities.functions import user_object
 #from telegram.utils.helpers import mention_html
-from core.utilities.functions import member_status_object, chat_status_object
+#from core.utilities.functions import member_status_object, chat_status_object
 #from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 #from core.utilities.menu import build_menu
+from core.database.migrations import Migrations
 
 @decorators.owner.init
 def old_init(update, context):
@@ -21,10 +22,11 @@ def old_init(update, context):
         print("Error")
 
 def init(update,context):
-    a = member_status_object(update,context)
-    b = chat_status_object(update,context)
-    print(a.status)
-    print(b)
+    print(Migrations.GROUPS)
+    #a = member_status_object(update,context)
+    #b = chat_status_object(update,context)
+    #print(a.status)
+    #print(b)
 
 
 
