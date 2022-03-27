@@ -58,6 +58,20 @@ def init(update, context):
             message(update,context,"Attention you can not superbanned without entering an TELEGRAM ID!")
 
 @decorators.owner.init
+def multi_superban(update,context):
+    txt = update.message.text
+    x = re.findall(r'\d+', txt)
+    string = "MultiSuperban eseguito! dei seguenti id:\n"
+    for a in x:
+        save_date = datetime.datetime.utcnow().isoformat()
+        default_motivation = "MultiSuperban"
+        operator_id = update.message.from_user.id
+        data = [(a,default_motivation,save_date,operator_id)]
+        SuperbanRepository().add(data)
+        string += "▪️ {}\n".format(a)
+    message(update,context,string)
+
+@decorators.owner.init
 def update_superban(update, context):
     bot = context.bot
     query = update.callback_query
