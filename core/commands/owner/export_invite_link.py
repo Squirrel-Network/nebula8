@@ -14,3 +14,11 @@ def init(update, context):
     link = bot.export_chat_invite_link(chat.id)
     message(update, context, "An invitation link was generated for the chat <b>{}</b>\nThe invitation was sent in <i>private</i>".format(chat.title))
     PrivateMessage(update, context, "Chat: {}\nInvite Link: {}".format(chat.title,link))
+
+@decorators.owner.init
+@decorators.delete.ini
+def manual_export(update,context):
+    bot = context.bot
+    chat = update.message.text[8:].strip()
+    link = bot.export_chat_invite_link(chat)
+    PrivateMessage(update, context, "Invite Link: {}".format(link))

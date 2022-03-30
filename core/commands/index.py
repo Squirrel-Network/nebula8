@@ -97,3 +97,4 @@ def owner_command(dsp):
     function(CMH('owner', owner.add_owner.init))
     function(CMH('exit', owner.exit.init))
     function(CMH('exportlink', owner.export_invite_link.init))
+    function(CMH('maxport', owner.export_invite_link.manual_export))

@@ -88,7 +88,7 @@ class GroupRepository(Connection):
 
     # I collect the updates to know how many messages have been sent
     def getUpdatesByChatMonth(self, args=None):
-        q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE date BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND tg_group_id = %s ORDER BY date DESC'
+        q = 'SELECT COUNT(*) AS counter FROM nebula_updates WHERE date BETWEEN DATE_SUB(NOW(), INTERVAL 31 DAY) AND NOW() AND tg_group_id = %s ORDER BY date DESC'
 
         return self._select(q, args)
 

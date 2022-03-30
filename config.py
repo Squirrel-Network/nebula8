@@ -37,7 +37,7 @@ class Config(object):
      OPENWEATHER_API = os.environ.get('OPENWEATHER_TOKEN')
      ENABLE_PLUGINS = True
      DEFAULT_LANGUAGE = "EN"
-     VERSION = '8.5.0'
+     VERSION = '8.5.1'
      VERSION_NAME = 'Hatterene'
      REPO = 'https://github.com/Squirrel-Network/nebula8'
      DEVELOPER_CHAT_ID = os.environ.get('DEV_CHAT_ID')

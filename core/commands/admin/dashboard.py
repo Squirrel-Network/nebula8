@@ -15,7 +15,6 @@ def init(update,context):
     else:
         user_status = member_status_object(update,context)
         chat_status = chat_status_object(update, context)
-        print(chat_status)
         if user_status.status == 'creator':
             user = user_status.user
             username = "@"+user.username

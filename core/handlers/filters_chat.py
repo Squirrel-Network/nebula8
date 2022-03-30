@@ -6,6 +6,7 @@ This function allows you to terminate the type
 of file that contains a message on telegram and filter it
 """
 def init(update, context):
+    # Mime Types
     apk = 'application/vnd.android.package-archive'
     doc = 'application/msword'
     docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
@@ -22,10 +23,12 @@ def init(update, context):
     xml = 'application/xml'
     filezip = 'application/zip'
 
+    #Variables
     msg = update.effective_message
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
 
+    #Start Control
     if msg.document is not None:
         #No APK Allowed
         if msg.document.mime_type == apk and group['apk_filter'] == 1:
