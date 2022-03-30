@@ -16,7 +16,7 @@ def init(update, context):
     PrivateMessage(update, context, "Chat: {}\nInvite Link: {}".format(chat.title,link))
 
 @decorators.owner.init
-@decorators.delete.ini
+@decorators.delete.init
 def manual_export(update,context):
     bot = context.bot
     chat = update.message.text[8:].strip()
