@@ -19,5 +19,6 @@ Nebula 8.0 Stable released
 - <a href="https://github.com/Squirrel-Network/api_nebula">Source</a>
 
 ## Official Resources
+- <a href="https://nebula.squirrel-network.online">Nebula Dashboard(BETA)</a>
 - <a href="https://squirrel-network.online/knowhere/">Knowhere (Blacklist Search)</a>
 - <a href="https://api.nebula.squirrel-network.online/users">Nebula's public user search </a>

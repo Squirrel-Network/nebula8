@@ -28,7 +28,7 @@ async def handler():
   It will be repeated at 18:00
 
 """
-
+#TODO ASYNC PROBLEM ATTEND TO UPDATE V14 PTB
 class Scheduler:
     def __init__(self):
         self._schedule_list: List[Dict[str, Any]] = []

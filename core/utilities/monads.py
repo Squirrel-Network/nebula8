@@ -3,6 +3,7 @@
 
 # Copyright SquirrelNetwork
 
+# Schrödinger's cat but in Python
 class Optional:
 	@staticmethod
 	def of(value = None):

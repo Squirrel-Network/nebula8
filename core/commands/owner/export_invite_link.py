@@ -20,5 +20,6 @@ def init(update, context):
 def manual_export(update,context):
     bot = context.bot
     chat = update.message.text[8:].strip()
+    print(chat)
     link = bot.export_chat_invite_link(chat)
     PrivateMessage(update, context, "Invite Link: {}".format(link))

@@ -271,6 +271,11 @@ def chat_status_object(update,context):
     get_chat = bot.getChat(chat_id=chat.id)
     return get_chat
 
+def chat_status_object_by_id(context,chat):
+    bot = context.bot
+    get_chat = bot.getChat(chat_id=chat)
+    return get_chat
+
 def member_status_object(update,context):
     bot = context.bot
     chat = chat_object(update)
