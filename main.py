@@ -53,7 +53,7 @@ def main():
     dsp.add_error_handler(handlers.handler_errors.init)
 
     # Start the Bot Polling
-    updater.start_polling()
+    updater.start_polling(poll_interval=1.0, timeout=5.0)
     updater.idle()
 
 if __name__ == '__main__':
