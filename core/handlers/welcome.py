@@ -145,7 +145,7 @@ def welcome_bot(update, context):
     arr_buttons = []
     arr_buttons.append(InlineKeyboardButton(text="🌐 Dashboard", url="https://nebula.squirrel-network.online"))
     arr_buttons.append(InlineKeyboardButton(text="📢 Bot_Logs", url="https://t.me/nebulalogs"))
-    arr_buttons.append(InlineKeyboardButton(text="📰 Bot_News", url="https://t.me/nebuladevbot"))
+    arr_buttons.append(InlineKeyboardButton(text="📰 Bot_News", url="https://t.me/nebulanewsbot"))
     arr_buttons.append(InlineKeyboardButton(text="🔷 Source Code", url="https://github.com/Squirrel-Network/nebula8"))
     arr_buttons.append(InlineKeyboardButton(text="👥 Support", url="https://t.me/nebulabot_support"))
     menu = build_menu(arr_buttons, 2)
