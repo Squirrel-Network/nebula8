@@ -6,7 +6,6 @@ import time
 import datetime
 import re
 import json
-import requests
 from config import Config
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
@@ -102,7 +101,8 @@ def save_group(update):
             "sender_chat_block": 1,
             "spoiler_block": 0,
             "set_no_vocal": 0,
-            "set_antiflood": 1
+            "set_antiflood": 1,
+            "ban_message": '{mention} has been <b>banned</b> from: {chat}'
         }
         GroupRepository().add_with_dict(dictionary)
 

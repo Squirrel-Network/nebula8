@@ -34,6 +34,7 @@ def admin_command(dsp):
     ######################
     function(CMH('ban', admin.ban.init))
     function(CMH('unban', admin.unban.init))
+    function(CMH('setban', admin.ban.set_ban_message))
     function(CMH('status', admin.info_group.init))
     function(CMH('lang', admin.set_lang.init))
     function(CMH('mute', admin.mute.init))

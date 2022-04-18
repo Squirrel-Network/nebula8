@@ -17,6 +17,8 @@ from core.utilities.strings import Strings
 from core.utilities.monads import (
 	Given,
 	Try)
+from telegram.utils.helpers import mention_html
+from core.database.repository.group import GroupRepository
 from languages.getLang import languages
 
 def ban_error(update, context, username = None, id = None):
@@ -36,22 +38,30 @@ def init(update, context):
 	bot = bot_object(update,context)
 	chat = update.effective_chat
 	reply = update.message.reply_to_message
-
 	if reply is not None:
 		user_status = reply_member_status_object(update,context)
-		if reply.from_user.id == bot.id:
+		user = reply.from_user
+		row = GroupRepository().getById(chat.id)
+		if user.id == bot.id:
 			text = "I can't ban myself!"
 
 			message(update,context,text)
 		elif user_status.status == 'administrator' or user_status.status == 'creator':
 			message(update,context,"I can't <i>ban</i> an administrator or creator!")
 		else:
-			ban_text = languages.ban_message.format(
-				user = reply.from_user.username or reply.from_user.first_name,
-				userid = reply.from_user.id,
-				chat = chat.title
-			)
-
+			if row['ban_message']:
+				parsed_message = row['ban_message'].replace('{first_name}',
+				user.first_name).replace('{chat}',
+				update.message.chat.title).replace('{username}',
+				"@"+user.username).replace('{mention}',mention_html(user.id, user.first_name)).replace('{userid}',str(user.id))
+				ban_text = "{}".format(parsed_message)
+			else:
+				ban_text = languages.ban_message.format(
+					user = reply.from_user.username or reply.from_user.first_name,
+					userid = reply.from_user.id,
+					chat = chat.title
+				)
+			#Log Ban
 			logs_text = Strings.BAN_LOG.format(
 				username = reply.from_user.username or reply.from_user.first_name,
 				id = reply.from_user.id,
@@ -93,3 +103,24 @@ def init(update, context):
 					.format(ban_argument)
 			)
 			return
+
+@decorators.admin.user_admin
+@decorators.delete.init
+def set_ban_message(update, context):
+    languages(update,context)
+    record = GroupRepository.BAN_MESSAGE
+    chat = update.effective_chat.id
+    msg = update.message.text[7:]
+    reply = update.message.reply_to_message
+    if reply:
+        ban_text = str(reply.text).lower()
+        data = [(ban_text, chat)]
+        GroupRepository().update_group_settings(record, data)
+        message(update,context, text="Testo Ban impostato!")
+    else:
+        if msg != "":
+            data = [(msg, chat)]
+            GroupRepository().update_group_settings(record, data)
+            message(update, context, "Hai Impostato il Messaggio Di Ban!")
+        else:
+            message(update, context, "Il testo del ban non può essere vuoto!")
