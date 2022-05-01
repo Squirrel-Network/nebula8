@@ -36,10 +36,11 @@ def init(update,context):
             menu = build_menu(buttons,3)
             if get_user:
                 default_warn_count = 0
+                default_user_score = 0
                 username = "@"+user.username
                 data = [(username,current_time,user.id)]
                 UserRepository().update(data)
-                data_mtm = [(user.id, chat.id, default_warn_count)]
+                data_mtm = [(user.id, chat.id, default_warn_count,default_user_score)]
                 UserRepository().add_into_mtm(data_mtm)
                 data_warn = [(user.id,chat.id)]
                 UserRepository().updateWarn(data_warn)

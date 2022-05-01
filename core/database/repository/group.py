@@ -128,6 +128,11 @@ class GroupRepository(Connection):
         q = "DELETE FROM groups WHERE id_group = %s"
         return self._delete(q, args)
 
+    def get_custom_handler(self, args=None):
+        q = "SELECT answer FROM custom_handler WHERE question = %s AND chat_id = %s"
+
+        return self._select(q, args)
+
     ##########################
     ##### GROUP SETTINGS #####
     ##########################

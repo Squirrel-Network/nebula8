@@ -50,6 +50,7 @@ def save_user(member, chat):
     user = UserRepository().getById(member.id)
     username = "@"+member.username
     default_count_warn = 0
+    default_user_score = 0
     current_time = datetime.datetime.utcnow().isoformat()
     if user:
         data = [(username,current_time,member.id)]
@@ -57,7 +58,7 @@ def save_user(member, chat):
     else:
         data = [(member.id,username,current_time,current_time)]
         UserRepository().add(data)
-    data_mtm = [(member.id, chat, default_count_warn)]
+    data_mtm = [(member.id, chat, default_count_warn,default_user_score)]
     UserRepository().add_into_mtm(data_mtm)
 
 def save_group(update):

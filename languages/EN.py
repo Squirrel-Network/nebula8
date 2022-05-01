@@ -2,7 +2,7 @@ English =	{
   "LANG_DEFAULT": "en",
   "START_COMMAND": "Hi, my name is {} and I am a tool for managing groups with many special functions to be discovered and I am Open Source! If you want to see my source type: /source If you need help, type /help",
   "HELP_COMMAND": "Hi my name is {}\nDo You need Help?",
-  "GROUP_INFO": "<b>Group Title:</b> <code>{}</code>\n\n<b>Group Id:</b> <code>{}</code>\n\n<b>Group's Welcome:</b> <code>{}</code>\n\n<b>Group's Rules:</b> <code>{}</code>\n\n<b>Group's Language:</b> <code>{}</code>\n\n<b>Warn Limit:</b> <code>{}</code>\n\n<b>Total Group Users:</b> <code>{}</code>\n\n<b>Total Group Messages:</b> <code>{}</code> In the last 30 days",
+  "GROUP_INFO": "<b>Group Title:</b> <code>{}</code>\n\n<b>Group Id:</b> <code>{}</code>\n\n<b>Group's Welcome:</b> <code>{}</code>\n\n<b>Group's Rules:</b> <code>{}</code>\n\n<b>Ban Message:</b> <code>{}</code>\n\n<b>Group's Language:</b> <code>{}</code>\n\n<b>Warn Limit:</b> <code>{}</code>\n\n<b>Total Group Users:</b> <code>{}</code>\n\n<b>Total Group Messages:</b> <code>{}</code> In the last 30 days",
   "BOT_WELCOME": "Thank you for adding me to the {} group\nFor working properly i need admins privileges!",
   "BAN_MESSAGE": '<a href="tg://user?id={userid}">{user}</a> has been <b>banned</b> from: {chat}',
   "RULES": "Here are the group rules: {}",

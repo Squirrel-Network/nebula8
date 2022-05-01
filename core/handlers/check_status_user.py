@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 import datetime
 from core import decorators
+from core.utilities.constants import *
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
@@ -12,11 +13,6 @@ from core.utilities.message import message
 from core.handlers.flood_wait import Flood_Manager_Python
 
 flood_manager = Flood_Manager_Python()
-
-#Constants
-DEFAULT_COUNT_WARN = 0
-DEFAULT_MAX_WARN = 3
-SERVICE_ACCOUNT = 777000
 
 @decorators.public.init
 def check_status(update,context):
@@ -76,7 +72,7 @@ def check_status(update,context):
             username = "@"+user.username
             data = [(username,current_time,user.id)]
             UserRepository().update(data)
-            data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
+            data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN,DEFAULT_USER_SCORE)]
             UserRepository().add_into_mtm(data_mtm)
         else:
             #Get the Current Time
@@ -84,7 +80,7 @@ def check_status(update,context):
             username = "@"+user.username
             data = [(user.id,username,current_time,current_time)]
             UserRepository().add(data)
-            data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN)]
+            data_mtm = [(user.id, chat.id, DEFAULT_COUNT_WARN,DEFAULT_USER_SCORE)]
             UserRepository().add_into_mtm(data_mtm)
     #Check if the user has a profile photo
     if user_photo.total_count == 0 and user_set_photo == 1:

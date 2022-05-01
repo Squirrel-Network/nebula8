@@ -4,6 +4,13 @@
 # Copyright SquirrelNetwork
 
 from telegram import ChatPermissions
+
+#general constants
+DEFAULT_COUNT_WARN = 0
+DEFAULT_USER_SCORE = 0
+DEFAULT_MAX_WARN = 3
+SERVICE_ACCOUNT = 777000
+
 # constants for time management
 # DAILY == 24h  ; TWELVE_HOUR == 12h ; EIGHT_HOUR == 8h ; FOUR_HOUR == 4h ; ONE_HOUR == 1h
 DAILY = 86400.0

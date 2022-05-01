@@ -29,6 +29,7 @@ def init(update, context):
             row['id_group'],
             row['welcome_text'],
             row['rules_text'],
+            row['ban_message'],
             row['languages'],
             row['max_warn'],
             row['total_users'],
