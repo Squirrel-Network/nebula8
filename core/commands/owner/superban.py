@@ -21,6 +21,7 @@ def init(update, context):
     text = update.message.text
     operator_id = update.message.from_user.id
     operator_username = "@"+update.message.from_user.username
+    operator_first_name = update.message.from_user.first_name
     save_date = datetime.datetime.utcnow().isoformat()
     #Build a Keyboard Buttons
     buttons = []
@@ -45,7 +46,8 @@ def init(update, context):
                 message(update,context,"Attention you must enter a number not letters!")
             else:
                 default_motivation = "Other"
-                data = [(user_id,default_motivation,save_date,operator_id)]
+                default_user_first_name = "Unknown"
+                data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
                 SuperbanRepository().add(data)
                 msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
                 message(update,context,msg)
@@ -81,7 +83,9 @@ def update_superban(update, context):
         chat_id = query.message.chat_id
         operator_id = query.from_user.id
         operator_username = "@"+query.from_user.username
+        operator_first_name = query.from_user.first_name
         user_id = query.message.reply_to_message.from_user.id
+        user_first_name = query.message.reply_to_message.from_user.first_name
         motivation = query.data[1:]
         row = SuperbanRepository().getById(user_id)
         whitelist = SuperbanRepository().getWhitelistById(user_id)
@@ -92,7 +96,7 @@ def update_superban(update, context):
             text = "Attention already superbanned user!"
             query.edit_message_text(text, parse_mode='HTML')
         else:
-            data = [(user_id,motivation,save_date,operator_id)]
+            data = [(user_id,user_first_name,motivation,save_date,operator_id,operator_username,operator_first_name)]
             SuperbanRepository().add(data)
             #Ban the User
             bot.ban_chat_member(chat_id, user_id)

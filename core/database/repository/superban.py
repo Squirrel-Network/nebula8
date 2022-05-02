@@ -39,7 +39,7 @@ class SuperbanRepository(Connection):
         return self._selectAll(q, args)
 
     def add(self, args=None):
-        q = "INSERT IGNORE INTO superban_table(user_id, motivation_text, user_date, id_operator) VALUES (%s,%s,%s,%s)"
+        q = "INSERT IGNORE INTO superban_table(user_id, user_first_name, motivation_text, user_date, id_operator, username_operator, first_name_operator) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
     def remove(self, args=None):
