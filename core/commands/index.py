@@ -57,6 +57,7 @@ def admin_command(dsp):
     function(CMH('promote', admin.promote.init))
     function(CMH('dashboard', admin.dashboard.init))
     function(CMH('chatid', admin.info_group.id_chat))
+    function(CMH('custom', admin.set_custom_handler.init))
     #############################
     ### CallbackQuery Handler ###
     #############################

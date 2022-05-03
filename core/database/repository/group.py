@@ -133,6 +133,11 @@ class GroupRepository(Connection):
 
         return self._select(q, args)
 
+    def insert_custom_handler(self, args=None):
+        q = "INSERT INTO custom_handler (chat_id, question, answer) VALUES (%s,%s,%s)"
+
+        return self._insert(q, args)
+
     ##########################
     ##### GROUP SETTINGS #####
     ##########################

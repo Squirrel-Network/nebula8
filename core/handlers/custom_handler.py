@@ -15,7 +15,7 @@ def init(update,context):
         if row:
             message(update,context,row['answer'])
         else:
-            message(update,context,"Scusa non ho capito, riprova o crea il tuo comando")
+            return
 
     if str(update.effective_message.text).lower().startswith("!"):
         chat = chat_object(update)
@@ -24,4 +24,4 @@ def init(update,context):
         if row:
             message(update,context,row['answer'])
         else:
-            message(update,context,"Scusa non ho capito, riprova o crea il tuo comando")
+            return
