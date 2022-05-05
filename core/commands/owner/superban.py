@@ -46,14 +46,16 @@ def init(update, context):
                 message(update,context,"Attention you must enter a number not letters!")
             else:
                 default_motivation = "Other"
-                default_user_first_name = "Unknown"
+                default_user_first_name = "NB{}".format(user_id)
                 data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
                 SuperbanRepository().add(data)
                 msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
                 message(update,context,msg)
-                logs_text = Strings.SUPERBAN_LOG.format(user_id,default_motivation,save_date,operator_username,operator_id)
+                #Log in Telegram Channel
+                logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
                 messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
-                formatter = "Superban eseguito da: {}".format(operator_id)
+                #Log in Debug Channel
+                formatter = "Superban eseguito da: {}<code>[{}]</code> verso l'utente: <code>[{}]</code>".format(operator_username,operator_id,user_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
                 debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
         else:
@@ -104,10 +106,10 @@ def update_superban(update, context):
             msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user_id,user_id,motivation,user_id)
             query.edit_message_text(msg, parse_mode='HTML')
             #Telegram Logs
-            logs_text = Strings.SUPERBAN_LOG.format(user_id,motivation,save_date,operator_username,operator_id)
+            logs_text = Strings.SUPERBAN_LOG.format(user_first_name,user_id,motivation,save_date,operator_first_name,operator_username,operator_id)
             messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
             #System Logs
-            formatter = "Superban eseguito da: {}".format(operator_id)
+            formatter = "Superban eseguito da: {}<code>[{}]</code> verso l'utente: <code>[{}]</code>".format(operator_username,operator_id,user_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
             debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
 
