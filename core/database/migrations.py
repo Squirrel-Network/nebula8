@@ -40,10 +40,11 @@ class Migrations(object):
             "spoiler_block tinyint(1) NOT NULL DEFAULT 0," \
             "set_no_vocal tinyint(1) NOT NULL DEFAULT 0," \
             "set_antiflood tinyint(1) NOT NULL DEFAULT 1," \
+            "ban_message text NOT NULL DEFAULT '{mention} has been banned from: {chat}'",\
             "PRIMARY KEY (id)," \
             "UNIQUE KEY group_id (id_group)" \
             ") ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4".format('{  "buttons": [{"id": 0,"title": "Bot Logs","url": "https://t.me/nebulalogs"}]}')
     COMMUNITY = "CREATE TABLE IF NOT EXISTS nebula.community (id int(11) NOT NULL,tg_group_name varchar(50) DEFAULT NULL,tg_group_id varchar(50) DEFAULT NULL,tg_group_link varchar(50) DEFAULT NULL,language varchar(50) NOT NULL DEFAULT 'IT',type varchar(50) NOT NULL DEFAULT 'supergroup') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
-    GROUPS_BADWORDS = "CREATE TABLE IF NOT EXISTS nebula.groups_badwords (id int(11) NOT NULL,word varchar(255) NOT NULL,tg_group_id varchar(255) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+    GROUPS_BADWORDS = "CREATE TABLE IF NOT EXISTS nebula.groups_badwords (id int(11) NOT NULL,word varchar(255) NOT NULL,tg_group_id varchar(255) NOT NULL,user_score bigint(20) NOT NULL DEFAULT 0) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
     GROUP_USERS = "CREATE TABLE IF NOT EXISTS nebula.group_users (id int(11) NOT NULL,tg_id varchar(50) DEFAULT NULL,tg_group_id varchar(50) DEFAULT NULL,warn_count int(11) NOT NULL DEFAULT 0) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
     NEBULA_UPDATES = "CREATE TABLE IF NOT EXISTS nebula.nebula_updates (id int(11) NOT NULL AUTO_INCREMENT,update_id varchar(255) NOT NULL,tg_group_id varchar(255) NOT NULL,tg_user_id varchar(255) NOT NULL,date datetime(6) NOT NULL,PRIMARY KEY (id),UNIQUE KEY update_index (update_id)) ENGINE=InnoDB AUTO_INCREMENT=184434 DEFAULT CHARSET=utf8mb4"
