@@ -31,6 +31,8 @@ def check_group_badwords(update):
             return False
 
 def check_status(update, context):
+    print(update.effective_message)
+    #message_auto_delete_timer_changed(60)
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id
@@ -42,6 +44,7 @@ def check_status(update, context):
     linked_chat = get_chat_tg.linked_chat_id
     group_members_count = update.effective_chat.get_member_count()
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
+
 
     """
     This function updates the group id on the database

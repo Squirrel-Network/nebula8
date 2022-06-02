@@ -111,6 +111,7 @@ def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)
 
 def welcome_user(update, context, member):
+    bot = context.bot
     # Check that the welcome exists on the database if there is no Default Welcome
     chat = update.effective_message.chat_id
 
@@ -132,7 +133,7 @@ def welcome_user(update, context, member):
                 url = a['url']
                 arr_buttons.append(InlineKeyboardButton(text=title, url=url))
             menu = build_menu(arr_buttons, 2)
-            update.message.reply_text(format_message,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+            bot.send_message(chat,format_message,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         except ValueError:
             reply_message(update,context,format_message)
     else:
@@ -157,6 +158,10 @@ def init(update, context):
     # Get settings
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
+
+    if len(update.effective_message['new_chat_members']) > 0:
+        get_bot = context.bot
+        get_bot.delete_message(update.effective_message.chat_id, update.message.message_id)
 
     if group:
         row = group['set_welcome']
