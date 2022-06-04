@@ -24,7 +24,7 @@ def init(update,context):
                 if row['enable'] == 0:
                     message(update,context,"Mi dispiace sei stato disabilitato a questa funzionalità, Contatta un amministratore su: https://t.me/nebulabot_support")
                 else:
-                    get_group_dashboard = DashboardRepository().getByGroupId(chat_status.id)
+                    get_group_dashboard = DashboardRepository().getUserAndGroup((chat_status.id,user.id))
                     if get_group_dashboard:
                         data = [(username, user_status.status, save_date, user.id, chat_status.id)]
                         DashboardRepository().update(data)

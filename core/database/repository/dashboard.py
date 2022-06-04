@@ -27,6 +27,11 @@ class DashboardRepository(Connection):
 
         return self._select(q, args)
 
+    def getUserAndGroup(self, args=None):
+        q = "SELECT * FROM nebula_dashboard WHERE tg_group_id = %s AND tg_id = %s"
+
+        return self._select(q, args)
+
     def add(self, args=None):
         q = "INSERT INTO nebula_dashboard (tg_id, tg_username, tg_group_id, enable, role, created_at, updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         return self._insert(q, args)
