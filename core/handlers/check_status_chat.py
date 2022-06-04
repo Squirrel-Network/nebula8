@@ -31,8 +31,6 @@ def check_group_badwords(update):
             return False
 
 def check_status(update, context):
-    print(update.effective_message)
-    #message_auto_delete_timer_changed(60)
     bot = context.bot
     chat_title = update.effective_chat.title
     chat_id = update.effective_chat.id

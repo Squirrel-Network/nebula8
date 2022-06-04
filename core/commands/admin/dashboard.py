@@ -15,7 +15,7 @@ def init(update,context):
     else:
         user_status = member_status_object(update,context)
         chat_status = chat_status_object(update, context)
-        if user_status.status == 'creator':
+        if user_status.status == 'creator' or user_status.status == 'administrator':
             user = user_status.user
             username = "@"+user.username
             save_date = datetime.datetime.utcnow().isoformat()
@@ -26,17 +26,17 @@ def init(update,context):
                 else:
                     get_group_dashboard = DashboardRepository().getByGroupId(chat_status.id)
                     if get_group_dashboard:
-                        data = [(username, save_date, user.id, chat_status.id)]
+                        data = [(username, user_status.status, save_date, user.id, chat_status.id)]
                         DashboardRepository().update(data)
                         message(update,context,"Ho aggiornato i tuoi dati sul database!")
                     else:
-                        data_add = [(user.id,username,chat_status.id,1,save_date,save_date)]
+                        data_add = [(user.id,username,chat_status.id,1,user_status.status,save_date,save_date)]
                         DashboardRepository().add(data_add)
                         message(update,context,"Ho aggiornato i tuoi dati sul database! e ho inserito {} nella Dashboard\n\nEsegui il login su: https://nebula.squirrel-network.online".format(chat_status.title))
             else:
-                data = [(user.id,username,chat_status.id,1,save_date,save_date)]
+                data = [(user.id,username,chat_status.id,1,user_status.status,save_date,save_date)]
                 DashboardRepository().add(data)
                 message(update,context,"<i>{} hai eseguito la prima abilitazione alla dashboard di Nebula </i>\n\nEsegui il login su: https://nebula.squirrel-network.online".format(username))
         else:
-            msg = "Non sei il proprietario del gruppo non puoi usare questo comando"
+            msg = "Non sei amministratore o proprietario del gruppo non puoi usare questo comando!"
             message(update,context,msg)
