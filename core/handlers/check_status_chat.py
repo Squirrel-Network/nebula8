@@ -43,6 +43,7 @@ def check_status(update, context):
     group_members_count = update.effective_chat.get_member_count()
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
+
     """
     This function updates the group id on the database
     when a group changes from group to supergroup

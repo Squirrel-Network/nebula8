@@ -8,7 +8,8 @@ from core.utilities.constants import *
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message, mute_user_by_id
+from core.database.repository.dashboard import DashboardRepository
+from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message, mute_user_by_id, member_status_object, chat_status_object
 from core.utilities.message import message
 from core.handlers.flood_wait import Flood_Manager_Python
 
@@ -22,6 +23,8 @@ def check_status(update,context):
     user = user_object(update)
     get_superban_user_id = update.effective_user.id
     user_photo = user.get_profile_photos(user.id)
+    user_status = member_status_object(update,context)
+    chat_status = chat_status_object(update, context)
 
     #Get Group via Database
     get_group = GroupRepository().getById(chat.id)
@@ -31,6 +34,8 @@ def check_status(update,context):
     get_user = UserRepository().getUserByGroup([user.id,chat.id])
     #Get User in Superban Table
     get_superban = SuperbanRepository().getById(get_superban_user_id)
+    #get user in Dashboard
+    get_dashboard = DashboardRepository().getById(user.id)
     #Get User Warn
     warn_count = get_user['warn_count'] if get_user is not None else DEFAULT_COUNT_WARN
     #Get Max Warn in group
@@ -94,6 +99,12 @@ def check_status(update,context):
         message(update,context,msg)
         delete_message(update,context)
         ban_user(update,context)
+
+    if get_dashboard:
+        username = "@"+user.username
+        save_date = datetime.datetime.utcnow().isoformat()
+        dash_data = [(username, user_status.status, save_date, user.id, chat_status.id)]
+        DashboardRepository().update(dash_data)
     #Check if the user has reached the maximum number of warns and ban him
     if warn_count == max_warn:
         ban_user(update,context)
