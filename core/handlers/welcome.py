@@ -18,6 +18,7 @@ from telegram.utils.helpers import mention_html
 from core.handlers.logs import telegram_loggers
 from core.utilities.menu import build_menu
 from core.utilities.strings import Strings
+from languages.getLang import languages
 
 def get_owner_list() -> list:
     rows = UserRepository().getOwners()
@@ -183,6 +184,7 @@ def init(update, context):
 
     if row == 1 and row is not None:
         for member in update.message.new_chat_members:
+            languages(update,context)
             user = member.username
             user_first = member.first_name
             user_id = member.id
@@ -198,13 +200,13 @@ def init(update, context):
             # Kicked user because username field is empty
             elif user is None:
                 if type_no_username == 1:
-                    message(update,context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b> You were kicked for safety!'.format(user_id,user_first))
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first)))
                     time.sleep(2)
                     kick_user(update, context)
                 elif type_no_username == 2:
-                    message(update,context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b>'.format(user_id,user_first))
+                    message(update, context, languages.user_message.format(mention_html(user_id, user_first)))
                 elif type_no_username == 3:
-                    message(update,context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b> You were Muted for safety!'.format(user_id,user_first))
+                    message(update, context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b> You were Muted for safety!'.format(user_id,user_first))
                     mute_user_by_id(update, context, member.id, True)
                 elif type_no_username == 4:
                     ban_user(update,context)

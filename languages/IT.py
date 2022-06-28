@@ -39,5 +39,7 @@ Italian =	{
   "BADWORD_ADD_TEXT": "Hai inserito la parola proibita: [<b><i>{}</i></b>] nel database",
   "BADWORD_ADD_EMPTY": "Non puoi inserire una badword vuota!\nIl formato corretto del comando è: <code>/badword banana</code>",
   "SHIELD_ON": "🛡Scudo attivato!\n<b>Attenzione! Attivando questo comando hai completamente bloccato il gruppo!!!\nper modificare nuovamente le impostazioni è necessario digitare /settings</b>",
-  "WARN_USER_REASON": "‼️ {} è stato warnato!\nnel gruppo {} <code>[{}]</code>\nMotivo: {}"
+  "WARN_USER_REASON": "‼️ {} è stato warnato!\nnel gruppo {} <code>[{}]</code>\nMotivo: {}",
+  "KICKED_USER_MESSAGE_NO_USERNAME": '{}, per essere ben accetto nel gruppo, imposta un tuo username! Sei stato Kickato per Sicurezza!',
+  "USER_MESSAGE_NO_USERNAME": '{}, per essere ben accetto nel gruppo, imposta un tuo username!'
 }
