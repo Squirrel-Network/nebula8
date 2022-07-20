@@ -149,3 +149,7 @@ class GroupRepository(Connection):
     def update_group_settings(self, record, args=None):
         q = "UPDATE groups SET @record = %s WHERE id_group = %s".replace('@record',record)
         return self._update(q, args)
+
+    def job_nebula_updates(self, args=None):
+        q = "DELETE FROM nebula_updates WHERE date < NOW() - INTERVAL 180 DAY"
+        return self._delete(q, args)
