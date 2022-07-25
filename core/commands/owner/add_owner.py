@@ -21,6 +21,6 @@ def init(update,context):
             username = "@"+user.username
             data = [(user_id, username)]
             UserRepository().add_owner(data)
-            message(update,context, "You have entered a new owner in the database!")
+            message(update,context, "You have entered [<code>{}</code>] a new owner in the database!".format(user_id))
     else:
         message(update,context, "Error! This command should be used in response to the user!")

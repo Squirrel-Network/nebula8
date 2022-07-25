@@ -49,13 +49,13 @@ def init(update, context):
                 default_user_first_name = "NB{}".format(user_id)
                 data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
                 SuperbanRepository().add(data)
-                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
+                msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nvia ID\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
                 message(update,context,msg)
                 #Log in Telegram Channel
                 logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
                 messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
                 #Log in Debug Channel
-                formatter = "Superban eseguito da: {}<code>[{}]</code> verso l'utente: <code>[{}]</code>".format(operator_username,operator_id,user_id)
+                formatter = "Superban eseguito da: {}[<code>{}</code>] verso l'utente: [<code>{}</code>]".format(operator_username,operator_id,user_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
                 debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
         else:
@@ -95,7 +95,7 @@ def update_superban(update, context):
             text_w = "This user is whitelisted you cannot blacklist!"
             query.edit_message_text(text_w, parse_mode='HTML')
         elif row:
-            text = "Attention already superbanned user!"
+            text = "Attention already superbanned user {}!".format(user_first_name)
             query.edit_message_text(text, parse_mode='HTML')
         else:
             data = [(user_id,user_first_name,motivation,save_date,operator_id,operator_username,operator_first_name)]

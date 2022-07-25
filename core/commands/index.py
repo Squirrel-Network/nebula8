@@ -100,3 +100,4 @@ def owner_command(dsp):
     function(CMH('exit', owner.exit.init))
     function(CMH('exportlink', owner.export_invite_link.init))
     function(CMH('maxport', owner.export_invite_link.manual_export))
+    function(CMH('spam', owner.add_antispam.init))

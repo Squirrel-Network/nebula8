@@ -18,6 +18,7 @@ TWELVE_HOUR = 43200.0
 EIGHT_HOUR = 28800.0
 FOUR_HOUR = 14400.0
 ONE_HOUR = 3600.0
+ONE_MINUTE = 60.0
 
 #these constants change and disrupt an entire group
 PERM_FALSE = ChatPermissions(

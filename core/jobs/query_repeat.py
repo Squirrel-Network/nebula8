@@ -7,5 +7,7 @@
 from core.database.repository.group import GroupRepository
 
 def query(context):
+    bot = context.bot
+    chat = '-1001540824311'
     GroupRepository().job_nebula_updates()
-    context.send_message(chat_id='-1001540824311', text="I ran the nebula_updates table cleanup query")
+    bot.send_message(chat,text="[DEBUG LOGGER] I ran the nebula_updates table cleanup query",parse_mode='HTML')

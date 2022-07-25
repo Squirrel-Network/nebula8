@@ -113,6 +113,11 @@ class GroupRepository(Connection):
 
         return self._select(q, args)
 
+    def get_antispam_logic(self, args=None):
+        q = "SELECT * FROM nebula_antispam WHERE INSTR(%s, logic) <> 0"
+
+        return self._select(q, args)
+
     def get_badwords_group(self, args=None):
         q = "SELECT * FROM groups_badwords WHERE tg_group_id = %s"
 
@@ -122,6 +127,11 @@ class GroupRepository(Connection):
         q = "INSERT IGNORE INTO groups_badwords (word, tg_group_id) VALUES (%s,%s)"
 
         return self._insert(q, args)
+
+    def insert_spam(self, args=None):
+        q = "INSERT IGNORE INTO nebula_antispam (logic) VALUES (%s)"
+
+        return self._single_insert(q, args)
 
 
     def remove(self, args=None):

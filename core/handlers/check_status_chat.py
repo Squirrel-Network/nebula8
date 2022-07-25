@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object
+from core.utilities.functions import chat_object, user_object, ban_user
 
 
 def check_group_blacklist(update):
@@ -25,6 +25,15 @@ def check_group_badwords(update):
     bad_word = update.effective_message.text or update.effective_message.caption
     if bad_word is not None:
         row = GroupRepository().get_group_badwords([bad_word, chat_id])
+        if row:
+            return True
+        else:
+            return False
+
+def check_antispam(update):
+    spam_word = update.effective_message.text or update.effective_message.caption
+    if spam_word is not None:
+        row = GroupRepository().get_antispam_logic(spam_word)
         if row:
             return True
         else:
@@ -184,6 +193,13 @@ def check_status(update, context):
     if update.effective_message.voice is not None and get_group['set_no_vocal'] == 1:
         message(update,context,"<b>#Automatic Handler:</b>\nIs not allowed to use vocals in this chat!")
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+
+    if check_antispam(update) == True:
+        user = user_object(update)
+        ban_user(update,context)
+        bot.delete_message(update.effective_message.chat_id, update.message.message_id)
+        message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> Antispam Triggered".format(user.id))
+        debug_channel(update,context,"[DEBUG_LOGGER] L'utente <code>{}</code> ha attivato il filtro ANTISPAM".format(user.id))
 
 """
 this function has the task of saving
