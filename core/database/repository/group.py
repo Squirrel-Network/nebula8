@@ -148,6 +148,18 @@ class GroupRepository(Connection):
 
         return self._insert(q, args)
 
+    def getTopActiveUsers(self, args=None):
+
+        q = "SELECT COUNT(*) AS counter, u.tg_username, u.tg_id FROM nebula_updates nu INNER JOIN users u ON u.tg_id = nu.tg_user_id WHERE DATE BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND nu.tg_group_id = %s GROUP BY nu.tg_user_id ORDER BY counter DESC LIMIT 10"
+
+        return self._selectAll(q, args)
+
+    def getTopInactiveUsers(self, args=None):
+
+        q = "SELECT COUNT(*) AS counter, u.tg_username, u.tg_id FROM nebula_updates nu INNER JOIN users u ON u.tg_id = nu.tg_user_id WHERE DATE BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND nu.tg_group_id = %s GROUP BY nu.tg_user_id ORDER BY counter ASC LIMIT 10"
+
+        return self._selectAll(q, args)
+
     ##########################
     ##### GROUP SETTINGS #####
     ##########################

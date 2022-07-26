@@ -58,6 +58,7 @@ def admin_command(dsp):
     function(CMH('dashboard', admin.dashboard.init))
     function(CMH('chatid', admin.info_group.id_chat))
     function(CMH('custom', admin.set_custom_handler.init))
+    function(CMH('top', admin.top.init))
     #############################
     ### CallbackQuery Handler ###
     #############################
@@ -79,6 +80,8 @@ def admin_command(dsp):
     function(CQH(public.rules.update_rules, pattern='openRules'))
     function(CQH(public.report.update_resolve, pattern='resolved'))
     function(CQH(admin.shield.update_shield, pattern='removeShield'))
+    function(CQH(admin.top.update_top, pattern='useractive'))
+    function(CQH(admin.top.update_top, pattern='userinactive'))
     function(CQH(admin.settings.update_settings))
 """
 Here are inserted all the commands with owner permissions

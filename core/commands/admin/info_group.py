@@ -27,9 +27,6 @@ def init(update, context):
         caption = languages.group_info.format(
             row['group_name'],
             row['id_group'],
-            row['welcome_text'],
-            row['rules_text'],
-            row['ban_message'],
             row['languages'],
             row['max_warn'],
             row['total_users'],
@@ -42,4 +39,4 @@ def init(update, context):
 @decorators.delete.init
 def id_chat(update,context):
     chat = update.effective_message.chat_id
-    message(update,context,"⚙️ Chat Id:\n<code>🏷 [{}]</code>\n\nFor more information on the group type /status".format(chat))
+    message(update,context,"⚙️ Chat Id:\n🏷 [<code>{}</code>]\n\nFor more information on the group type /status".format(chat))
