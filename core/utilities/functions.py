@@ -289,3 +289,10 @@ def reply_member_status_object(update,context):
     user = user_reply_object(update)
     get_member = bot.getChatMember(chat.id,user.id)
     return get_member
+
+def check_user_permission(update,context):
+    user_status = member_status_object(update,context)
+    if user_status.status == 'creator' or user_status.status == 'administrator':
+        return True
+    else:
+        return False

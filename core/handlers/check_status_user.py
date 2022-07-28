@@ -5,13 +5,13 @@
 import datetime
 from core import decorators
 from core.utilities.constants import *
+from core.utilities.message import message
 from core.database.repository.user import UserRepository
+from core.handlers.flood_wait import Flood_Manager_Python
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
 from core.database.repository.dashboard import DashboardRepository
-from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message, mute_user_by_id, member_status_object, chat_status_object
-from core.utilities.message import message
-from core.handlers.flood_wait import Flood_Manager_Python
+from core.utilities.functions import user_object, chat_object, ban_user, kick_user, delete_message, mute_user_by_id, member_status_object, chat_status_object, check_user_permission
 
 flood_manager = Flood_Manager_Python()
 
@@ -106,12 +106,12 @@ def check_status(update,context):
         dash_data = [(username, user_status.status, save_date, user.id, chat_status.id)]
         DashboardRepository().update(dash_data)
     #Check if the user has reached the maximum number of warns and ban him
-    if warn_count == max_warn:
+    if warn_count == max_warn and check_user_permission(update,context) == False:
         ban_user(update,context)
         msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
         message(update,context,msg.format(user.id))
 
-    if flood_manager.check_flood_wait(update) == 1 and get_group['set_antiflood'] == 1:
+    if flood_manager.check_flood_wait(update) == 1 and get_group['set_antiflood'] == 1 and check_user_permission(update,context) == False:
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         kick_user(update, context)
         msg = "#Automatic Handler\n<code>{}</code> has been kicked for flood".format(user.id)

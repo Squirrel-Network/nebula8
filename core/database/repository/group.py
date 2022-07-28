@@ -84,7 +84,7 @@ class GroupRepository(Connection):
 
     # I insert the updates for the message count by group
     def insert_updates(self, args=None):
-        q = "INSERT INTO nebula_updates (update_id, tg_group_id, tg_user_id, date) VALUES (%s,%s,%s,%s)"
+        q = "INSERT INTO nebula_updates (update_id, message_id, tg_group_id, tg_user_id, date) VALUES (%s,%s,%s,%s,%s)"
         return self._insert(q, args)
 
     # I collect the updates to know how many messages have been sent

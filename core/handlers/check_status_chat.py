@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object, ban_user
+from core.utilities.functions import chat_object, user_object, ban_user, member_status_object, check_user_permission
 
 
 def check_group_blacklist(update):
@@ -50,6 +50,7 @@ def check_status(update, context):
     get_chat_tg = bot.getChat(chat_id=chat_id)
     linked_chat = get_chat_tg.linked_chat_id
     group_members_count = update.effective_chat.get_member_count()
+    user_status = member_status_object(update,context)
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
 
@@ -121,7 +122,7 @@ def check_status(update, context):
     This function checks the
     badwords of the group
     """
-    if check_group_badwords(update) == True:
+    if check_group_badwords(update) == True and check_user_permission(update,context) == False:
         user = user_object(update)
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
@@ -134,7 +135,7 @@ def check_status(update, context):
             if x['url'] is not None:
                 bad_word = x['url']
                 row = GroupRepository().get_group_badwords([bad_word, chat_id])
-                if row:
+                if row and check_user_permission(update,context) == False:
                     user = user_object(update)
                     bot.delete_message(update.effective_message.chat_id, update.message.message_id)
                     message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> You used a forbidden word!".format(user.id))
@@ -171,7 +172,7 @@ def check_status(update, context):
     for a in entities:
         type_entities = a['type']
         if type_entities is not None:
-            if type_entities == "spoiler" and get_group['spoiler_block'] == 1:
+            if type_entities == "spoiler" and get_group['spoiler_block'] == 1 and check_user_permission(update,context) == False:
                 message(update,context,"<b>#Automatic Handler:</b>\nIn this chat the use of spoilers is not allowed!")
                 bot.delete_message(update.effective_message.chat_id, update.message.message_id)
     #TODO NONETYPE PROBLEM
@@ -190,7 +191,7 @@ def check_status(update, context):
     """
     Voice audio blocking
     """
-    if update.effective_message.voice is not None and get_group['set_no_vocal'] == 1:
+    if update.effective_message.voice is not None and get_group['set_no_vocal'] == 1 and check_user_permission(update,context) == False:
         message(update,context,"<b>#Automatic Handler:</b>\nIs not allowed to use vocals in this chat!")
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
 
@@ -209,7 +210,8 @@ for the calculation of messages
 def check_updates(update):
       chat = chat_object(update)
       user = user_object(update)
+      message_id = update.message.message_id
       date = datetime.datetime.utcnow().isoformat()
       if chat.type == "supergroup" or chat.type == "group":
-          data = [(update.update_id, chat.id, user.id, date)]
+          data = [(update.update_id, message_id, chat.id, user.id, date)]
           GroupRepository().insert_updates(data)
