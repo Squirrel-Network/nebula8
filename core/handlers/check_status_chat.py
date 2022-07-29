@@ -210,7 +210,7 @@ for the calculation of messages
 def check_updates(update):
       chat = chat_object(update)
       user = user_object(update)
-      message_id = update.message.message_id
+      message_id = update.effective_message.message_id
       date = datetime.datetime.utcnow().isoformat()
       if chat.type == "supergroup" or chat.type == "group":
           data = [(update.update_id, message_id, chat.id, user.id, date)]

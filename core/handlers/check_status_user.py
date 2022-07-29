@@ -99,7 +99,7 @@ def check_status(update,context):
         message(update,context,msg)
         delete_message(update,context)
         ban_user(update,context)
-
+    #If a user is enabled on the dashboard, I perform an update
     if get_dashboard:
         username = "@"+user.username
         save_date = datetime.datetime.utcnow().isoformat()
@@ -110,7 +110,7 @@ def check_status(update,context):
         ban_user(update,context)
         msg = "#Automatic Handler\n<code>{}</code> has reached the maximum number of warns"
         message(update,context,msg.format(user.id))
-
+    #I run an antiflood check if a user exceeds the allowed limit the antiflood starts working
     if flood_manager.check_flood_wait(update) == 1 and get_group['set_antiflood'] == 1 and check_user_permission(update,context) == False:
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         kick_user(update, context)

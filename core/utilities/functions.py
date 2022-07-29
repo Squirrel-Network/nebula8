@@ -14,13 +14,14 @@ from languages.getLang import languages
 # GENERAL FUNCTIONS ###
 #######################
 
+
+OFFSET = 127462 - ord('A')
+
 """
 Example:
 flag('it')
 flag('en')
 """
-OFFSET = 127462 - ord('A')
-
 def flag(code):
     code = code.upper()
     return chr(ord(code[0]) + OFFSET) + chr(ord(code[1]) + OFFSET)
