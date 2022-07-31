@@ -5,7 +5,7 @@
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
 from core.utilities.message import message, messagePhoto
-from core.handlers.welcome import save_group
+from core.utilities.functions import save_group
 from core import decorators
 
 @decorators.admin.user_admin

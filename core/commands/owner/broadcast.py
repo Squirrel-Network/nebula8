@@ -24,7 +24,7 @@ def init(update, context):
             else:
                 message(update,context,"You cannot send an empty message!")
         except (BadRequest,Unauthorized):
-            message(update,context,Strings.ERROR_HANDLING)
+            message(update,context,Strings.ERROR_HANDLING.format(id_groups))
 
 @decorators.owner.init
 def global_broadcast(update, context):
@@ -38,4 +38,4 @@ def global_broadcast(update, context):
             else:
                 message(update,context,"You cannot send an empty message!")
         except (BadRequest,Unauthorized):
-            message(update,context,Strings.ERROR_HANDLING)
+            message(update,context,Strings.ERROR_HANDLING.format(id_groups))

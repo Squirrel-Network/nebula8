@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object, ban_user, member_status_object, check_user_permission
+from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission, save_group
 
 
 def check_group_blacklist(update):
@@ -50,8 +50,13 @@ def check_status(update, context):
     get_chat_tg = bot.getChat(chat_id=chat_id)
     linked_chat = get_chat_tg.linked_chat_id
     group_members_count = update.effective_chat.get_member_count()
-    user_status = member_status_object(update,context)
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
+
+    """
+    If the group is not on the database, save it
+    """
+    if get_group is None:
+        save_group(update)
 
 
     """

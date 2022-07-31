@@ -3,6 +3,7 @@
 
 # Copyright SquirrelNetwork
 import datetime
+from email.policy import default
 from core import decorators
 from core.utilities.message import PrivateMessage
 from core.utilities.functions import user_reply_object, chat_object
@@ -18,18 +19,19 @@ def init(update, context):
     get_warn = UserRepository().getUserByGroup([user.id,chat.id])
     current_time = datetime.datetime.utcnow().isoformat()
     default_warn = 0
+    default_score = 0
     if user_db:
         username = "@"+user.username
         data = [(username,current_time,user.id)]
         UserRepository().update(data)
         warn_count = get_warn['warn_count']
-        data_mtm = [(user.id, chat.id, default_warn)]
+        data_mtm = [(user.id, chat.id, default_warn, default_score)]
         UserRepository().add_into_mtm(data_mtm)
         msg = Strings.USER_INFO.format(id=user.id,username=user.username,chat=chat.title,warn=warn_count)
         PrivateMessage(update,context,msg)
     else:
         username = "@"+user.username
-        data = [(user.id,username,current_time,current_time)]
+        data = [(user.id,username,current_time,current_time, default_score)]
         UserRepository().add(data)
         data_mtm = [(user.id, chat.id, default_warn)]
         UserRepository().add_into_mtm(data_mtm)

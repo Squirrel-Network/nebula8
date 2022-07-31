@@ -4,27 +4,34 @@
 # Copyright SquirrelNetwork
 
 import time
-#from core import decorators
+from config import Config
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
 from telegram import ChatPermissions
 from languages.getLang import languages
 
-#######################
-# GENERAL FUNCTIONS ###
-#######################
-
+################################
+###     GENERAL FUNCTIONS    ###
+################################
 
 OFFSET = 127462 - ord('A')
 
 """
-Example:
+Example to use:
 flag('it')
 flag('en')
 """
 def flag(code):
     code = code.upper()
     return chr(ord(code[0]) + OFFSET) + chr(ord(code[1]) + OFFSET)
+
+
+def check_user_permission(update,context):
+    user_status = member_status_object(update,context)
+    if user_status.status == 'creator' or user_status.status == 'administrator':
+        return True
+    else:
+        return False
 
 #######################
 ### USER FUNCTIONS ####
@@ -204,6 +211,7 @@ def delete_message_reply(update,context):
 ###   GROUP FUNCTIONS  ###
 ##########################
 
+#Perform an update of a boolean setting of the group on the database
 def update_db_settings(update,record, options):
     chat = update.effective_message.chat_id
     if options == True:
@@ -240,6 +248,53 @@ def dynamic_perms(csm = True, csmm = True, csp = True, csom = True, cawpp = True
         can_invite_users=ciu,
         can_pin_messages=cpm
         )
+
+#Function to save the group to the database
+def save_group(update):
+    chat = update.effective_message.chat_id
+    chat_title = update.effective_chat.title
+    record = GroupRepository.SET_GROUP_NAME
+    group = GroupRepository().getById(chat)
+    if group:
+        data = [(chat_title, chat)]
+        GroupRepository().update_group_settings(record, data)
+    else:
+        dictionary = {
+            "id_group": chat,
+            "group_name": chat_title,
+            "welcome_text": Config.DEFAULT_WELCOME.format("{mention}","{chat}"),
+            "welcome_buttons": '{"buttons": [{"id": 0,"title": "Bot Logs","url": "https://t.me/nebulalogs"}]}',
+            "rules_text": Config.DEFAULT_RULES,
+            "community": 0,
+            "languages": Config.DEFAULT_LANGUAGE,
+            "set_welcome": 1,
+            "max_warn": 3,
+            "set_silence": 0,
+            "exe_filter": 0,
+            "block_new_member": 0,
+            "set_arabic_filter": 0,
+            "set_cirillic_filter": 0,
+            "set_chinese_filter": 0,
+            "set_user_profile_picture": 0,
+            "gif_filter": 0,
+            "set_cas_ban": 1,
+            "type_no_username": 1,
+            "log_channel": Config.DEFAULT_LOG_CHANNEL,
+            "group_photo": 'https://naos.hersel.it/group_photo/default.jpg',
+            "total_users": 0,
+            "zip_filter": 0,
+            "targz_filter": 0,
+            "jpg_filter": 0,
+            "docx_filter": 0,
+            "apk_filter": 0,
+            "zoophile_filter": 1,
+            "sender_chat_block": 1,
+            "spoiler_block": 0,
+            "set_no_vocal": 0,
+            "set_antiflood": 1,
+            "ban_message": '{mention} has been <b>banned</b> from: {chat}'
+        }
+        GroupRepository().add_with_dict(dictionary)
 
 ################################
 ### OBJECT ENTITY DEFINITION ###
@@ -290,10 +345,3 @@ def reply_member_status_object(update,context):
     user = user_reply_object(update)
     get_member = bot.getChatMember(chat.id,user.id)
     return get_member
-
-def check_user_permission(update,context):
-    user_status = member_status_object(update,context)
-    if user_status.status == 'creator' or user_status.status == 'administrator':
-        return True
-    else:
-        return False

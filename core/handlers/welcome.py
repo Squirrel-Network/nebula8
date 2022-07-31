@@ -12,7 +12,7 @@ from core.database.repository.user import UserRepository
 from core.database.repository.superban import SuperbanRepository
 from core.utilities.message import message, reply_message
 from core.utilities.regex import Regex
-from core.utilities.functions import kick_user, ban_user, bot_object, mute_user_by_id
+from core.utilities.functions import kick_user, ban_user, bot_object, mute_user_by_id, save_group
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.utils.helpers import mention_html
 from core.handlers.logs import telegram_loggers
@@ -61,52 +61,6 @@ def save_user(member, chat):
         UserRepository().add(data)
     data_mtm = [(member.id, chat, default_count_warn,default_user_score)]
     UserRepository().add_into_mtm(data_mtm)
-
-def save_group(update):
-    chat = update.effective_message.chat_id
-    chat_title = update.effective_chat.title
-    record = GroupRepository.SET_GROUP_NAME
-    group = GroupRepository().getById(chat)
-    if group:
-        data = [(chat_title, chat)]
-        GroupRepository().update_group_settings(record, data)
-    else:
-        dictionary = {
-            "id_group": chat,
-            "group_name": chat_title,
-            "welcome_text": Config.DEFAULT_WELCOME.format("{mention}","{chat}"),
-            "welcome_buttons": '{"buttons": [{"id": 0,"title": "Bot Logs","url": "https://t.me/nebulalogs"}]}',
-            "rules_text": Config.DEFAULT_RULES,
-            "community": 0,
-            "languages": Config.DEFAULT_LANGUAGE,
-            "set_welcome": 1,
-            "max_warn": 3,
-            "set_silence": 0,
-            "exe_filter": 0,
-            "block_new_member": 0,
-            "set_arabic_filter": 0,
-            "set_cirillic_filter": 0,
-            "set_chinese_filter": 0,
-            "set_user_profile_picture": 0,
-            "gif_filter": 0,
-            "set_cas_ban": 1,
-            "type_no_username": 1,
-            "log_channel": Config.DEFAULT_LOG_CHANNEL,
-            "group_photo": 'https://naos.hersel.it/group_photo/default.jpg',
-            "total_users": 0,
-            "zip_filter": 0,
-            "targz_filter": 0,
-            "jpg_filter": 0,
-            "docx_filter": 0,
-            "apk_filter": 0,
-            "zoophile_filter": 1,
-            "sender_chat_block": 1,
-            "spoiler_block": 0,
-            "set_no_vocal": 0,
-            "set_antiflood": 1,
-            "ban_message": '{mention} has been <b>banned</b> from: {chat}'
-        }
-        GroupRepository().add_with_dict(dictionary)
 
 def is_in_blacklist(uid):
     return not not SuperbanRepository().getById(uid)
