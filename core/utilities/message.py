@@ -10,36 +10,22 @@ from config import Config
 MAIN_URL = "https://api.telegram.org/"
 TOKEN = Config.BOT_TOKEN
 
-def message(update,context,text = ""):
+def message(update, context, text = "", parse = 'HTML', type = 'message', chatid=None, img=None):
     bot = context.bot
     chat = update.effective_chat.id
-    msg = bot.send_message(chat,text,parse_mode='HTML')
-    return msg
 
-def messageMarkdown(update,context, text= ""):
-    bot = context.bot
-    chat = update.effective_chat.id
-    msg = bot.send_message(chat,text,parse_mode='MarkdownV2')
-    return msg
+    if type == 'message':
+        send = bot.send_message(chat, text, parse_mode=parse)
+    elif type == 'photo':
+        send = bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption=text, parse_mode=parse)
+    elif type == 'reply':
+        send = update.message.reply_text(text, parse_mode=parse)
+    elif type == 'messageid':
+        send = bot.send_message(chatid,text,parse_mode=parse)
+    elif type == 'private':
+        send = bot.send_message(update.message.from_user.id,text,parse_mode=parse)
 
-def messageWithId(update,context,chat,text = ""):
-    bot = context.bot
-    msg = bot.send_message(chat,text,parse_mode='HTML')
-    return msg
-
-def reply_message(update,context,text = ""):
-    msg = update.message.reply_text(text,parse_mode='HTML')
-    return msg
-
-def PrivateMessage(update,context, text = ""):
-    bot = context.bot
-    msg = bot.send_message(update.message.from_user.id,text,parse_mode='HTML')
-    return msg
-
-def messagePhoto(update, context, img, desc = ''):
-    bot = context.bot
-    photo = bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption=desc, parse_mode='HTML')
-    return photo
+    return send
 
 def ApiMessage(text, chat_id):
     text = urllib.parse.quote_plus(text)

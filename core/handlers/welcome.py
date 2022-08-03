@@ -10,7 +10,7 @@ from config import Config
 from core.database.repository.group import GroupRepository
 from core.database.repository.user import UserRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.message import message, reply_message
+from core.utilities.message import message
 from core.utilities.regex import Regex
 from core.utilities.functions import kick_user, ban_user, bot_object, mute_user_by_id, save_group
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -90,11 +90,11 @@ def welcome_user(update, context, member):
             menu = build_menu(arr_buttons, 2)
             bot.send_message(chat,format_message,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         except ValueError:
-            reply_message(update,context,format_message)
+            message(update, context, format_message, 'HTML', 'reply', None, None)
     else:
         chat_title = update.effective_chat.title
         default_welcome = Config.DEFAULT_WELCOME.format("@"+member.username,chat_title)
-        reply_message(update, context,default_welcome)
+        message(update, context, default_welcome, 'HTML', 'reply', None, None)
 
 
 def welcome_bot(update, context):

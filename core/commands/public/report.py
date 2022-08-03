@@ -6,7 +6,7 @@ from core import decorators
 from languages.getLang import languages
 from core.utilities.strings import Strings
 from core.utilities.functions import chat_object
-from core.utilities.message import messageWithId, reply_message, message
+from core.utilities.message import message
 from core.handlers.logs import telegram_loggers, staff_loggers
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.menu import build_menu
@@ -29,7 +29,7 @@ def init(update,context):
             msg = update.effective_message.reply_to_message
             format_link = "https://t.me/c/{}/{}".format(str(chat.id)[3:],msg.message_id)
             format_message = Strings.REPORT_MSG.format(chat.id,chat.title,msg.text,format_link)
-            reply_message(update,context,languages.report_msg)
+            message(update, context, languages.report_msg, 'HTML', 'reply', None, None)
             telegram_loggers(update,context,format_message)
             bot.send_message(staff_group_id,format_message, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         else:
@@ -38,7 +38,7 @@ def init(update,context):
             user_first = update.message.from_user.first_name
             format_link = "https://t.me/c/{}/{}".format(str(chat.id)[3:],msg_id)
             format_message = '#Report\nUser: <a href="tg://user?id={}">{}</a>\nGroup Id: <code>[{}]</code>\nGroup Title: {}\nLink: {}'.format(user_id,user_first,str(chat.id)[3:],chat.title,format_link)
-            reply_message(update,context,languages.report_msg)
+            message(update, context, languages.report_msg, 'HTML', 'reply', None, None)
             telegram_loggers(update,context,format_message)
             bot.send_message(staff_group_id,format_message, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
 

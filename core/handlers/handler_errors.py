@@ -1,7 +1,7 @@
 import logging
 from config import Config
 from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
-from core.utilities.message import messageWithId
+from core.utilities.message import message
 
 
 def init(update, context):
@@ -49,4 +49,4 @@ def error_message(update, context, err, txt):
     chat_id = Config.DEVELOPER_CHAT_ID
     log = '\n🔵 <b>[LOG_ERROR]:</b> <code>{}</code>'.format(context.error)
     txt = "🤖 Bot Command: {}\n\n{}{}".format(txt, err, log)
-    messageWithId(update,context,chat_id,txt)
+    message(update, context, txt, 'HTML', 'messageid', chat_id, None)

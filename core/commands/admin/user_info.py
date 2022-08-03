@@ -5,7 +5,7 @@
 import datetime
 from email.policy import default
 from core import decorators
-from core.utilities.message import PrivateMessage
+from core.utilities.message import message
 from core.utilities.functions import user_reply_object, chat_object
 from core.database.repository.user import UserRepository
 from core.utilities.strings import Strings
@@ -28,7 +28,7 @@ def init(update, context):
         data_mtm = [(user.id, chat.id, default_warn, default_score)]
         UserRepository().add_into_mtm(data_mtm)
         msg = Strings.USER_INFO.format(id=user.id,username=user.username,chat=chat.title,warn=warn_count)
-        PrivateMessage(update,context,msg)
+        message(update, context, msg, 'HTML', 'private')
     else:
         username = "@"+user.username
         data = [(user.id,username,current_time,current_time, default_score)]
@@ -36,4 +36,4 @@ def init(update, context):
         data_mtm = [(user.id, chat.id, default_warn)]
         UserRepository().add_into_mtm(data_mtm)
         msg = Strings.USER_INFO.format(id=user.id,username=user.username,chat=chat.title,warn=default_warn)
-        PrivateMessage(update,context,msg)
+        message(update, context, msg, 'HTML', 'private')

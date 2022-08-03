@@ -13,6 +13,6 @@ def init(update,context):
     languages(update,context)
     msg = update.message.text[4:].strip()
     if msg != "":
-        message(update,context,msg)
+        message(update, context, msg, 'HTML', 'message', None, None)
     else:
-        message(update,context,languages.say_error)
+        message(update, context, languages.say_error, 'HTML', 'message', None, None)

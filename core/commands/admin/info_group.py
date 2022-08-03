@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
-from core.utilities.message import message, messagePhoto
+from core.utilities.message import message
 from core.utilities.functions import save_group
 from core import decorators
 
@@ -31,7 +31,7 @@ def init(update, context):
             row['max_warn'],
             row['total_users'],
             counter['counter'])
-        messagePhoto(update, context, img, caption)
+        message(update, context, caption, 'HTML', 'photo', None, img)
     else:
         save_group(update)
 

@@ -6,7 +6,7 @@
 import logging
 from config import Config
 from telegram.error import BadRequest, Unauthorized
-from core.utilities.message import messageWithId, message
+from core.utilities.message import message
 from core.database.repository.group import GroupRepository
 
 SET_CHANNEL_DEBUG = True
@@ -41,20 +41,20 @@ def telegram_loggers(update,context,msg = ""):
     id_channel = Config.DEFAULT_LOG_CHANNEL
     if row:
         get_log_channel = row['log_channel']
-        send = messageWithId(update,context,get_log_channel,msg)
+        send = message(update, context, msg, 'HTML', 'messageid', get_log_channel, None)
     else:
-        send = messageWithId(update,context,id_channel,msg)
+        send = message(update, context, msg, 'HTML', 'messageid', id_channel, None)
     return send
 
 def staff_loggers(update,context,msg = ""):
     id_staff_group = Config.DEFAULT_STAFF_GROUP
-    send = messageWithId(update,context,id_staff_group,msg)
+    send = message(update, context, msg, 'HTML', 'messageid', id_staff_group, None)
     return send
 
 def debug_channel(update,context,msg = ""):
     id_debug_channel = -1001540824311
     if SET_CHANNEL_DEBUG == True:
-        send = messageWithId(update,context,id_debug_channel,msg)
+        send = message(update, context, msg, 'HTML', 'messageid', id_debug_channel, None)
     else:
         return
     return send
@@ -81,7 +81,8 @@ def set_log_channel(update,context):
                     message(update,context,"Error deleting message in log channel. Should work anyway though.")
 
             try:
-                messageWithId(update,context,msg.forward_from_chat.id,"This channel has been set as the log channel for {}.".format(chat.title or chat.first_name))
+                msg = "This channel has been set as the log channel for {}.".format(chat.title or chat.first_name)
+                message(update, context, msg, 'HTML', 'messageid', msg.forward_from_chat.id, None)
             except Unauthorized as excp:
                 if excp.message == "Forbidden: bot is not a member of the channel chat":
                     message(update,context, "Successfully set log channel!")

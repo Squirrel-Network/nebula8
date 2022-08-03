@@ -7,7 +7,7 @@ import datetime
 from config import Config
 from core import decorators
 from core.utilities.menu import build_menu
-from core.utilities.message import message, messageWithId
+from core.utilities.message import message
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
 from core.handlers.logs import sys_loggers, debug_channel
@@ -53,7 +53,7 @@ def init(update, context):
                 message(update,context,msg)
                 #Log in Telegram Channel
                 logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
-                messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
+                message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
                 #Log in Debug Channel
                 formatter = "Superban eseguito da: {}[<code>{}</code>] verso l'utente: [<code>{}</code>]".format(operator_username,operator_id,user_id)
                 sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
@@ -107,7 +107,7 @@ def update_superban(update, context):
             query.edit_message_text(msg, parse_mode='HTML')
             #Telegram Logs
             logs_text = Strings.SUPERBAN_LOG.format(user_first_name,user_id,motivation,save_date,operator_first_name,operator_username,operator_id)
-            messageWithId(update,context,Config.DEFAULT_LOG_CHANNEL,logs_text)
+            message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
             #System Logs
             formatter = "Superban eseguito da: {}<code>[{}]</code> verso l'utente: <code>[{}]</code>".format(operator_username,operator_id,user_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
