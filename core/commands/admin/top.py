@@ -25,6 +25,7 @@ def init(update, context):
     menu = build_menu(list_buttons,1)
     bot.send_message(chat,'Please select an option',reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
 
+@decorators.admin.user_admin
 def update_top(update,context):
     query = update.callback_query
     if query.data == 'useractive':
