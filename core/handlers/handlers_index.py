@@ -20,6 +20,7 @@ def group_handlers(update,context):
     handlers.custom_handler.init(update, context)
     public.report.init(update,context)
     public.eggs.egg_gh(update,context)
+    public.eggs.nanachi(update,context)
     handlers.filters_chat.init(update, context)
     handlers.logs.set_log_channel(update,context)
 

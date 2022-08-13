@@ -21,3 +21,11 @@ def egg_gh(update,context):
     if str(update.effective_message.text).lower().startswith(".fiko"):
         animation = "https://i.imgur.com/LP23P90.gif"
         bot.sendAnimation(chat, animation, caption="I'm not GroupHelp! If you want to know who they are type /source")
+
+@decorators.public.init
+def nanachi(update,context):
+    bot = context.bot
+    chat = update.effective_chat.id
+    if str(update.effective_message.text).lower().startswith("nanachi"):
+        animation = "https://i.imgur.com/P9HXqM8.mp4"
+        bot.sendAnimation(chat, animation, caption="Naaaa~~ 🐾")

@@ -156,6 +156,10 @@ def init(update, context):
                 l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
                 telegram_loggers(update,context,l_txt)
                 welcome_bot(update, context)
+            # They ban the user because he is blacklisted
+            elif is_in_blacklist(user_id):
+                ban_user(update, context)
+                message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a> [{}]'.format(user_id,user_first,user_id))
             # Kicked user because username field is empty
             elif user is None:
                 if type_no_username == 1:
@@ -182,10 +186,6 @@ def init(update, context):
                     main_msg = "Welcome {} in {}".format(mention_html(member.id, member.first_name),chat_title)
                     update.message.reply_text(main_msg,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
                     print("No action even if you don't have a username")
-            # They ban the user because he is blacklisted
-            elif is_in_blacklist(user_id):
-                ban_user(update, context)
-                message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a> [{}]'.format(user_id,user_first,user_id))
             # They ban the user because he doesn't have a profile picture
             elif user_photo.total_count == 0 and user_profile_photo == 1:
                 kick_user(update, context)

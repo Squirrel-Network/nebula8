@@ -45,21 +45,27 @@ def init(update, context):
             if number is None:
                 message(update,context,"Attention you must enter a number not letters!")
             else:
-                default_motivation = "Other"
-                default_user_first_name = "NB{}".format(user_id)
-                data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
-                SuperbanRepository().add(data)
-                msg = '🚷 You got super banned <a href="tg://user?id={}">{}</a> via TelegramID\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
-                message(update,context,msg)
-                #Log in Telegram Channel
-                logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
-                message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
-                #Log in Debug Channel
-                formatter = "Superban eseguito da: {}[<code>{}</code>] verso l'utente: [<code>{}</code>]".format(operator_username,operator_id,user_id)
-                sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
-                debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
+                row = SuperbanRepository().getById(int(user_id))
+                if row:
+                    message(update,context,"The user <code>{}</code> is already present in the database".format(user_id))
+                else:
+                    default_motivation = "Other"
+                    default_user_first_name = "NB{}".format(user_id)
+                    data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
+                    SuperbanRepository().add(data)
+                    msg = '🚷 You got super banned <a href="tg://user?id={}">{}</a> via TelegramID\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
+                    message(update,context,msg)
+
+                    #Log in Telegram Channel
+                    logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name,user_id,default_motivation,save_date,operator_first_name,operator_username,operator_id)
+                    message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
+
+                    #Log in Debug Channel
+                    formatter = "Superban eseguito da: {}[<code>{}</code>] verso l'utente: [<code>{}</code>]".format(operator_username,operator_id,user_id)
+                    sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
+                    debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
         else:
-            message(update,context,"Attention you can not superbanned without entering an TELEGRAM ID!")
+            message(update,context,"Attention you can not superbanned without entering an TelegramID!")
 
 @decorators.owner.init
 def multi_superban(update,context):

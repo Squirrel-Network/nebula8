@@ -15,7 +15,7 @@ def init(update,context):
         user = user_reply_object(update)
         row = UserRepository().getById(user.id)
         if row:
-            message(update, context, text="<b>The user search returned the following results:</b>\nTelegram Id: <code>{}</code>\nUsername: {}\nLast Update: {}"
+            message(update, context, text="<b>The user search returned the following results:</b>\nTelegram Id: <code>{}</code>\nUsername: {}\nLast Update: {} [UTC]"
             .format(
                 row['tg_id'],
                 row['tg_username'],
@@ -29,7 +29,7 @@ def init(update,context):
         if user_id != "":
             row = UserRepository().getByUsername(user_id)
             if row:
-                message(update, context, text="<b>The user search returned the following results:</b>\nTelegram Id: <code>{}</code>\nUsername: {}\nLast Update: {}"
+                message(update, context, text="<b>The user search returned the following results:</b>\nTelegram Id: <code>{}</code>\nUsername: {}\nLast Update: {} [UTC]"
                 .format(
                     row['tg_id'],
                     row['tg_username'],

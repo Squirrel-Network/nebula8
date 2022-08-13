@@ -54,20 +54,22 @@ def init(update,context):
         user_id = input_user_id[0]
         time_args = input_user_id[1]
         if user_id != "" and time_args != "":
+            #Mute via Username
             if user_id.startswith('@'):
                 time_args = input_user_id[1]
                 arg_time = convert_time(update,context,time_args)
-                mute_user_by_username_time(update,context,user_id,arg_time)
+                mute_user_by_username_time(update,context,user_id,True,arg_time)
                 msg = 'You muted the user {} for <code>{}</code> seconds'.format(user_id,time_args)
                 message(update,context,msg)
             else:
+            #Mute via Id
                 time_args = input_user_id[1]
                 number = re.search(Regex.HAS_NUMBER, user_id)
                 if number is None:
                     message(update,context,"Type a correct telegram id or type in the username!")
                 else:
                     mute_user_by_id_time(update,context,user_id,True,int(time_args))
-                    msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> seconds'.format(user_id,user_id,user_id,time_args)
+                    msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> time'.format(user_id,user_id,user_id,time_args)
                     message(update,context,msg)
         else:
             message(update,context,"Attention you have not entered the user id and mute time correctly")
