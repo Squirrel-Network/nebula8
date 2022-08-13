@@ -22,7 +22,7 @@ class Flood_Manager_Python(RedisConnect):
         now_time = int(time())
         if not self.hexists('groups',chat_id):
             self.update_group_data(chat_id, 5, 5, 30)
-            raise Exception('Chat not found')
+            print("No Group Data")
         else:
             chat_data = json.loads(self.hget('groups',chat_id))
             self.hget('groups', chat_id)

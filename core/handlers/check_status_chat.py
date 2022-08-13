@@ -53,13 +53,6 @@ def check_status(update, context):
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
     """
-    If the group is not on the database, save it
-    """
-    if get_group is None:
-        save_group(update)
-
-
-    """
     This function updates the group id on the database
     when a group changes from group to supergroup
     """

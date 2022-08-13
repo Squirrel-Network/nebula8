@@ -11,27 +11,21 @@ def init(update, context):
         raise context.error
     except Unauthorized:
         err = '🔴 <b>[ERROR]:</b> <code>Unauthorized</code>\n'
-        #error_message(update, context, err)
         # remove update.message.chat_id from conversation list
     except BadRequest:
         err = '🔴 <b>[ERROR]:</b> <code>BadRequest - malformed requests</code>\n'
-        #error_message(update, context, err)
         # handle malformed requests - read more below!
     except TimedOut:
         err = '🔴 <b>[ERROR]:</b> <code>TimedOut - slow connection problems</code>\n'
-        #error_message(update, context, err)
         # handle slow connection problems
     except NetworkError:
         err = '🔴 <b>[ERROR]:</b> <code>NetworkError - other connection problems</code>\n'
-        #error_message(update, context, err)
         # handle other connection problems
     except ChatMigrated:
         err = '🔴 <b>[ERROR]:</b> <code>ChatMigrated - chat_id not found (maybe group/channel migrated?)</code>\n'
-        #error_message(update, context, err)
         # the chat_id of a group has changed, use e.new_chat_id instead
     except TelegramError:
         err = '🔴 <b>[ERROR]:</b> <code>TelegramError\nThis is a generic error not handled by other handlers, check the console logs for info</code>\n'
-        #error_message(update, context, err)
         # handle all other telegram related errors
     except AttributeError:
         err = '🔴 <b>[ERROR]:</b> <code>AttributeError -  bad code</code>'

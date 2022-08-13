@@ -98,7 +98,6 @@ def welcome_user(update, context, member):
 
 
 def welcome_bot(update, context):
-    save_group(update)
     arr_buttons = []
     arr_buttons.append(InlineKeyboardButton(text="🌐 Dashboard", url="https://nebula.squirrel-network.online"))
     arr_buttons.append(InlineKeyboardButton(text="📢 Bot_Logs", url="https://t.me/nebulalogs"))
@@ -108,15 +107,12 @@ def welcome_bot(update, context):
     menu = build_menu(arr_buttons, 2)
     main_msg = Strings.WELCOME_BOT.format(Config.VERSION, Config.VERSION_NAME)
     update.message.reply_text(main_msg, reply_markup=InlineKeyboardMarkup(menu), parse_mode='HTML')
+    save_group(update)
 
 def init(update, context):
     # Get settings
     chat = update.effective_message.chat_id
     group = GroupRepository().getById(chat)
-
-    if len(update.effective_message['new_chat_members']) > 0:
-        get_bot = context.bot
-        get_bot.delete_message(update.effective_message.chat_id, update.message.message_id)
 
     if group:
         row = group['set_welcome']
@@ -142,6 +138,7 @@ def init(update, context):
             message(update, context, "<b>#Automatic Handler:</b> Kick User for group protection")
 
     if row == 1 and row is not None:
+        foundme = False
         for member in update.message.new_chat_members:
             languages(update,context)
             user = member.username
@@ -153,13 +150,14 @@ def init(update, context):
             user_photo = member.get_profile_photos(member.id)
             # Welcome the bot when it is added
             if bot.id == user_id:
+                foundme = True
                 l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
                 telegram_loggers(update,context,l_txt)
                 welcome_bot(update, context)
             # They ban the user because he is blacklisted
             elif is_in_blacklist(user_id):
                 ban_user(update, context)
-                message(update, context, 'I got super banned <a href="tg://user?id={}">{}</a> [{}]'.format(user_id,user_first,user_id))
+                message(update, context, '🚷 I got superbanned <a href="tg://user?id={}">{}</a> [{}]\n\n'.format(user_id,user_first,user_id))
             # Kicked user because username field is empty
             elif user is None:
                 if type_no_username == 1:
@@ -212,3 +210,7 @@ def init(update, context):
             else:
                 save_user(member, chat_id)
                 welcome_user(update,context,member)
+
+        if not foundme and len(update.effective_message['new_chat_members']) > 0:
+            get_bot = context.bot
+            get_bot.delete_message(update.effective_message.chat_id, update.message.message_id)
