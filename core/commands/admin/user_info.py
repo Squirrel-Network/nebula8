@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 import datetime
-from email.policy import default
 from core import decorators
 from core.utilities.message import message
 from core.utilities.functions import user_reply_object, chat_object

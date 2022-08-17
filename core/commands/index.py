@@ -59,6 +59,8 @@ def admin_command(dsp):
     function(CMH('chatid', admin.info_group.id_chat))
     function(CMH('custom', admin.set_custom_handler.init))
     function(CMH('top', admin.top.init))
+    function(CMH('unpinall', admin.pin.unpin_all))
+    function(CMH('pin', admin.pin.pin))
     #############################
     ### CallbackQuery Handler ###
     #############################

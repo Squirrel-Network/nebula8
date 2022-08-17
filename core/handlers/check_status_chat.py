@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission, save_group
+from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission
 
 
 def check_group_blacklist(update):
