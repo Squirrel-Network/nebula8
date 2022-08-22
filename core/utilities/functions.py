@@ -4,9 +4,13 @@
 # Copyright SquirrelNetwork
 
 import time
+import pandas
+import matplotlib.pyplot as plt
+from matplotlib import style
 from config import Config
 from core.database.repository.user import UserRepository
 from core.database.repository.group import GroupRepository
+from core.database.db_connect import SqlAlchemyConnection
 from telegram import ChatPermissions
 from languages.getLang import languages
 
@@ -15,6 +19,19 @@ from languages.getLang import languages
 ################################
 
 OFFSET = 127462 - ord('A')
+
+COLORS = [
+        '#0066cc',
+        '#cc0000',
+        '#009933',
+        '#009999',
+        '#cc0066',
+        '#cc6600',
+        '#cccc00',
+        '#66cc00',
+        '#66cccc',
+        '#6666ff'
+        ]
 
 """
 Example to use:
@@ -249,6 +266,38 @@ def dynamic_perms(csm = True, csmm = True, csp = True, csom = True, cawpp = True
         can_pin_messages=cpm
         )
 
+def upd_charts_DESC(update,context):
+    chat = chat_object(update)
+
+    db = SqlAlchemyConnection()
+    engine = db.engine
+
+    style.use('seaborn-pastel')
+
+    # Read data from database
+    df = pandas.read_sql("SELECT COUNT(*) AS message, u.tg_username as username, u.tg_id FROM nebula_updates nu INNER JOIN users u ON u.tg_id = nu.tg_user_id WHERE DATE BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND nu.tg_group_id = %s GROUP BY nu.tg_user_id ORDER BY message DESC LIMIT 10" % chat.id, engine)
+    #Reverse Dataframe
+    df = df[::-1]
+    df.plot(kind="barh", x="username", y="message",figsize=(18,10),grid=True,color=COLORS,title="Top 10 users with the most updates in the last 30 days in the group {}".format(chat.title))
+    #Save Dataframe to Jpeg
+    plt.savefig('/var/www/naos.hersel.it/charts/{}desc.jpg'.format(chat.id))
+
+def upd_charts_ASC(update,context):
+    chat = chat_object(update)
+
+    db = SqlAlchemyConnection()
+    engine = db.engine
+
+    style.use('seaborn-pastel')
+
+    # Read data from database
+    df = pandas.read_sql("SELECT COUNT(*) AS message, u.tg_username as username, u.tg_id FROM nebula_updates nu INNER JOIN users u ON u.tg_id = nu.tg_user_id WHERE DATE BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() AND nu.tg_group_id = %s GROUP BY nu.tg_user_id ORDER BY message ASC LIMIT 10" % chat.id, engine)
+    #Reverse Dataframe
+    df = df[::-1]
+    df.plot(kind="barh", x="username", y="message",figsize=(18,10),grid=True,color=COLORS,title="The 10 worst users with the most updates in the last 30 days in the group {}".format(chat.title))
+    #Save Dataframe to Jpeg
+    plt.savefig('/var/www/naos.hersel.it/charts/{}asc.jpg'.format(chat.id))
+
 #Function to save the group to the database
 def save_group(update):
     chat = update.effective_message.chat_id
@@ -295,6 +344,7 @@ def save_group(update):
             "ban_message": '{mention} has been <b>banned</b> from: {chat}'
         }
         GroupRepository().add_with_dict(dictionary)
+
 
 ################################
 ### OBJECT ENTITY DEFINITION ###

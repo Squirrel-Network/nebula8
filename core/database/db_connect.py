@@ -6,6 +6,7 @@ import pymysql
 from pymysql import OperationalError
 from config import Config
 from loguru import logger
+from sqlalchemy import create_engine
 from core.database.migrations import Migrations
 
 """
@@ -88,3 +89,13 @@ class Connection:
     def _delete(self, sql, args=None):
         self.delete = self.cur.executemany(sql,args)
         return self.delete
+
+
+class SqlAlchemyConnection:
+    def __init__(self):
+        self.server = '{}:{}'.format(Config.HOST,Config.PORT)
+        self.db = Config.DBNAME
+        self.login = Config.USER
+        self.passwd = Config.PASSWORD
+        self.engine_str = 'mysql+pymysql://{}:{}@{}/{}'.format(self.login, self.passwd, self.server, self.db)
+        self.engine = create_engine(self.engine_str)

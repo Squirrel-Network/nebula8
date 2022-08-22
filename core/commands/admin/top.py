@@ -3,10 +3,8 @@
 
 # Copyright SquirrelNetwork
 
-import string
 from core.database.repository.group import GroupRepository
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from core.utilities.functions import chat_object
 from core.utilities.message import message
 from core.utilities.menu import build_menu
 from core import decorators
@@ -34,11 +32,17 @@ def update_top(update,context):
         string = ""
         for row in topUsers:
             string += "▪️ {} <code>[{}]</code>\n".format(row['tg_username'],row['counter'])
-        query.edit_message_text('Top 10 Active Users Until 30 Days\n\n{}'.format(string),parse_mode='HTML')
+        img = "https://naos.hersel.it/charts/{}desc.jpg".format(chat)
+        caption = 'Top 10 Active Users Until 30 Days\n\n{}'.format(string)
+        query.edit_message_text('Close',parse_mode='HTML')
+        message(update, context, caption, 'HTML', 'photo', None, img)
     if query.data == 'userinactive':
         chat = update.effective_message.chat_id
         topUsers = GroupRepository().getTopInactiveUsers(chat)
         string = ""
         for row in topUsers:
             string += "▪️ {} <code>[{}]</code>\n".format(row['tg_username'],row['counter'])
-        query.edit_message_text('Top 10 Inactive Users Until 30 Days\n\n{}'.format(string),parse_mode='HTML')
+        img = "https://naos.hersel.it/charts/{}asc.jpg".format(chat)
+        caption = 'Top 10 Inactive Users Until 30 Days\n\n{}'.format(string)
+        query.edit_message_text('Close',parse_mode='HTML')
+        message(update, context, caption, 'HTML', 'photo', None, img)

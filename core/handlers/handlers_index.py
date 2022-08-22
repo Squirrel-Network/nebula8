@@ -17,6 +17,7 @@ def group_handlers(update,context):
     handlers.check_status_user.check_status(update, context)
     handlers.check_status_chat.check_status(update, context)
     handlers.check_status_chat.check_updates(update)
+    handlers.check_status_chat.create_charts(update,context)
     handlers.custom_handler.init(update, context)
     public.report.init(update,context)
     public.eggs.egg_gh(update,context)
