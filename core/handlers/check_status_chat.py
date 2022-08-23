@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission, upd_charts_DESC, upd_charts_ASC
+from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission
 
 
 def check_group_blacklist(update):
@@ -199,18 +199,6 @@ def check_status(update, context):
         bot.delete_message(update.effective_message.chat_id, update.message.message_id)
         message(update,context,"<b>#Automatic handler:</b>\n<code>{}</code> Antispam Triggered".format(user.id))
         debug_channel(update,context,"[DEBUG_LOGGER] L'utente <code>{}</code> ha attivato il filtro ANTISPAM".format(user.id))
-
-"""
-This feature generates a graph
-of the top 10 active users
-"""
-def create_charts(update,context):
-    chat = chat_object(update)
-    if chat.type == "supergroup" or chat.type == "group":
-        upd_charts_DESC(update,context)
-        upd_charts_ASC(update,context)
-        debug_channel(update,context,"[DEBUG_LOGGER] Aggiornato il charts della chat:\n {} [<code>{}</code>]".format(chat.title,chat.id))
-
 """
 this function has the task of saving
 in the database the updates
