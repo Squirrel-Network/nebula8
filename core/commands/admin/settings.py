@@ -190,4 +190,4 @@ def update_settings(update,context):
 
     # Close Menu
     if query.data == 'close':
-        query.edit_message_text(languages.close_menu_msg, parse_mode='HTML')
+        query.message.delete()

@@ -23,7 +23,7 @@ def keyboard_filters(update,context,editkeyboard = False):
     list_buttons.append(InlineKeyboardButton('JPG Filters %s' % ('✅' if group['jpg_filter'] == 1 else '❌'), callback_data='ffjpg_filters'))
     list_buttons.append(InlineKeyboardButton('Doc/x Filters %s' % ('✅' if group['docx_filter'] == 1 else '❌'), callback_data='ffdocx_filters'))
     list_buttons.append(InlineKeyboardButton('Apk Filters %s' % ('✅' if group['apk_filter'] == 1 else '❌'), callback_data='ffapk_filters'))
-    list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
+    list_buttons.append(InlineKeyboardButton("Close", callback_data='closeMenu'))
     menu = build_menu(list_buttons,2)
     if editkeyboard == False:
         keyboard_menu = bot.send_message(chat,"⚙️ Group Filters Settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')

@@ -38,7 +38,7 @@ def update_top(update,context):
         img = "https://naos.hersel.it/charts/{}desc.jpg".format(chat)
         caption = 'Top 10 Active Users Until 30 Days\n\n{}'.format(string)
         time.sleep(1)
-        query.edit_message_text('Close',parse_mode='HTML')
+        query.message.delete()
         message(update, context, caption, 'HTML', 'photo', None, img)
     if query.data == 'userinactive':
         chat = update.effective_message.chat_id
@@ -50,5 +50,5 @@ def update_top(update,context):
         img = "https://naos.hersel.it/charts/{}asc.jpg".format(chat)
         caption = 'Top 10 Inactive Users Until 30 Days\n\n{}'.format(string)
         time.sleep(1)
-        query.edit_message_text('Close',parse_mode='HTML')
+        query.message.delete()
         message(update, context, caption, 'HTML', 'photo', None, img)

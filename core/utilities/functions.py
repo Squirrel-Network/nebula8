@@ -252,7 +252,7 @@ def close_menu(update, context):
     query = update.callback_query
     languages(update,context)
     if query.data == 'closeMenu':
-        query.edit_message_text(languages.close_menu_general, parse_mode='HTML')
+        query.message.delete()
 
 def dynamic_perms(csm = True, csmm = True, csp = True, csom = True, cawpp = True, cci = False, ciu = False, cpm = False):
     return ChatPermissions(
