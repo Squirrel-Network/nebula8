@@ -75,8 +75,11 @@ def multi_superban(update,context):
     for a in x:
         save_date = datetime.datetime.utcnow().isoformat()
         default_motivation = "MultiSuperban"
+        default_user_first_name = "NB{}".format(a)
         operator_id = update.message.from_user.id
-        data = [(a,default_motivation,save_date,operator_id)]
+        operator_username = "@"+update.message.from_user.username
+        operator_first_name = update.message.from_user.first_name
+        data = [(a,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
         SuperbanRepository().add(data)
         string += "▪️ {}\n".format(a)
     message(update,context,string)
