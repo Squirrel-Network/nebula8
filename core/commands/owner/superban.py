@@ -49,7 +49,12 @@ def init(update, context):
                 if row:
                     message(update,context,"The user <code>{}</code> is already present in the database".format(user_id))
                 else:
-                    default_motivation = "Other"
+                    motivation_input = ""
+                    if len(input_user_id) > 1:
+                        motivation_input = input_user_id[1]
+                        default_motivation = motivation_input
+                    else:
+                        default_motivation = "Other"
                     default_user_first_name = "NB{}".format(user_id)
                     data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
                     SuperbanRepository().add(data)
