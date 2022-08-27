@@ -5,11 +5,22 @@
 # Credits LakyDev
 
 import json
+from typing import List
 from core.database.redis_connect import RedisConnect
 from time import time
 
 
 class Flood_Manager_Python(RedisConnect):
+    def __init__(self):
+        super().__init__()
+        self._knows_gids: List[str] = []
+
+    def _register_id(self, user_id: int, chat_id: int, group_id: int):
+        self._knows_gids.append(f'{chat_id}{user_id}{group_id}')
+
+    def _is_known_id(self, user_id: int, chat_id: int, group_id: int) -> bool:
+        return f'{chat_id}{user_id}{group_id}' in self._knows_gids
+
     def check_flood_wait(self,update) -> int:
         # 0 = No Flood
         # 1 = Flood Start
@@ -17,6 +28,12 @@ class Flood_Manager_Python(RedisConnect):
 
         user_id = update.effective_user.id
         chat_id = update.effective_chat.id
+        media_id = update.effective_message.media_group_id
+        if media_id is not None:
+            if self._is_known_id(user_id, chat_id, media_id):
+                return 0
+            else:
+                self._register_id(user_id, chat_id, media_id)
 
         id_data = f'{chat_id}:{user_id}'
         now_time = int(time())
