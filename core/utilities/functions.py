@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 
 import time
+import datetime
 import pandas
 import matplotlib.pyplot as plt
 from matplotlib import style
@@ -341,7 +342,9 @@ def save_group(update):
             "spoiler_block": 0,
             "set_no_vocal": 0,
             "set_antiflood": 1,
-            "ban_message": '{mention} has been <b>banned</b> from: {chat}'
+            "ban_message": '{mention} has been <b>banned</b> from: {chat}',
+            "created_at": datetime.datetime.utcnow().isoformat(),
+            "updated_at": datetime.datetime.utcnow().isoformat()
         }
         GroupRepository().add_with_dict(dictionary)
 

@@ -26,7 +26,7 @@ Italian =	{
   "CLOSE_MENU": "Hai chiuso il Menu",
   "GLOBAL_REPORT_MSG": "Hai segnalato un problema al personale del bot, un operatore disponibile verrà ad aiutarti",
   "ERROR_RESPONSE_USER_MSG": "È necessario utilizzare questo comando in risposta a un utente",
-  "WARN_USER": "‼️ {} è stato warnato!\nnel gruppo {} <code>[{}]</code>",
+  "WARN_USER": "‼️ {} è stato warnato!\nnel gruppo {} [<code>{}</code>]\nWarn: <code>{}</code>",
   "WARN_USER_MAX": "L'utente @{} ha raggiunto il numero massimo\n di avvertimenti nel gruppo {} ed è stato bannato",
   "BUTTON_REMOVE": '🗑 Rimuovi',
   "MUTE_MSG": 'Hai mutato <a href="tg://user?id={}">{}</a> <code>[{}]</code>',
@@ -39,7 +39,11 @@ Italian =	{
   "BADWORD_ADD_TEXT": "Hai inserito la parola proibita: [<b><i>{}</i></b>] nel database",
   "BADWORD_ADD_EMPTY": "Non puoi inserire una badword vuota!\nIl formato corretto del comando è: <code>/badword banana</code>",
   "SHIELD_ON": "🛡Scudo attivato!\n<b>Attenzione! Attivando questo comando hai completamente bloccato il gruppo!!!\nper modificare nuovamente le impostazioni è necessario digitare /settings</b>",
-  "WARN_USER_REASON": "‼️ {} è stato warnato!\nnel gruppo {} <code>[{}]</code>\nMotivo: {}",
-  "KICKED_USER_MESSAGE_NO_USERNAME": '{}, per essere ben accetto nel gruppo, imposta un tuo username! Sei stato Kickato per Sicurezza!',
-  "USER_MESSAGE_NO_USERNAME": '{}, per essere ben accetto nel gruppo, imposta un tuo username!'
+  "WARN_USER_REASON": "‼️ {} è stato warnato!\nnel gruppo {} [<code>{}</code>]\nMotivo: {}\nWarn: <code>{}</code>",
+  "KICKED_USER_MESSAGE_NO_USERNAME": '⛔️ {}, per essere ben accetto nel gruppo, imposta un tuo username!\nAzione: <b>{}</b>',
+  "SET_BAN_MESSAGE": "Hai impostato il messaggio di ban personalizzato con successo!",
+  "BAN_ERROR_SYNTAX": "Sintassi del comando errata o utente non riconosciuto: {}",
+  "BAN_ERROR_AC": "Non posso bannare un amministratore o un owner!",
+  "BAN_EMPTY_ERROR": "Il testo del ban non può essere vuoto!",
+  "BAN_SELF_BAN": "Non posso bannarmi da sola, usa questo comando nel modo corretto!"
 }

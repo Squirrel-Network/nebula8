@@ -14,9 +14,7 @@ from core.utilities.functions import (
 	reply_member_status_object)
 from core.utilities.message import message
 from core.utilities.strings import Strings
-from core.utilities.monads import (
-	Given,
-	Try)
+from core.utilities.monads import Try
 from telegram.utils.helpers import mention_html
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
@@ -43,11 +41,11 @@ def init(update, context):
 		user = reply.from_user
 		row = GroupRepository().getById(chat.id)
 		if user.id == bot.id:
-			text = "I can't ban myself!"
+			text = languages.ban_self_ban
 
 			message(update,context,text)
 		elif user_status.status == 'administrator' or user_status.status == 'creator':
-			message(update,context,"I can't <i>ban</i> an administrator or creator!")
+			message(update,context,languages.ban_error_ac)
 		else:
 			if row['ban_message']:
 				parsed_message = row['ban_message'].replace('{first_name}',
@@ -99,8 +97,7 @@ def init(update, context):
 			message(
 				update,
 				context,
-				"Sintassi del comando errata o utente non riconosciuto: {}"
-					.format(ban_argument)
+				languages.ban_syntax_error.format(ban_argument)
 			)
 			return
 
@@ -116,11 +113,11 @@ def set_ban_message(update, context):
         ban_text = str(reply.text).lower()
         data = [(ban_text, chat)]
         GroupRepository().update_group_settings(record, data)
-        message(update,context, text="Testo Ban impostato!")
+        message(update,context, languages.set_ban_message)
     else:
         if msg != "":
             data = [(msg, chat)]
             GroupRepository().update_group_settings(record, data)
-            message(update, context, "Hai Impostato il Messaggio Di Ban!")
+            message(update, context, languages.set_ban_message)
         else:
-            message(update, context, "Il testo del ban non può essere vuoto!")
+            message(update, context, languages.ban_error_empty)

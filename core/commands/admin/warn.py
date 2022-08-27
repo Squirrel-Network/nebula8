@@ -45,14 +45,14 @@ def init(update,context):
                 data_warn = [(user.id,chat.id)]
                 UserRepository().updateWarn(data_warn)
                 if reason:
-                    msg = languages.warn_with_reason.format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
+                    msg = languages.warn_with_reason.format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
                     update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
                 else:
-                    msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id)
+                    msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
                     update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
-                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
+                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
                 if reason:
-                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
+                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
                 telegram_loggers(update,context,log_txt)
             else:
                 username = "@"+user.username
@@ -123,7 +123,7 @@ def update_warn(update,context):
         if warn_count != max_warn:
             data_warn = [(user_id,chat_id)]
             UserRepository().updateWarn(data_warn)
-            msg = 'You Upwarned: <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
+            msg = 'You Upwarned: <a href="tg://user?id={}">{}</a>\nWarns: {}'.format(user_id,user_id,get_user['warn_count']+1)
             query.edit_message_text(msg, parse_mode='HTML')
         else:
             ban_user_by_id(update,context,user_id)
@@ -133,7 +133,7 @@ def update_warn(update,context):
         if warn_count != 0:
             data_warn = [(user_id,chat_id)]
             UserRepository().downWarn(data_warn)
-            msg = 'You Downwarned: <a href="tg://user?id={}">{}</a>'.format(user_id,user_id)
+            msg = 'You Downwarned: <a href="tg://user?id={}">{}</a>\nWarns: {}'.format(user_id,user_id,get_user['warn_count']-1)
             query.edit_message_text(msg, parse_mode='HTML')
         else:
             msg = "The user cannot be downwarned anymore!"

@@ -160,18 +160,31 @@ def init(update, context):
                 message(update, context, '🚷 I got superbanned <a href="tg://user?id={}">{}</a> [{}]\n\n'.format(user_id,user_first,user_id))
             # Kicked user because username field is empty
             elif user is None:
+                """
+                LEGEND:
+                1 == Kick
+                2 == Message
+                3 == Mute
+                4 == Ban
+                5 == Silent Kick
+                else == No Action
+                """
                 if type_no_username == 1:
-                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first)))
+                    action = 'Kick'
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
                     time.sleep(2)
                     kick_user(update, context)
                 elif type_no_username == 2:
-                    message(update, context, languages.user_message.format(mention_html(user_id, user_first)))
+                    action = 'Message'
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
                 elif type_no_username == 3:
-                    message(update, context,'<a href="tg://user?id={}">{}</a> set an <b>username!</b> You were Muted for safety!'.format(user_id,user_first))
+                    action = 'Mute'
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
                     mute_user_by_id(update, context, member.id, True)
                 elif type_no_username == 4:
                     ban_user(update,context)
-                    message(update,context,'<a href="tg://user?id={}">{}</a> was banned because they did not have an username'.format(user_id,user_first))
+                    action = 'Ban'
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
                 elif type_no_username == 5:
                     kick_user(update, context)
                 elif has_zoophile(user_first) and zoophile_filter == 1:

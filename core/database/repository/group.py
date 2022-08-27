@@ -43,6 +43,8 @@ class GroupRepository(Connection):
     SET_NO_VOCAL = "set_no_vocal"
     SET_ANTIFLOOD = "set_antiflood"
     BAN_MESSAGE = "ban_message"
+    CREATED_AT = "created_at"
+    UPDATED_AT = "updated_at"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')
@@ -173,5 +175,5 @@ class GroupRepository(Connection):
         return self._update(q, args)
 
     def job_nebula_updates(self, args=None):
-        q = "DELETE FROM nebula_updates WHERE date < NOW() - INTERVAL 180 DAY"
+        q = "DELETE FROM nebula_updates WHERE date < NOW() - INTERVAL 90 DAY"
         return self._delete(q, args)

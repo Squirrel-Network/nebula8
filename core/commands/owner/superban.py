@@ -34,9 +34,11 @@ def init(update, context):
     buttons.append(InlineKeyboardButton('Remove Superban', callback_data='removeSuperban'))
     buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
     menu = build_menu(buttons,2)
+    # Superban in response to a user
     if update.message.reply_to_message:
         user_id = update.message.reply_to_message.from_user.id
         update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
+    # Superban via id with optional motivation, format: /s 123456789 or /s 123456789 reason
     else:
         input_user_id = text[2:].strip().split(" ", 1)
         user_id = input_user_id[0]
@@ -137,5 +139,3 @@ def update_superban(update, context):
             query.edit_message_text(msg,parse_mode='HTML')
         else:
             query.edit_message_text("Attention this user not super banned!!!",parse_mode='HTML')
-    if query.data == 'closeMenu':
-        query.edit_message_text("You have closed the Menu", parse_mode='HTML')

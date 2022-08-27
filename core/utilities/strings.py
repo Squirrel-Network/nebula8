@@ -4,7 +4,7 @@
 # Copyright SquirrelNetwork
 
 class Strings(object):
-    ERROR_HANDLING = "Attention I detected a problem to send the message in the following group: <code>{}</code>"
+    ERROR_HANDLING = "Attention I detected a problem to send the message in the following group:\n ID: <code>{}</code>\nTYPE: {}"
     BAN_LOG = "<b>⚠️ #Log User Banned!</b>\n👤 User_Id: {id}\n"\
               '👤 Username: <a href="tg://user?id={id}">{username}</a>\n'\
               "👥 Group: {chat}\n"

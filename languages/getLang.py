@@ -68,5 +68,9 @@ def languages(update, context):
     languages.shield_on = setLang["SHIELD_ON"]
     languages.warn_with_reason = setLang["WARN_USER_REASON"]
     languages.kicked_user_message = setLang["KICKED_USER_MESSAGE_NO_USERNAME"]
-    languages.user_message = setLang["USER_MESSAGE_NO_USERNAME"]
+    languages.set_ban_message = setLang["SET_BAN_MESSAGE"]
+    languages.ban_syntax_error = setLang["BAN_ERROR_SYNTAX"]
+    languages.ban_error_ac = setLang["BAN_ERROR_AC"]
+    languages.ban_error_empty = setLang["BAN_EMPTY_ERROR"]
+    languages.ban_self_ban = setLang["BAN_SELF_BAN"]
     return LANGUAGE

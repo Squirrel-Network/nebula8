@@ -210,5 +210,8 @@ def check_updates(update):
       message_id = update.effective_message.message_id
       date = datetime.datetime.utcnow().isoformat()
       if chat.type == "supergroup" or chat.type == "group":
-          data = [(update.update_id, message_id, chat.id, user.id, date)]
-          GroupRepository().insert_updates(data)
+        record_updated_at = GroupRepository.UPDATED_AT
+        data = [(update.update_id, message_id, chat.id, user.id, date)]
+        GroupRepository().insert_updates(data)
+        data_upd_date = [(date,chat.id)]
+        GroupRepository().update_group_settings(record_updated_at,data_upd_date)
