@@ -171,20 +171,20 @@ def init(update, context):
                 """
                 if type_no_username == 1:
                     action = 'Kick'
-                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first),action))
                     time.sleep(2)
                     kick_user(update, context)
                 elif type_no_username == 2:
                     action = 'Message'
-                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first),action))
                 elif type_no_username == 3:
                     action = 'Mute'
-                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first),action))
                     mute_user_by_id(update, context, member.id, True)
                 elif type_no_username == 4:
                     ban_user(update,context)
                     action = 'Ban'
-                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first, action)))
+                    message(update, context, languages.kicked_user_message.format(mention_html(user_id, user_first),action))
                 elif type_no_username == 5:
                     kick_user(update, context)
                 elif has_zoophile(user_first) and zoophile_filter == 1:
