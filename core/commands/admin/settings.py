@@ -30,6 +30,7 @@ def keyboard_settings(update,context,editkeyboard = False):
         list_buttons.append(InlineKeyboardButton('%s Block Vocal ⛔️' % ('✅' if group['set_no_vocal'] == 1 else '❌'), callback_data='novocal'))
         list_buttons.append(InlineKeyboardButton('%s Block Channel 📢' % ('✅' if group['sender_chat_block'] == 1 else '❌'), callback_data='channelblock'))
         list_buttons.append(InlineKeyboardButton('%s Block Spoiler 🚫' % ('✅' if group['spoiler_block'] == 1 else '❌'), callback_data='spoilerblock'))
+        list_buttons.append(InlineKeyboardButton('%s Live with GH 🤖' % ('✅' if group['set_gh'] == 1 else '❌'),callback_data='setgrouphelp'))
         list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
         list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
         list_buttons.append(InlineKeyboardButton('Dashboard', url='https://nebula.squirrel-network.online'))
@@ -128,6 +129,17 @@ def update_settings(update,context):
             update_db_settings(update, record, True)
             return keyboard_settings(query,context,True)
         else:
+            update_db_settings(update, record, False)
+            return keyboard_settings(query,context,True)
+
+    if query.data == 'setgrouphelp':
+        record = GroupRepository.SET_GH
+        row = group['set_gh']
+        if row == 1:
+            update_db_settings(update, record, True)
+            return keyboard_settings(query,context,True)
+        else:
+
             update_db_settings(update, record, False)
             return keyboard_settings(query,context,True)
 

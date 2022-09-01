@@ -75,7 +75,8 @@ def welcome_user(update, context, member):
         parsed_message = group['welcome_text'].replace('{first_name}',
         member.first_name).replace('{chat}',
         update.message.chat.title).replace('{username}',
-        "@"+member.username).replace('{mention}',mention_html(member.id, member.first_name)).replace('{userid}',str(member.id))
+        "@"+member.username if member.username else member.first_name).replace('{mention}',mention_html(member.id, member.first_name)).replace('{userid}',str(member.id))
+
         format_message = "{}".format(parsed_message)
         buttons = GroupRepository().getById(chat)
         try:
@@ -189,13 +190,9 @@ def init(update, context):
                     kick_user(update, context)
                 elif has_zoophile(user_first) and zoophile_filter == 1:
                     ban_user(update, context)
-                    message(update, context, "Nebula's automatic system intercepted a <b>zoophile!</b>\nI banned user {}".format(mention_html(user_id, user_first)))
+                    message(update, context, "Nebula's automatic system intercepted a <b>Zoophile!</b>\nI banned user {}".format(mention_html(user_id, user_first)))
                 else:
-                    arr_buttons = []
-                    arr_buttons.append(InlineKeyboardButton(text="Bot_logs", url="https://t.me/nebulalogs"))
-                    menu = build_menu(arr_buttons, 2)
-                    main_msg = "Welcome {} in {}".format(mention_html(member.id, member.first_name),chat_title)
-                    update.message.reply_text(main_msg,reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+                    welcome_user(update,context,member)
                     print("No action even if you don't have a username")
             # They ban the user because he doesn't have a profile picture
             elif user_photo.total_count == 0 and user_profile_photo == 1:

@@ -45,6 +45,7 @@ class GroupRepository(Connection):
     BAN_MESSAGE = "ban_message"
     CREATED_AT = "created_at"
     UPDATED_AT = "updated_at"
+    SET_GH = "set_gh"
 
     def getById(self, args=None):
         query = Query.from_(groups).select("*").where(groups.id_group == '%s')

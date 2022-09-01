@@ -23,60 +23,63 @@ def init(update,context):
     current_time = datetime.datetime.utcnow().isoformat()
     default_warn = 1
     languages(update,context)
-    if update.message.reply_to_message:
-        reason = update.message.text[5:]
-        user = user_reply_object(update)
-        get_user = UserRepository().getUserByGroup([user.id,chat.id])
-        warn_count = get_user['warn_count'] if get_user is not None else 0
-        if warn_count != max_warn:
-            buttons = []
-            buttons.append(InlineKeyboardButton('➖ 1', callback_data='downWarn'))
-            buttons.append(InlineKeyboardButton('➕ 1', callback_data='upWarn'))
-            buttons.append(InlineKeyboardButton(languages.button_remove, callback_data='removeWarn'))
-            menu = build_menu(buttons,3)
-            if get_user:
-                default_warn_count = 0
-                default_user_score = 0
-                username = "@"+user.username
-                data = [(username,current_time,user.id)]
-                UserRepository().update(data)
-                data_mtm = [(user.id, chat.id, default_warn_count,default_user_score)]
-                UserRepository().add_into_mtm(data_mtm)
-                data_warn = [(user.id,chat.id)]
-                UserRepository().updateWarn(data_warn)
-                if reason:
-                    msg = languages.warn_with_reason.format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
-                    update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+    if get_group['set_gh'] == 0:
+        if update.message.reply_to_message:
+            reason = update.message.text[5:]
+            user = user_reply_object(update)
+            get_user = UserRepository().getUserByGroup([user.id,chat.id])
+            warn_count = get_user['warn_count'] if get_user is not None else 0
+            if warn_count != max_warn:
+                buttons = []
+                buttons.append(InlineKeyboardButton('➖ 1', callback_data='downWarn'))
+                buttons.append(InlineKeyboardButton('➕ 1', callback_data='upWarn'))
+                buttons.append(InlineKeyboardButton(languages.button_remove, callback_data='removeWarn'))
+                menu = build_menu(buttons,3)
+                if get_user:
+                    default_warn_count = 0
+                    default_user_score = 0
+                    username = "@"+user.username
+                    data = [(username,current_time,user.id)]
+                    UserRepository().update(data)
+                    data_mtm = [(user.id, chat.id, default_warn_count,default_user_score)]
+                    UserRepository().add_into_mtm(data_mtm)
+                    data_warn = [(user.id,chat.id)]
+                    UserRepository().updateWarn(data_warn)
+                    if reason:
+                        msg = languages.warn_with_reason.format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
+                        update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+                    else:
+                        msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
+                        update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
+                    if reason:
+                        log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
+                    telegram_loggers(update,context,log_txt)
                 else:
-                    msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
-                    update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
-                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
-                if reason:
-                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
-                telegram_loggers(update,context,log_txt)
+                    username = "@"+user.username
+                    data = [(user.id,username,current_time,current_time)]
+                    UserRepository().add(data)
+                    data_mtm = [(user.id, chat.id, default_warn)]
+                    UserRepository().add_into_mtm(data_mtm)
+                    if reason:
+                        message(update,context,languages.warn_with_reason.format(username,chat.title,chat.id,reason))
+                    else:
+                        message(update,context,languages.warn_user.format(username,chat.title,chat.id))
+                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
+                    if reason:
+                        log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
+                    telegram_loggers(update,context,log_txt)
             else:
-                username = "@"+user.username
-                data = [(user.id,username,current_time,current_time)]
-                UserRepository().add(data)
-                data_mtm = [(user.id, chat.id, default_warn)]
-                UserRepository().add_into_mtm(data_mtm)
-                if reason:
-                    message(update,context,languages.warn_with_reason.format(username,chat.title,chat.id,reason))
-                else:
-                    message(update,context,languages.warn_user.format(username,chat.title,chat.id))
-                log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id)
-                if reason:
-                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason)
-                telegram_loggers(update,context,log_txt)
+                ban_user_reply(update,context)
+                buttons = []
+                buttons.append(InlineKeyboardButton('Remove', callback_data='removeWarn'))
+                menu = build_menu(buttons,2)
+                msg = languages.warn_user_max.format(user.username,chat.title)
+                update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
         else:
-            ban_user_reply(update,context)
-            buttons = []
-            buttons.append(InlineKeyboardButton('Remove', callback_data='removeWarn'))
-            menu = build_menu(buttons,2)
-            msg = languages.warn_user_max.format(user.username,chat.title)
-            update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+            message(update,context,languages.error_response_user_msg)
     else:
-        message(update,context,languages.error_response_user_msg)
+        return
 
 
 
