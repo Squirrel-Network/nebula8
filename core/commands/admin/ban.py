@@ -55,7 +55,7 @@ def init(update, context):
 					parsed_message = row['ban_message'].replace('{first_name}',
 					user.first_name).replace('{chat}',
 					update.message.chat.title).replace('{username}',
-					"@"+user.username).replace('{mention}',mention_html(user.id, user.first_name)).replace('{userid}',str(user.id))
+					"@"+user.username if user.username else user.first_name).replace('{mention}',mention_html(user.id, user.first_name)).replace('{userid}',str(user.id))
 					ban_text = "{}".format(parsed_message)
 				else:
 					ban_text = languages.ban_message.format(
