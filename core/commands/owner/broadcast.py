@@ -3,7 +3,6 @@
 
 # Copyright SquirrelNetwork
 import asyncio
-from unicodedata import category
 from core import decorators
 from core.utilities.message import message,messageWithAsyncById
 from core.utilities.strings import Strings

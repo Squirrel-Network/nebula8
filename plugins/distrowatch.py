@@ -7,7 +7,6 @@ import requests
 from core import decorators
 from bs4 import BeautifulSoup
 from core.utilities.menu import build_menu
-from core.utilities.message import message
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 @decorators.delete.init
