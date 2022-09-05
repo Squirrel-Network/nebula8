@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "nebula"
+version = "8.6.2"
+description = "Open source bot to administer a telegram group with different functionalities and blacklist"
+authors = ["SquirrelNetwork"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.9.2"
+pandas = "^1.4.4"
+matplotlib = "^3.5.3"
+PyMySQL = "^1.0.2"
+python-telegram-bot = "^13.14"
+telegram = "^0.0.1"
+psutil = "^5.9.2"
+loguru = "^0.6.0"
+pyowm = "^3.3.0"
+PyPika = "^0.48.9"
+wikipedia = "^1.4.0"
+beautifulsoup4 = "^4.11.1"
+pip = "^22.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
