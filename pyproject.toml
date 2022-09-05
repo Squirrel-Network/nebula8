@@ -20,6 +20,7 @@ PyPika = "^0.48.9"
 wikipedia = "^1.4.0"
 beautifulsoup4 = "^4.11.1"
 pip = "^22.2.2"
+SQLAlchemy = "^1.4.40"
 
 
 [build-system]
