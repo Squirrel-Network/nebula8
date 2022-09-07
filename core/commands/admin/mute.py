@@ -9,6 +9,7 @@ from core.utilities.regex import Regex
 from languages.getLang import languages
 from core.utilities.message import message
 from core.utilities.menu import build_menu
+from telegram.utils.helpers import mention_html
 from core.database.repository.group import GroupRepository
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.functions import mute_user_reply, mute_user_by_id, mute_user_by_id_time, mute_user_by_username_time, chat_object
@@ -28,6 +29,10 @@ def convert_time(update,context,time_args):
         error_msg = "You must enter a valid time value for the bot among the following: <code>1d, 3d, 7d, 1h, 30s</code>"
         message(update,context,error_msg)
     return int(time_args)
+
+def mute_message(user,time):
+    message = '🔇 You muted the user {}\n[<code>{}</code>]\n\nfor <code>{}</code> Time'.format(mention_html(user.id, user.first_name),user.id,time)
+    return message
 
 @decorators.admin.user_admin
 @decorators.delete.init
@@ -61,7 +66,7 @@ def init(update,context):
                     time_args = input_user_id[1]
                     arg_time = convert_time(update,context,time_args)
                     mute_user_by_username_time(update,context,user_id,True,arg_time)
-                    msg = 'You muted the user {} for <code>{}</code> seconds'.format(user_id,time_args)
+                    msg = '🔇 You muted the user {} for <code>{}</code> time'.format(user_id,time_args)
                     message(update,context,msg)
                 else:
                 #Mute via Id
@@ -71,7 +76,7 @@ def init(update,context):
                         message(update,context,"Type a correct telegram id or type in the username!")
                     else:
                         mute_user_by_id_time(update,context,user_id,True,int(time_args))
-                        msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> time'.format(user_id,user_id,user_id,time_args)
+                        msg = '🔇 You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> time'.format(user_id,user_id,user_id,time_args)
                         message(update,context,msg)
             else:
                 message(update,context,"Attention you have not entered the user id and mute time correctly")
@@ -86,28 +91,22 @@ def update_mute(update,context):
         txt = query.data[2:]
         if txt == "30":
             mute_user_by_id_time(update,context,user.id,True,int(txt))
-            msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for <code>{}</code> seconds'.format(user.id,user.first_name,user.id,txt)
-            query.edit_message_text(msg, parse_mode='HTML')
+            query.edit_message_text(mute_message(user,txt), parse_mode='HTML')
         if txt == "3600":
             mute_user_by_id_time(update,context,user.id,True,int(txt))
-            msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for 1 Hour'.format(user.id,user.first_name,user.id)
-            query.edit_message_text(msg, parse_mode='HTML')
+            query.edit_message_text(mute_message(user,'1 Hour'), parse_mode='HTML')
         if txt == "86400":
             mute_user_by_id_time(update,context,user.id,True,int(txt))
-            msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for 1 Day'.format(user.id,user.first_name,user.id)
-            query.edit_message_text(msg, parse_mode='HTML')
+            query.edit_message_text(mute_message(user,'1 Day'), parse_mode='HTML')
         if txt == "259200":
             mute_user_by_id_time(update,context,user.id,True,int(txt))
-            msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for 3 Day'.format(user.id,user.first_name,user.id)
-            query.edit_message_text(msg, parse_mode='HTML')
+            query.edit_message_text(mute_message(user,'3 Days'), parse_mode='HTML')
         if txt == "604800":
             mute_user_by_id_time(update,context,user.id,True,int(txt))
-            msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> for 7 Day'.format(user.id,user.first_name,user.id)
-            query.edit_message_text(msg, parse_mode='HTML')
+            query.edit_message_text(mute_message(user,'7 Days'), parse_mode='HTML')
         if txt == "forever":
             mute_user_by_id(update,context,user.id,True)
-            msg = 'You muted the user <a href="tg://user?id={}">{}</a> <code>[{}]</code> forever'.format(user.id,user.first_name,user.id)
-            query.edit_message_text(msg, parse_mode='HTML')
+            query.edit_message_text(mute_message(user,'Forever'), parse_mode='HTML')
         if txt == 'unmute':
             languages(update,context)
             mute_user_by_id(update,context,user.id,False)

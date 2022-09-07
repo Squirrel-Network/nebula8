@@ -51,9 +51,9 @@ def init(update,context):
                     else:
                         msg = languages.warn_user.format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
                         update.message.reply_to_message.reply_text(msg, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
-                    log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
+                    log_txt = "‼️ #Log {} was warned\nin the group: {} [<code>{}</code>]\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,get_user['warn_count']+1)
                     if reason:
-                        log_txt = "‼️ #Log {} was warned\nin the group: {} <code>[{}]</code>\nReason: {}\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
+                        log_txt = "‼️ #Log {} was warned\nin the group: {} [<code>{}</code>]\nReason: {}\nWarns: <code>{}</code>".format(mention_html(user.id, user.first_name),chat.title,chat.id,reason,get_user['warn_count']+1)
                     telegram_loggers(update,context,log_txt)
                 else:
                     username = "@"+user.username
@@ -99,7 +99,7 @@ def set_warn(update, context):
     buttons.append(InlineKeyboardButton('9️⃣', callback_data='w9'))
     buttons.append(InlineKeyboardButton('🔟', callback_data='w10'))
     menu = build_menu(buttons,3)
-    bot.send_message(chat,"⚙️ Warn Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML' )
+    bot.send_message(chat,"⚙ Warn Settings", reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML' )
 
 @decorators.admin.user_admin
 def update_set_warn(update, context):

@@ -49,7 +49,7 @@ def admin_command(dsp):
     function(CMH('setwarn', admin.warn.set_warn))
     function(CMH('setrules', admin.set_rules.init))
     function(CMH('setnousername', admin.set_welcome.set_type_no_username))
-    function(CMH('delete', admin.delete_message.init))
+    function(CMH('del', admin.delete_message.init))
     function(CMH('welcomebuttons', admin.set_welcome.set_welcome_buttons))
     function(CMH('shield', admin.shield.init))
     function(CMH('badword', admin.badword.init))

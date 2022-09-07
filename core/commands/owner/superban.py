@@ -31,6 +31,7 @@ def init(update, context):
     buttons.append(InlineKeyboardButton('Porn', callback_data='mPorn'))
     buttons.append(InlineKeyboardButton('Other', callback_data='mOther'))
     buttons.append(InlineKeyboardButton('Illegal Content', callback_data='mIllegal_Content'))
+    buttons.append(InlineKeyboardButton('Harrasment', callback_data='mHarrasment'))
     buttons.append(InlineKeyboardButton('Remove Superban', callback_data='removeSuperban'))
     buttons.append(InlineKeyboardButton('Close', callback_data='closeMenu'))
     menu = build_menu(buttons,2)
@@ -102,40 +103,40 @@ def update_superban(update, context):
         operator_id = query.from_user.id
         operator_username = "@"+query.from_user.username
         operator_first_name = query.from_user.first_name
-        user_id = query.message.reply_to_message.from_user.id
-        user_first_name = query.message.reply_to_message.from_user.first_name
+        user = query.message.reply_to_message.from_user
         motivation = query.data[1:]
-        row = SuperbanRepository().getById(user_id)
-        whitelist = SuperbanRepository().getWhitelistById(user_id)
+        row = SuperbanRepository().getById(user.id)
+        whitelist = SuperbanRepository().getWhitelistById(user.id)
         if whitelist:
-            text_w = "This user is whitelisted you cannot blacklist!"
+            text_w = "user {} is whitelisted you cannot blacklist!".format(user.first_name)
             query.edit_message_text(text_w, parse_mode='HTML')
         elif row:
-            text = "Attention already superbanned user {}!".format(user_first_name)
+            text = "Attention already <b>SuperBanned</b> user {} [<code>{}</code>]!".format(user.first_name,user.id)
             query.edit_message_text(text, parse_mode='HTML')
         else:
-            data = [(user_id,user_first_name,motivation,save_date,operator_id,operator_username,operator_first_name)]
+            data = [(user.id,user.first_name,motivation,save_date,operator_id,operator_username,operator_first_name)]
             SuperbanRepository().add(data)
             #Ban the User
-            bot.ban_chat_member(chat_id, user_id)
+            bot.ban_chat_member(chat_id, user.id)
             #Edit Message Text after push the button
-            msg = 'You got super banned <a href="tg://user?id={}">{}</a>\nFor the following reason: <b>{}</b>\nGo to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user_id,user_id,motivation,user_id)
+            msg = '🚷 Got <b>SuperBanned</b> <a href="tg://user?id={}">{}</a>\n\n📝 For the following reason: <b>{}</b>\n\n➡ Go to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user.id,user.first_name,motivation,user.id)
             query.edit_message_text(msg, parse_mode='HTML')
+            bot.delete_message(chat_id, query.message.reply_to_message.message_id)
             #Telegram Logs
-            logs_text = Strings.SUPERBAN_LOG.format(user_first_name,user_id,motivation,save_date,operator_first_name,operator_username,operator_id)
+            logs_text = Strings.SUPERBAN_LOG.format(user.first_name,user.id,motivation,save_date,operator_first_name,operator_username,operator_id)
             message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
             #System Logs
-            formatter = "Superban eseguito da: {}<code>[{}]</code> verso l'utente: <code>[{}]</code>".format(operator_username,operator_id,user_id)
+            formatter = "Superban eseguito dall'operatore: {}<code>[{}]</code>\nVerso l'utente: {} [<code>{}</code>]\nNella chat: [<code>{}</code>]".format(operator_username,operator_id,user.first_name,user.id,chat_id)
             sys_loggers("[SUPERBAN_LOGS]",formatter,False,False,True)
-            debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
+            debug_channel(update, context, "[DEBUG_LOGGER]\n{}".format(formatter))
 
     if query.data == "removeSuperban":
-        user_id = query.message.reply_to_message.from_user.id
-        row = SuperbanRepository().getById(user_id)
+        user = query.message.reply_to_message.from_user
+        row = SuperbanRepository().getById(user.id)
         if row:
-            data = [(user_id)]
+            data = [(user.id)]
             SuperbanRepository().remove(data)
-            msg = "I removed the superban to user <code>{}</code>".format(user_id)
+            msg = "I removed the superban to user {} [<code>{}</code>]".format(user.first_name,user.id)
             query.edit_message_text(msg,parse_mode='HTML')
         else:
             query.edit_message_text("Attention this user not super banned!!!",parse_mode='HTML')
