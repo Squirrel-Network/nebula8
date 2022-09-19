@@ -61,7 +61,7 @@ def init(update,context):
             user_id = input_user_id[0]
             time_args = input_user_id[1]
             if user_id != "" and time_args != "":
-                #Mute via Username
+                #Mute via Username es: /mute @username 1d
                 if user_id.startswith('@'):
                     time_args = input_user_id[1]
                     arg_time = convert_time(update,context,time_args)
@@ -69,7 +69,7 @@ def init(update,context):
                     msg = '🔇 You muted the user {} for <code>{}</code> time'.format(user_id,time_args)
                     message(update,context,msg)
                 else:
-                #Mute via Id
+                #Mute via Id es: /mute 1234568 1d
                     time_args = input_user_id[1]
                     number = re.search(Regex.HAS_NUMBER, user_id)
                     if number is None:

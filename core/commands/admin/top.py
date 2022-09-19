@@ -4,6 +4,7 @@
 # Copyright SquirrelNetwork
 
 import time
+import calendar
 from core.database.repository.group import GroupRepository
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.message import message
@@ -28,6 +29,8 @@ def init(update, context):
 @decorators.admin.user_admin
 def update_top(update,context):
     query = update.callback_query
+    current_GMT = time.gmtime()
+    ts = calendar.timegm(current_GMT)
     if query.data == 'useractive':
         chat = update.effective_message.chat_id
         topUsers = GroupRepository().getTopActiveUsers(chat)
@@ -35,7 +38,7 @@ def update_top(update,context):
         for row in topUsers:
             string += "▪️ {} <code>[{}]</code>\n".format(row['tg_username'],row['counter'])
         upd_charts_DESC(update,context)
-        img = "https://naos.hersel.it/charts/{}desc.jpg".format(chat)
+        img = "https://naos.hersel.it/charts/{}desc.jpg?v={}".format(chat,ts)
         caption = 'Top 10 Active Users Until 30 Days\n\n{}'.format(string)
         time.sleep(1)
         query.message.delete()
@@ -47,7 +50,7 @@ def update_top(update,context):
         for row in topUsers:
             string += "▪️ {} <code>[{}]</code>\n".format(row['tg_username'],row['counter'])
         upd_charts_ASC(update,context)
-        img = "https://naos.hersel.it/charts/{}asc.jpg".format(chat)
+        img = "https://naos.hersel.it/charts/{}asc.jpg?v={}".format(chat,ts)
         caption = 'Top 10 Inactive Users Until 30 Days\n\n{}'.format(string)
         time.sleep(1)
         query.message.delete()
