@@ -5,12 +5,13 @@
 
 import time
 import calendar
-from core.database.repository.group import GroupRepository
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from core import decorators
 from core.utilities.message import message
 from core.utilities.menu import build_menu
+from core.database.repository.group import GroupRepository
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.functions import upd_charts_DESC, upd_charts_ASC
-from core import decorators
+
 
 @decorators.admin.user_admin
 @decorators.bot.check_is_admin
@@ -21,8 +22,9 @@ def init(update, context):
     bot = context.bot
     chat = update.effective_message.chat_id
     list_buttons = []
-    list_buttons.append(InlineKeyboardButton('Active', callback_data='useractive'))
-    list_buttons.append(InlineKeyboardButton('Inactive', callback_data='userinactive'))
+    list_buttons.append(InlineKeyboardButton('📈 Active', callback_data='useractive'))
+    list_buttons.append(InlineKeyboardButton('📉 Inactive', callback_data='userinactive'))
+    list_buttons.append(InlineKeyboardButton("🗑 Close", callback_data='close'))
     menu = build_menu(list_buttons,1)
     bot.send_message(chat,'Please select an option',reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
 

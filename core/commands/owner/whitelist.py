@@ -38,7 +38,6 @@ def init(update,context):
 @decorators.owner.init
 def remove_blacklist(update,context):
     query = update.callback_query
-    user_id = query.message.reply_to_message.from_user.id
     if query.data == 'removeBL':
         user_id = query.message.reply_to_message.from_user.id
         row = SuperbanRepository().getById(user_id)

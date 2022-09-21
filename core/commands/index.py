@@ -84,6 +84,7 @@ def admin_command(dsp):
     function(CQH(admin.shield.update_shield, pattern='removeShield'))
     function(CQH(admin.top.update_top, pattern='useractive'))
     function(CQH(admin.top.update_top, pattern='userinactive'))
+    function(CQH(owner.add_owner.update_owner, pattern='OwnerRemove'))
     function(CQH(admin.settings.update_settings))
 """
 Here are inserted all the commands with owner permissions

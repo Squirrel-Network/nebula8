@@ -117,7 +117,7 @@ class GroupRepository(Connection):
         return self._select(q, args)
 
     def get_antispam_logic(self, args=None):
-        q = "SELECT * FROM nebula_antispam WHERE INSTR(%s, logic) <> 0"
+        q = "SELECT logic FROM nebula_antispam WHERE INSTR(%s, logic) <> 0"
 
         return self._select(q, args)
 

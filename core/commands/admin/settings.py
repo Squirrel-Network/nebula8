@@ -31,10 +31,10 @@ def keyboard_settings(update,context,editkeyboard = False):
         list_buttons.append(InlineKeyboardButton('%s Block Channel 📢' % ('✅' if group['sender_chat_block'] == 1 else '❌'), callback_data='channelblock'))
         list_buttons.append(InlineKeyboardButton('%s Block Spoiler 🚫' % ('✅' if group['spoiler_block'] == 1 else '❌'), callback_data='spoilerblock'))
         list_buttons.append(InlineKeyboardButton('%s Live with GH 🤖' % ('✅' if group['set_gh'] == 1 else '❌'),callback_data='setgrouphelp'))
-        list_buttons.append(InlineKeyboardButton('Languages', callback_data='lang'))
+        list_buttons.append(InlineKeyboardButton('Languages 🌍', callback_data='lang'))
         list_buttons.append(InlineKeyboardButton('Commands', url='https://github.com/Squirrel-Network/nebula8/wiki/Command-List'))
         list_buttons.append(InlineKeyboardButton('Dashboard', url='https://nebula.squirrel-network.online'))
-        list_buttons.append(InlineKeyboardButton("Close", callback_data='close'))
+        list_buttons.append(InlineKeyboardButton("Close 🗑", callback_data='close'))
         menu = build_menu(list_buttons,2)
         if editkeyboard == False:
             keyboard_menu = bot.send_message(chat,"⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
