@@ -13,12 +13,10 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 @decorators.owner.init
 @decorators.delete.init
 def init(update,context):
-    bot = context.bot
     if update.message.reply_to_message:
         user = user_reply_object(update)
         user_id = user.id
         username = "@"+user.username
-        chat = update.effective_message.chat_id
         row = UserRepository().getOwnerById(user.id)
         list_buttons = []
         if row:
