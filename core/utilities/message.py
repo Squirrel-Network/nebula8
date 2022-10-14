@@ -24,6 +24,8 @@ def message(update, context, text = "", parse = 'HTML', type = 'message', chatid
         send = bot.send_message(chatid,text,parse_mode=parse)
     elif type == 'private':
         send = bot.send_message(update.message.from_user.id,text,parse_mode=parse)
+    elif type == 'animation':
+        send = bot.sendAnimation(chat, img, caption=text)
 
     return send
 
