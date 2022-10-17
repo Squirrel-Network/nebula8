@@ -23,7 +23,7 @@ def init(update,context):
 
     chat = update.effective_chat
     languages(update,context)
-    if str(update.effective_message.text).lower().startswith("@admin"):
+    if str(update.effective_message.text).lower().startswith("@admin") or str(update.effective_message.text).lower().startswith("/report"):
         if update.effective_message.reply_to_message:
             msg = update.effective_message.reply_to_message
             format_link = "https://t.me/c/{}/{}".format(str(chat.id)[3:],msg.message_id)
@@ -36,15 +36,14 @@ def init(update,context):
             user_id = update.message.from_user.id
             user_first = update.message.from_user.first_name
             format_link = "https://t.me/c/{}/{}".format(str(chat.id)[3:],msg_id)
-            format_message = '#Report\nUser: <a href="tg://user?id={}">{}</a>\nGroup Id: <code>[{}]</code>\nGroup Title: {}\nLink: {}'.format(user_id,user_first,str(chat.id)[3:],chat.title,format_link)
+            format_message = '#Report\nUser: <a href="tg://user?id={}">{}</a>\nGroup Id: [<code>{}</code>]\nGroup Title: {}\nLink: {}'.format(user_id,user_first,str(chat.id)[3:],chat.title,format_link)
             message(update, context, languages.report_msg, 'HTML', 'reply', None, None)
             telegram_loggers(update,context,format_message)
             bot.send_message(staff_group_id,format_message, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
 
 @decorators.admin.user_admin
-def update_resolve(update, context):
+def update_resolve(update,context):
     query = update.callback_query
     var_message = query.message.text
-    var_message = query.message.text[7:]
     query.edit_message_text(text="{}\n<b>Risolto da: @{username}</b>"
     .format(var_message,username=str(update.effective_user.username)),parse_mode='HTML')

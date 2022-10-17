@@ -60,7 +60,7 @@ def admin_command(dsp):
     function(CMH('top', admin.top.init))
     function(CMH('unpinall', admin.pin.unpin_all))
     function(CMH('pin', admin.pin.pin))
-    function(CMH('report', admin.greport.init))
+    function(CMH('greport', admin.greport.init))
     #############################
     ### CallbackQuery Handler ###
     #############################

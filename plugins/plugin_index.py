@@ -16,3 +16,4 @@ def function_plugins(dsp):
     function(CMH('weather',plugins.weather.init))
     function(CMH('inspire',plugins.inspire.init))
     function(CMH('react',plugins.reactions.init))
+    function(CMH('linktree', plugins.linktree.init))
