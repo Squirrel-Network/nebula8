@@ -5,9 +5,8 @@
 from core import decorators
 from languages.getLang import languages
 from core.utilities.strings import Strings
-from core.utilities.functions import chat_object
 from core.utilities.message import message
-from core.handlers.logs import telegram_loggers, staff_loggers
+from core.handlers.logs import telegram_loggers
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.utilities.menu import build_menu
 
@@ -41,21 +40,6 @@ def init(update,context):
             message(update, context, languages.report_msg, 'HTML', 'reply', None, None)
             telegram_loggers(update,context,format_message)
             bot.send_message(staff_group_id,format_message, reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
-
-@decorators.public.init
-@decorators.delete.init
-def global_report(update, context):
-    bot = context.bot
-    chat = chat_object(update)
-    languages(update,context)
-    if update.effective_message.reply_to_message:
-        message(update, context, languages.delete_error_msg)
-    else:
-        link = bot.export_chat_invite_link(chat.id)
-        msg = "#GlobalReport\nChatId: {}\nChat: {}\nLink: {}".format(chat.id, chat.title, link)
-        msg_report = languages.global_report_msg
-        staff_loggers(update, context, msg)
-        message(update, context, msg_report)
 
 @decorators.admin.user_admin
 def update_resolve(update, context):

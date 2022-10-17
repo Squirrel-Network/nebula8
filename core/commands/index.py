@@ -19,7 +19,6 @@ def user_command(dsp):
     function(CMH('rules', public.rules.init))
     function(CMH('io', public.io.init))
     function(CMH('source', public.source.init))
-    function(CMH('report', public.report.global_report))
     function(CMH('lost', public.eggs.egg_lost))
     function(CMH('kickme', public.kickme.init))
     function(CMH('staff', public.staff.init))
@@ -61,6 +60,7 @@ def admin_command(dsp):
     function(CMH('top', admin.top.init))
     function(CMH('unpinall', admin.pin.unpin_all))
     function(CMH('pin', admin.pin.pin))
+    function(CMH('report', admin.greport.init))
     #############################
     ### CallbackQuery Handler ###
     #############################
