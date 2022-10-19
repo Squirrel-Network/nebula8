@@ -100,3 +100,21 @@ class UserRepository(Connection):
         q = "INSERT INTO linktree_buttons (user_id, button_id, button_text, button_url) VALUES (%s, NULL, %s, %s)"
 
         return self._insert(q, args)
+
+    def insert_main_text_linktree(self, args=None):
+
+        q = "INSERT INTO linktree_main_text (user_id, main_text) VALUES (%s,%s)"
+
+        return self._insert(q, args)
+
+    def update_main_text_linktree(self, args=None):
+
+        q = "UPDATE linktree_main_text SET main_text = %s WHERE user_id = %s"
+
+        return self._update(q, args)
+
+    def delete_linktree_button(self, args=None):
+
+        q = "DELETE FROM linktree_buttons WHERE button_id = %s AND user_id = %s"
+
+        return self._delete(q, args)

@@ -17,3 +17,8 @@ def function_plugins(dsp):
     function(CMH('inspire',plugins.inspire.init))
     function(CMH('react',plugins.reactions.init))
     function(CMH('linktree', plugins.linktree.init))
+    function(CMH('linktreeid', plugins.linktree.linktreeid))
+    function(CMH('addlink', plugins.linktree.add_button))
+    function(CMH('startlink', plugins.linktree.startlink))
+    function(CMH('mainlink', plugins.linktree.mainlink))
+    function(CMH('deletelink', plugins.linktree.delete_button))

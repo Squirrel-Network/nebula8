@@ -36,7 +36,6 @@ def ApiMessage(text, chat_id):
     return  send
 
 def ApiGroupRemove(chat_id):
-
     url = MAIN_URL + "bot1080544251:{}/leaveChat?chat_id={}".format(TOKEN,chat_id)
     send = requests.get(url)
     return send
