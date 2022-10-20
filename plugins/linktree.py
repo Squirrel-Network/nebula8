@@ -75,7 +75,7 @@ def add_button(update,context):
         elif len(input_text) > 2:
             message(update, context,"You can only enter two parameters at a time!")
         else:
-            data = [(user.id,title_button,url_button)]
+            data = [(user.id,str(title_button).strip(),str(url_button).strip())]
             UserRepository().insert_linktree_button(data)
             message(update,context,"You have inserted a new button in the <code>/linktree</code> command\n\n Button text: {buttontext}\n Button URL: {buttonurl}".format(buttontext=title_button,buttonurl=url_button))
     except IndexError:
