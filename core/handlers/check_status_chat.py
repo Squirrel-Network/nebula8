@@ -9,7 +9,7 @@ from core.handlers.welcome import welcome_bot
 from core.handlers.logs import telegram_loggers, sys_loggers, debug_channel
 from core.database.repository.group import GroupRepository
 from core.database.repository.superban import SuperbanRepository
-from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission
+from core.utilities.functions import chat_object, user_object, ban_user, check_user_permission, save_group
 
 
 def check_group_blacklist(update):
@@ -52,17 +52,7 @@ def check_status(update, context):
     group_members_count = update.effective_chat.get_member_count()
     #buttons = list(update.effective_message.reply_markup.inline_keyboard)
 
-    """
-    This function updates the group id on the database
-    when a group changes from group to supergroup
-    """
-    if update.effective_message.migrate_from_chat_id is not None:
-        old_chat_id = update.message.migrate_from_chat_id
-        new_chat_id = update.message.chat.id
-        data = [(new_chat_id, old_chat_id)]
-        GroupRepository().update(data)
-        message(update,context,"<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
-        debug_channel(update,context,"[DEBUG_LOGGER] La chat {} è stata modifica da Gruppo a Supergruppo il suo nuovo id è: {}".format(old_chat_id,new_chat_id))
+
     """
     This function saves the group to the database
     when the bot is added as soon as a group or supergroup is created
@@ -71,6 +61,24 @@ def check_status(update, context):
         welcome_bot(update,context)
         l_txt = "#Log <b>Bot added to group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
         telegram_loggers(update,context,l_txt)
+
+    if get_group is None:
+        save_group(update)
+
+    """
+       This function updates the group id on the database
+       when a group changes from group to supergroup
+       """
+    if update.effective_message.migrate_from_chat_id is not None:
+        old_chat_id = update.message.migrate_from_chat_id
+        new_chat_id = update.message.chat.id
+        data = [(new_chat_id, old_chat_id)]
+        GroupRepository().update(data)
+        message(update, context,
+                "<b>#Automatic handler:</b>\nThe chat has been migrated to <b>supergroup</b> the bot has made the modification on the database.\n<i>It is necessary to put the bot admin</i>")
+        debug_channel(update, context,
+                      "[DEBUG_LOGGER] La chat {} è stata modifica da Gruppo a Supergruppo il suo nuovo id è: {}".format(
+                          old_chat_id, new_chat_id))
     """
     This feature changes the chat title
     on the database when it is changed
@@ -113,7 +121,7 @@ def check_status(update, context):
         message(update,context,"<b>#Automatic handler:</b>\nThe group is blacklisted the bot will automatically exit the chat")
         log_txt = "#Log <b>Bot removed from group</b> {}\nId: <code>{}</code>".format(chat_title,chat_id)
         telegram_loggers(update,context,log_txt)
-        time.sleep(2)
+        time.sleep(1)
         bot.leave_chat(chat_id)
         debug_channel(update,context,"[DEBUG_LOGGER] Il bot è stato rimosso dalla chat <code>[{}]</code> perchè il gruppo è in Blacklist".format(chat_id))
     """

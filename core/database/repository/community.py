@@ -26,3 +26,15 @@ class CommunityRepository(Connection):
     def add(self, args=None):
         q = "INSERT INTO community(tg_group_name, tg_group_id, tg_group_link, language, type) VALUES (%s,%s,%s,%s,%s)"
         return self._insert(q, args)
+
+    def getCommunityGroups(self):
+
+        q = "SELECT * FROM community WHERE type = 'supergroup'"
+
+        return self._selectAll(q)
+
+    def getCommunityChannels(self):
+
+        q = "SELECT * FROM community WHERE type = 'channel'"
+
+        return self._selectAll(q)

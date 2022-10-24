@@ -107,3 +107,5 @@ def owner_command(dsp):
     function(CMH('exportlink', owner.export_invite_link.init))
     function(CMH('maxport', owner.export_invite_link.manual_export))
     function(CMH('spam', owner.add_antispam.init))
+    function(CMH('channels', owner.list_community.channels))
+    function(CMH('groups', owner.list_community.groups))

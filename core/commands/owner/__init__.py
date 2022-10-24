@@ -4,6 +4,6 @@
 # Copyright SquirrelNetwork
 
 """Import Files"""
-__all__ = ["add_antispam","add_community","add_owner","broadcast","exit","export_invite_link","server_info","superban","test","whitelist"]
+__all__ = ["add_antispam","add_community","add_owner","broadcast","exit","export_invite_link","list_community","server_info","superban","test","whitelist"]
 
 from core.commands.owner import *

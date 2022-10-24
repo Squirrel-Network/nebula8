@@ -37,7 +37,6 @@ def init(update, context):
     menu = build_menu(buttons,2)
     # Superban in response to a user
     if update.message.reply_to_message:
-        user_id = update.message.reply_to_message.from_user.id
         update.message.reply_to_message.reply_text("Select a reason for the Superban", reply_markup=InlineKeyboardMarkup(menu))
     # Superban via id with optional motivation, format: /s 123456789 or /s 123456789 reason
     else:
