@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # Copyright SquirrelNetwork
+import time
+import calendar
 from core.database.repository.group import GroupRepository
 from languages.getLang import languages
 from core.utilities.message import message
@@ -20,10 +22,12 @@ def init(update, context):
     record = GroupRepository.SET_GROUP_NAME
     row = GroupRepository().getById([chat])
     if row:
+        current_GMT = time.gmtime()
+        ts = calendar.timegm(current_GMT)
         data = [(chat_title, chat)]
         GroupRepository().update_group_settings(record, data)
         counter = GroupRepository().getUpdatesByChatMonth(chat)
-        img = row['group_photo']
+        img = "{}?v={}".format(row['group_photo'],ts)
         caption = languages.group_info.format(
             row['group_name'],
             row['id_group'],
