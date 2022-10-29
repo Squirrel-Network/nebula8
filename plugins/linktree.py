@@ -50,6 +50,7 @@ def startlink(update,context):
         data = [(user.id,default_main_text)]
         UserRepository().insert_main_text_linktree(data)
         message(update, context,"You first created /linktree content\n\n🟦 Legend:\n🔹 To add a button type: <code>/addlink title,url</code>\n🔹 To see all links type: <code>/linktree</code>\n🔹 To change the main text type <code>/mainlink sampletext</code>\n🔹 To delete a button type <code>/deletelink id</code>\n<b>NB: to know the id of the buttons type the command /linktreeid</b>")
+
 @decorators.private.init
 def mainlink(update,context):
     user = user_object(update)
