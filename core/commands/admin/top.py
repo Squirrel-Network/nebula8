@@ -39,8 +39,8 @@ def update_top(update,context):
         string = ""
         for row in topUsers:
             username = row['tg_username']
-            x = username.replace('@', '')
-            string += '▪️ <a href="tg://user?id={}">{}</a>  [<code>{}</code>]\n'.format(row['tg_id'],x,row['counter'])
+            user = username.replace('@', '')
+            string += '▪️<a href="https://t.me/{}">{}</a>  [<code>{}</code> messages]\n'.format(user,user,row['counter'])
         upd_charts_DESC(update,context)
         img = "https://naos.hersel.it/charts/{}desc.jpg?v={}".format(chat,ts)
         caption = 'Top 10 Active Users Until 30 Days\n\n{}'.format(string)
@@ -53,8 +53,8 @@ def update_top(update,context):
         string = ""
         for row in topUsers:
             username = row['tg_username']
-            x = username.replace('@', '')
-            string += '▪️ <a href="tg://user?id={}">{}</a>  [<code>{}</code>]\n'.format(row['tg_id'],x,row['counter'])
+            user = username.replace('@', '')
+            string += '▪️<a href="https://t.me/{}">{}</a>  [<code>{}</code> messages]\n'.format(user,user,row['counter'])
         upd_charts_ASC(update,context)
         img = "https://naos.hersel.it/charts/{}asc.jpg?v={}".format(chat,ts)
         caption = 'Top 10 Inactive Users Until 30 Days\n\n{}'.format(string)
