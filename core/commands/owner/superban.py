@@ -10,6 +10,7 @@ from core.utilities.menu import build_menu
 from core.utilities.message import message
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.superban import SuperbanRepository
+from core.database.repository.user import UserRepository
 from core.handlers.logs import sys_loggers, debug_channel
 from core.utilities.strings import Strings
 from core.utilities.regex import Regex
@@ -43,10 +44,26 @@ def init(update, context):
         input_user_id = text[2:].strip().split(" ", 1)
         user_id = input_user_id[0]
         if user_id != "":
-            number = re.search(Regex.HAS_NUMBER, user_id)
-            if number is None:
-                message(update,context,"Attention you must enter a number not letters!")
+            if user_id.startswith('@'):
+                user = UserRepository().getByUsername(user_id)
+                if user is None:
+                    message(update, context, "Attention I can not Superbanned this user via Username!\nuse the superban via id example: <code>/s 123456789</code> and if you want to insert also the reason type as in example: <code>/s 123456789 Reason</code>")
+                else:
+                    id_user = user['tg_id']
+                    default_user_first_name = "NB{}".format(id_user)
+                    default_motivation = "Other"
+                    data = [(id_user, default_user_first_name, default_motivation, save_date, operator_id,operator_username, operator_first_name)]
+                    SuperbanRepository().add(data)
+                    msg = '🚷 You got Super Banned <a href="tg://user?id={}">{}</a> via Username\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(id_user, id_user, default_motivation, id_user)
+                    message(update, context, msg)
+
+                    # Log in Telegram Channel
+                    logs_text = Strings.SUPERBAN_LOG.format(default_user_first_name, id_user, default_motivation,save_date, operator_first_name, operator_username,operator_id)
+                    message(update, context, logs_text, 'HTML', 'messageid', Config.DEFAULT_LOG_CHANNEL, None)
             else:
+                number = re.search(Regex.HAS_NUMBER, user_id)
+                if number is None:
+                    message(update, context, "Attention you must enter a number not letters!")
                 row = SuperbanRepository().getById(int(user_id))
                 if row:
                     message(update,context,"The user <code>{}</code> is already present in the database".format(user_id))
@@ -60,7 +77,7 @@ def init(update, context):
                     default_user_first_name = "NB{}".format(user_id)
                     data = [(user_id,default_user_first_name,default_motivation,save_date,operator_id,operator_username,operator_first_name)]
                     SuperbanRepository().add(data)
-                    msg = '🚷 You got super banned <a href="tg://user?id={}">{}</a> via TelegramID\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
+                    msg = '🚷 You got Super Banned <a href="tg://user?id={}">{}</a> via TelegramID\n\n📜 For the following reason: <b>{}</b>\n\n➡️ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user_id,user_id,default_motivation,user_id)
                     message(update,context,msg)
 
                     #Log in Telegram Channel
@@ -73,6 +90,25 @@ def init(update, context):
                     debug_channel(update, context, "[DEBUG_LOGGER] {}".format(formatter))
         else:
             message(update,context,"Attention you can not superbanned without entering an TelegramID!")
+
+@decorators.owner.init
+def remove_superban_via_id(update,context):
+    text = update.message.text
+    input_user_id = text[3:].strip().split(" ", 1)
+    user_id = input_user_id[0]
+    number = re.search(Regex.HAS_NUMBER, user_id)
+    if number is None:
+        message(update, context, "Attention you must enter a number not letters!")
+    else:
+        row = SuperbanRepository().getById(int(user_id))
+        if row:
+            data = [(user_id)]
+            SuperbanRepository().remove(data)
+            message(update, context,"I removed the user with TelegramID: [<code>{}</code>] from the database".format(user_id))
+        else:
+            message(update, context, "The user <code>{}</code> is not present in the database".format(user_id))
+
+
 
 @decorators.owner.init
 def multi_superban(update,context):
