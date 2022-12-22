@@ -10,11 +10,15 @@ from config import Config
 MAIN_URL = "https://api.telegram.org/"
 TOKEN = Config.BOT_TOKEN
 
+def TopicMessage(thread_id,chat_id,text = ""):
+    url = MAIN_URL + "bot{}/sendmessage?message_thread_id={}&chat_id={}&text={}&parse_mode=HTML".format(TOKEN, thread_id,chat_id, text)
+    send = requests.get(url)
+    return send
 def message(update, context, text = "", parse = 'HTML', type = 'message', chatid=None, img=None):
     bot = context.bot
     chat = update.effective_chat.id
 
-    if type == 'message':
+    if type == 'message' and update.effective_message.message_thread_id is None:
         send = bot.send_message(chat, text, parse_mode=parse)
     elif type == 'photo':
         send = bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption=text, parse_mode=parse)
@@ -26,6 +30,9 @@ def message(update, context, text = "", parse = 'HTML', type = 'message', chatid
         send = bot.send_message(update.message.from_user.id,text,parse_mode=parse)
     elif type == 'animation':
         send = bot.sendAnimation(chat, img, caption=text)
+    elif type == 'message' and update.effective_message.message_thread_id is not None:
+        thread_id = update.effective_message.message_thread_id
+        send = bot.send_message(chat, text, parse_mode=parse,message_thread_id=thread_id)
 
     return send
 
