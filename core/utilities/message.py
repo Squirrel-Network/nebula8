@@ -14,26 +14,23 @@ def TopicMessage(thread_id,chat_id,text = ""):
     url = MAIN_URL + "bot{}/sendmessage?message_thread_id={}&chat_id={}&text={}&parse_mode=HTML".format(TOKEN, thread_id,chat_id, text)
     send = requests.get(url)
     return send
-def message(update, context, text = "", parse = 'HTML', type = 'message', chatid=None, img=None):
+def message(update, context, text = "", parse = 'HTML', type = 'message', chatid=None, img=None, reply_markup = None):
     bot = context.bot
     chat = update.effective_chat.id
+    thread_id = update.effective_message.message_thread_id
 
-    if type == 'message' and update.effective_message.message_thread_id is None:
-        send = bot.send_message(chat, text, parse_mode=parse)
+    if type == 'message':
+        send = bot.send_message(chat, text, parse_mode=parse,message_thread_id=thread_id,reply_markup=reply_markup)
     elif type == 'photo':
-        send = bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption=text, parse_mode=parse)
+        send = bot.sendPhoto(chat_id=update.effective_chat.id, photo=img, caption=text, parse_mode=parse,message_thread_id=thread_id)
     elif type == 'reply':
-        send = update.message.reply_text(text, parse_mode=parse)
+        send = update.message.reply_text(text, parse_mode=parse,message_thread_id=thread_id,reply_markup=reply_markup)
     elif type == 'messageid':
         send = bot.send_message(chatid,text,parse_mode=parse)
     elif type == 'private':
-        send = bot.send_message(update.message.from_user.id,text,parse_mode=parse)
+        send = bot.send_message(update.message.from_user.id,text,parse_mode=parse,reply_markup=reply_markup)
     elif type == 'animation':
-        send = bot.sendAnimation(chat, img, caption=text)
-    elif type == 'message' and update.effective_message.message_thread_id is not None:
-        thread_id = update.effective_message.message_thread_id
-        send = bot.send_message(chat, text, parse_mode=parse,message_thread_id=thread_id)
-
+        send = bot.sendAnimation(chat, img, caption=text,message_thread_id=thread_id)
     return send
 
 def ApiMessage(text, chat_id):

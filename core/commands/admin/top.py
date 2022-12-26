@@ -19,14 +19,12 @@ from core.utilities.functions import upd_charts_DESC, upd_charts_ASC
 @decorators.bot.check_can_delete
 @decorators.delete.init
 def init(update, context):
-    bot = context.bot
-    chat = update.effective_message.chat_id
     list_buttons = []
     list_buttons.append(InlineKeyboardButton('📈 Active', callback_data='useractive'))
     list_buttons.append(InlineKeyboardButton('📉 Inactive', callback_data='userinactive'))
     list_buttons.append(InlineKeyboardButton("🗑 Close", callback_data='close'))
     menu = build_menu(list_buttons,1)
-    bot.send_message(chat,'Please select an option',reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+    message(update,context,'Please select an option',reply_markup=InlineKeyboardMarkup(menu))
 
 @decorators.admin.user_admin
 def update_top(update,context):

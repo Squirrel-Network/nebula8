@@ -5,6 +5,7 @@
 from core import decorators
 from core.database.repository.group import GroupRepository
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from core.utilities.message import message
 from core.utilities.functions import flag
 
 LANGUAGE_KEYBOARD = [[
@@ -16,11 +17,9 @@ record = GroupRepository.SET_LANGUAGE
 
 @decorators.admin.user_admin
 def init(update,context):
-    bot = context.bot
-    chat = update.effective_message.chat_id
     reply_markup = InlineKeyboardMarkup(LANGUAGE_KEYBOARD)
     msg = "Please select your preferred language\n\nPerfavore seleziona la tua lingua di preferenza"
-    bot.send_message(chat,msg,reply_markup=reply_markup)
+    message(update,context,msg,reply_markup=reply_markup)
 
 @decorators.admin.user_admin
 def language_en(update, context):

@@ -8,6 +8,7 @@ from core.commands.admin import set_lang
 from core.utilities.menu import build_menu
 from core.utilities.functions import update_db_settings, save_group
 from core.utilities.constants import PERM_TRUE, PERM_FALSE
+from core.utilities.message import message
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from core.database.repository.group import GroupRepository
 
@@ -37,7 +38,7 @@ def keyboard_settings(update,context,editkeyboard = False):
         list_buttons.append(InlineKeyboardButton("Close 🗑", callback_data='close'))
         menu = build_menu(list_buttons,2)
         if editkeyboard == False:
-            keyboard_menu = bot.send_message(chat,"⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu),parse_mode='HTML')
+            keyboard_menu = message(update,context,"⚙️ Bot settings\n\n📜 Group Name: <i>{}</i>\n🏷 ChatId: <code>{}</code>".format(chat_title,chat),reply_markup=InlineKeyboardMarkup(menu))
         if editkeyboard == True:
             keyboard_menu = bot.edit_message_reply_markup(chat,update.message.message_id,reply_markup=InlineKeyboardMarkup(menu))
         return keyboard_menu
