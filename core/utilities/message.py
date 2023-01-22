@@ -42,8 +42,6 @@ def ApiMessage(text, chat_id):
 def ApiGroupRemove(chat_id):
     url = MAIN_URL + "bot{}/leaveChat?chat_id={}".format(TOKEN,chat_id)
     send = requests.get(url)
-    print(url)
-    print(send)
     return send
 
 async def messageWithAsync(update,context,delay,text = ""):
