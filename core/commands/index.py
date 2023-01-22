@@ -110,3 +110,4 @@ def owner_command(dsp):
     function(CMH('spam', owner.add_antispam.init))
     function(CMH('channels', owner.list_community.channels))
     function(CMH('groups', owner.list_community.groups))
+    function(CMH('rexit', owner.exit.remote_exit))
