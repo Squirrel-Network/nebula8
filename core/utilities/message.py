@@ -17,7 +17,8 @@ def TopicMessage(thread_id,chat_id,text = ""):
 def message(update, context, text = "", parse = 'HTML', type = 'message', chatid=None, img=None, reply_markup = None):
     bot = context.bot
     chat = update.effective_chat.id
-    thread_id = update.effective_message.message_thread_id
+    forum = bot.getChat(chat).is_forum
+    thread_id = update.effective_message.message_thread_id if forum is not None else 0
 
     if type == 'message':
         send = bot.send_message(chat, text, parse_mode=parse,message_thread_id=thread_id,reply_markup=reply_markup)
