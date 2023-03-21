@@ -28,3 +28,4 @@ def group_handlers(update,context):
 def jobs_handlers(job_updater):
     job_updater.run_repeating(jobs.send_debug.send_log,interval=constants.DAILY,first=0.0, name="[DEBUG_LOG_JOB]")
     job_updater.run_repeating(jobs.query_repeat.query,interval=constants.FOUR_HOUR,first=0.0, name="[QUERY_REPEAT_JOB]")
+    #job_updater.run_repeating(jobs.send_db_backup.send_backup, interval=constants.ONE_MINUTE, first=0.0,name="[DATABASE_BACKUP]")

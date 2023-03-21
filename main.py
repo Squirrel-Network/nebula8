@@ -13,6 +13,20 @@ from core.commands import index
 from plugins import plugin_index
 from core import handlers
 from core.handlers import handlers_index
+from tabulate import tabulate
+
+# crea la tabella con i dati desiderati
+table_data = [
+    ["Type", "Description", "Extra"],
+    ["Version", Config.VERSION, Config.VERSION_NAME],
+    ["Author", "SquirrelNetwork", Config.REPO],
+    ["Debug", Config.DEBUG],
+    ["Plugins", "Enable"]
+]
+
+# stampa la tabella formattata
+
+
 
 
 # if version < 3.7, stop bot.
