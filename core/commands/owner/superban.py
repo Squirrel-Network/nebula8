@@ -154,7 +154,7 @@ def update_superban(update, context):
             #Ban the User
             bot.ban_chat_member(chat_id, user.id)
             #Edit Message Text after push the button
-            msg = '🚷 Got <b>SuperBanned</b> <a href="tg://user?id={}">{}</a>\n\n📝 For the following reason: <b>{}</b>\n\n➡ Go to: https://squirrel-network.online/knowhere?q={} to search for blacklisted users'.format(user.id,user.first_name,motivation,user.id)
+            msg = '🚷 Got <b>SuperBanned</b> <a href="tg://user?id={}">{}</a>\n\n📝 For the following reason: <b>{}</b>\n\n➡ Go to: https://squirrel-network.online/knowhere/?q={} to search for blacklisted users'.format(user.id,user.first_name,motivation,user.id)
             query.edit_message_text(msg, parse_mode='HTML')
             bot.delete_message(chat_id, query.message.reply_to_message.message_id)
             #Telegram Logs
