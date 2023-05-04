@@ -7,8 +7,6 @@ from pypika import Query, Table
 
 users = Table("users")
 owners = Table("owner_list")
-linktree_main_text = Table("linktree_main_text")
-linktree_buttons = Table("linktree_buttons")
 
 class UserRepository(Connection):
     def getById(self, args=None):
@@ -83,38 +81,3 @@ class UserRepository(Connection):
         q = query.get_sql(quote_char=None)
 
         return self._select(q, args)
-    def getLinktreeMainText(self, args=None):
-        query = Query.from_(linktree_main_text).select("*").where(linktree_main_text.user_id == "%s")
-        q = query.get_sql(quote_char=None)
-
-        return self._select(q, args)
-
-    def getLinkTreeButtons(self, args=None):
-        query = Query.from_(linktree_buttons).select("*").where(linktree_buttons.user_id == "%s")
-        q = query.get_sql(quote_char=None)
-
-        return self._selectAll(q, args)
-
-    def insert_linktree_button(self, args=None):
-
-        q = "INSERT INTO linktree_buttons (user_id, button_id, button_text, button_url) VALUES (%s, NULL, %s, %s)"
-
-        return self._insert(q, args)
-
-    def insert_main_text_linktree(self, args=None):
-
-        q = "INSERT INTO linktree_main_text (user_id, main_text) VALUES (%s,%s)"
-
-        return self._insert(q, args)
-
-    def update_main_text_linktree(self, args=None):
-
-        q = "UPDATE linktree_main_text SET main_text = %s WHERE user_id = %s"
-
-        return self._update(q, args)
-
-    def delete_linktree_button(self, args=None):
-
-        q = "DELETE FROM linktree_buttons WHERE button_id = %s AND user_id = %s"
-
-        return self._delete(q, args)
