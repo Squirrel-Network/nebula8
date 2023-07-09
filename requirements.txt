@@ -35,7 +35,7 @@ six==1.16.0
 soupsieve==2.3.2.post1
 SQLAlchemy==1.4.42
 telegram==0.0.1
-tornado==6.1
+tornado==6.3.2
 tzdata==2022.5
 tzlocal==4.2
 urllib3==1.26.12
