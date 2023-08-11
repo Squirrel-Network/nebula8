@@ -4,23 +4,3 @@
 # NEBULA BOT
 
 ❗❗️️❗️ The new <a href="https://github.com/Squirrel-Network/Nebula10">Version</a> compatible with the python-telegram-bot 20.X library is under development❗️❗️❗️
-
-## Getting started
-
-- <a href="https://github.com/Squirrel-Network/nebula8/wiki/Getting-Started">Getting Started</a>
-- <a href="https://github.com/Squirrel-Network/nebula8/wiki/Command-List">Command list of the bot</a>
-
-Nebula 8.0 Stable released
-<br>
-==><a href="https://t.me/thenebulabot">Try it now!</a>
-
-
-## Official API
-- <a href="https://api.nebula.squirrel-network.online">Home</a>
-- <a href="https://api.nebula.squirrel-network.online/apidocs/">Docs</a>
-- <a href="https://github.com/Squirrel-Network/api_nebula">Source</a>
-
-## Official Resources
-- <a href="https://nebula.squirrel-network.online">Nebula Dashboard(BETA)</a>
-- <a href="https://squirrel-network.online/knowhere/">Knowhere (Blacklist Search)</a>
-- <a href="https://api.nebula.squirrel-network.online/users">Nebula's public user search </a>
